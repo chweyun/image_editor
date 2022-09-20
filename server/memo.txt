@@ -1,0 +1,17 @@
+< 전체 폴더 구조 >
+(참고 : https://granora2019.tistory.com/entry/NodeJS와-MongoDB로-SNS-만들어보기-현재-폴더-구조)
+
+database : 데이터베이스 관련 schema 설정
+
+routes : REST API 만들어 놓은 곳
+
+server.js : 서버 설정 및 구축
+
+
+– database/model.js : includes configuration for MongoDB and Multer (url, database, image Bucket).
+
+– routes/index.js : defines routes for endpoints that is called from views, use controllers to handle requests.
+
+– views : contains HTML form for user to upload images.
+
+– server.js: initializes routes, configure CORS, runs Express app.
