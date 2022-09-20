@@ -9,6 +9,7 @@ import './App.css';
 /*여기까지 밑에 페이지뷰에서 Prac컴포넌트도 얘 안쓸거면 지우기*/
 
 function App() {
+
   return (
     <div className='editor'>
       <SideBar />

@@ -24,10 +24,20 @@
 }
 
 .imgSizeControl {
-    margin-left: 20%;
+    margin-left: 15%;
     margin-top: 5%;
-    max-width:1500px;
+    max-width:1200px;
     max-height:550px;
     width: auto;
     height: auto;
+}
+
+.canvas {
+    position: absolute;
+    float: left;
+    margin-top: 5%;
+    margin-left: 10%;
+    width: 1200px;
+    height: 550px;
+    background-color: #D3D3D3;
 }
