@@ -28,7 +28,7 @@ const Storage = multer.diskStorage({
 
 const upload = multer({
     storage:Storage
-}).single('testImage')
+}).single('image')
 
 app.get('/', (req, res) => {
     res.send("upload file");
@@ -41,7 +41,7 @@ app.post('/upload', (req, res) => {
         }
         else {
             const newImage = new ImageModel({
-                id : req.body.id,
+                // id : req.body.id,
                 image : {
                     data: req.file.filename,
                     contentType: 'image/png'
