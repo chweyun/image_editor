@@ -20,6 +20,8 @@ import resetIcon from './Image/reset.svg';
 import saveImgIcon from './Image/saveImg.svg';
 import saveProIcon from './Image/savePro.svg';
 import basicImg from './Image/profile.png';
+import ModalStore from "./component/Modals/ModalStore"
+import ModalImport from "./component/Modals/ModalImport.js";
 
 const Prac = (props) => {
   const [imageUrl, setImageUrl] = useState(null);
@@ -77,15 +79,30 @@ function TopBar () {
     const onClick = () => {
         setShowing((prev) => !prev)
     };
-    
+
+    const [modalStoreOpen, setModalStoreOpen] = useState(false);
+    const [modalImportOpen, setModalImportOpen] = useState(false);
+
+    const openModalStore = () => {
+      setModalStoreOpen(true);
+    };
+    const openModalImport = () => {
+      setModalImportOpen(true);
+    };
+    const closeModalStore = () => {
+      setModalStoreOpen(false);
+    };
+    const closeModalImport = () => {
+      setModalImportOpen(false);
+    };
 
     return (
         <div className="TopBar">
             <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
-            <img src={callProIcon} className="toptoolIcon" onClick={() => onnewpro()} >
+            <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
+            <ModalImport open={modalImportOpen} close={closeModalImport} header="Modal heading"></ModalImport> 
                 {/* <input type="file" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                 <Button label="이미지 업로드" onClick={onUploadImageButtonClick} /> */}
-            </img>
             <label for="input-file"><img src={callImgIcon} className="toptoolIcon"/></label>
             <div className="TopCenterTool">
                 <img src={backIcon} className="toptoolIcon" onClick={() => onback()}/>
@@ -94,7 +111,8 @@ function TopBar () {
             </div>
             <div className="ToprightTool">
                 <img src={saveImgIcon} className="toptoolIcon" onClick={() => onsaveimg()} />
-                <img src={saveProIcon} className="toptoolIcon" onClick={() => onsavepro()} />
+                <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                <ModalStore open={modalStoreOpen} close={closeModalStore} header="Modal heading"></ModalStore> 
             </div>
             <div>
                 {showing ? <OninputFile /> : null}
