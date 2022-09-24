@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import SideBar from './SideBar';
-import TopBar from './TopBar';
+import MainBoard from "./MainBoard";
 import './App.css';
 
 /*여기서부터 이미지 업로더 InputFile.js에 있던 코드 옮겨논거*/
@@ -12,8 +11,7 @@ function App() {
 
   return (
     <div className='editor'>
-      <SideBar />
-      <TopBar />
+      <MainBoard />
     </div>
   );
 }
