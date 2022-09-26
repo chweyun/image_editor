@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const port = 8000;
-
+const cors = require('cors'); 
+app.use(cors());
 const ImageModel = require('./image.model');
+const mime = require('mime-types');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false }));
@@ -22,7 +24,7 @@ mongoose
 const Storage = multer.diskStorage({
     destination: 'uploads',
     filename:(req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, `${mime.extension(file.mimetype)}`);
     },
 });
 
@@ -30,8 +32,18 @@ const upload = multer({
     storage:Storage
 }).single('image')
 
-app.get('/', (req, res) => {
-    res.send("upload file");
+// app.get('/', (req, res) => {
+//     res.send("upload file");
+// });
+
+app.get('/find',(req, res) => {
+    // ImageModel.findById("632f01607002b14621d5823d", function(err, result) {
+    //     if (err) {
+    //         res.send(err);
+    //     } else {
+    //         res.json(result);
+    //     }
+    // });
 });
 
 app.post('/upload', (req, res) => {
@@ -43,7 +55,7 @@ app.post('/upload', (req, res) => {
             const newImage = new ImageModel({
                 // id : req.body.id,
                 image : {
-                    data: req.file.filename,
+                    data: req.file.filename, // TODO
                     contentType: 'image/png'
                 }
             })

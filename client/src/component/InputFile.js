@@ -8,7 +8,7 @@ const Prac = (props) => {
     const onChangeImage = () => {
       const reader = new FileReader();
       const file = imgRef.current.files[0];
-      console.log(file);
+      console.log('file: ',file);
   
       reader.readAsDataURL(file);
       reader.onloadend = () => {

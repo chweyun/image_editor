@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import './MainBoard.css';
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver';
 
 // import Image
 import newProIcon from './Image/newPro.svg';
@@ -64,6 +66,7 @@ function MainBoard () {
     let ctx = undefined;
     let image = undefined;
 
+
     const onChangeImage = () => {
         const reader = new FileReader();
         const file = imgRef.current.files[0];
@@ -72,66 +75,69 @@ function MainBoard () {
         reader.readAsDataURL(file);
 
         reader.onloadend = () => {
-        setImageUrl(reader.result);
-        console.log("이미지주소", reader.result);
-        /*canvasRef.drawImage(file, 0, 0)*/
-        
-        canvas = document.getElementById('canvasID');
-        ctx = canvas.getContext('2d');
-        image = document.getElementById('source');
-        setProps({canvas, ctx, image});
-        console.log('onChangeImage 안 canvas데이터',canvas);
-        console.log('onChangeImage 안 ctx데이터', ctx);
-        /*ctx.filter = 'grayscale()';*/
+            setImageUrl(reader.result);
+            console.log("이미지주소", reader.result);
+            /*canvasRef.drawImage(file, 0, 0)*/
+            
+            canvas = document.getElementById('canvasID');
+            ctx = canvas.getContext('2d');
+            image = document.getElementById('source');
+            setProps({canvas, ctx, image});
+            console.log('onChangeImage 안 canvas데이터',canvas);
+            console.log('onChangeImage 안 ctx데이터', ctx);
+            /*ctx.filter = 'grayscale()';*/
 
-        function drawImageData(image, ctx) { 
-            console.log('drawImageData 안 canvas데이터',canvas);
-            console.log('drawImageData 안 ctx데이터', ctx);
-            var canvasArea = ctx.canvas ;
-            var hRatio = canvasArea.width  / image.width    ;
-            var vRatio =  canvasArea.height / image.height  ;
-            var ratio  = Math.min ( hRatio, vRatio );
-            var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-            var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-            ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-            ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-        };
-        
-        image.addEventListener('load', (e) => {
-            console.log("addEventListener 돌아감");
-            drawImageData(image, ctx);
-            console.log("drawImageData 돌아감");
-            console.log('test0', canvas)
-            console.log('test0', ctx)
-        });
-
+            function drawImageData(image, ctx) { 
+                console.log('drawImageData 안 canvas데이터',canvas);
+                console.log('drawImageData 안 ctx데이터', ctx);
+                var canvasArea = ctx.canvas ;
+                var hRatio = canvasArea.width  / image.width    ;
+                var vRatio =  canvasArea.height / image.height  ;
+                var ratio  = Math.min ( hRatio, vRatio );
+                var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+                var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+            };
+            
+            image.addEventListener('load', (e) => {
+                console.log("addEventListener 돌아감");
+                drawImageData(image, ctx);
+                console.log("drawImageData 돌아감");
+                console.log('test0', canvas)
+                console.log('test0', ctx)
+            });
         };
         console.log('test', props.canvas)
         console.log('test', props.ctx)
-        
     };
 
+    const [showing, setShowing] = useState(false);
+    const onClick = () => {
+        setShowing((prev) => !prev)
+    };
 
-        const [showing, setShowing] = useState(false);
-        const onClick = () => {
-            setShowing((prev) => !prev)
-        };
+    const [modalStoreOpen, setModalStoreOpen] = useState(false);
+    const [modalImportOpen, setModalImportOpen] = useState(false);
 
-        const [modalStoreOpen, setModalStoreOpen] = useState(false);
-        const [modalImportOpen, setModalImportOpen] = useState(false);
+    const openModalStore = () => {
+    setModalStoreOpen(true);
+    };
+    const openModalImport = () => {
+    setModalImportOpen(true);
+    };
+    const closeModalStore = () => {
+    setModalStoreOpen(false);
+    };
+    const closeModalImport = () => {
+    setModalImportOpen(false);
+    };
 
-        const openModalStore = () => {
-        setModalStoreOpen(true);
-        };
-        const openModalImport = () => {
-        setModalImportOpen(true);
-        };
-        const closeModalStore = () => {
-        setModalStoreOpen(false);
-        };
-        const closeModalImport = () => {
-        setModalImportOpen(false);
-        };
+    const down = () => { // (https://bit.ly/3xTsMt2)
+        var canvas = document.getElementById('canvasID');
+        var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
+        window.location.href=image; 
+    }
 
     // SideBar.js function
     const [selectFilter, setSelectFilter] = useState(false);
@@ -192,7 +198,7 @@ function MainBoard () {
                     <img src={resetIcon} className="toptoolIcon" onClick={() => onreset()} />
                 </div>
                 <div className="ToprightTool">
-                    <img src={saveImgIcon} className="toptoolIcon" onClick={() => onsaveimg()} />
+                    <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down()}} />
                     <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
                     <ModalStore open={modalStoreOpen} close={closeModalStore} header="Modal heading"></ModalStore> 
                 </div>
@@ -200,8 +206,9 @@ function MainBoard () {
                     {showing ? <OninputFile /> : null}
                 </div>
                 <React.Fragment>
-                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/>
-                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} 
+                    {/* TODO */}
+                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
+                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px', backgroundColor:'red'}} 
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
