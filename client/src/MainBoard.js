@@ -44,6 +44,7 @@ import ModalStore from "./component/Modals/ModalStore"
 import ModalImport from "./component/Modals/ModalImport.js";
 import Filterfunc from "./component/Filterfunc.js";
 import Cropfunc from "./component/Cropfunc.js";
+import Turnfunc from "./component/Turnfunc.js";
 import onturn from "./component/Turnfunc.js";
 import onreverse from "./component/Reversefunc.js";
 import ontext from "./component/Textfunc.js";
@@ -142,6 +143,7 @@ function MainBoard () {
     // SideBar.js function
     const [selectFilter, setSelectFilter] = useState(false);
     const [selectCrop, setSelectCrop] = useState(false);
+    const [selectTurn, setSelectTurn] = useState(false);
 
     const [clickFilter, setClickFilter] = useState(false);
     const [clickCrop, setClickCrop] = useState(false);
@@ -162,6 +164,7 @@ function MainBoard () {
         setClickCrop((prev) => !prev);
     }
     const onClickTurn = () => {
+        setSelectTurn((prev) => !prev);
         setClickTurn((prev) => !prev);
     }
     const onClickReverse = () => {
@@ -241,6 +244,7 @@ function MainBoard () {
                     {console.log('test2', props.ctx)}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl}/> : null}
+                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} /> : null}
                 </div>
             </div>
         </>
