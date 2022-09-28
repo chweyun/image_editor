@@ -136,7 +136,7 @@ function MainBoard () {
 
     const down = () => { // (https://bit.ly/3xTsMt2)
         var canvas = document.getElementById('canvasID');
-        var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  
+        var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
         window.location.href=image; 
     }
 
@@ -211,7 +211,7 @@ function MainBoard () {
                 <React.Fragment>
                     {/* TODO */}
                 <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px', backgroundColor:'red'}} 
+                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} 
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
