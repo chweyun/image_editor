@@ -191,7 +191,7 @@ function MainBoard () {
             <div className="TopBar">
                 <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
                 <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
-                <ModalImport open={modalImportOpen} close={closeModalImport} header="Modal heading"></ModalImport> 
+                <ModalImport open={modalImportOpen} close={closeModalImport}></ModalImport> 
                     {/* <input type="file" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                     <Button label="이미지 업로드" onClick={onUploadImageButtonClick} /> */}
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
@@ -203,7 +203,7 @@ function MainBoard () {
                 <div className="ToprightTool">
                     <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down()}} />
                     <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
-                    <ModalStore open={modalStoreOpen} close={closeModalStore} header="Modal heading"></ModalStore> 
+                    <ModalStore open={modalStoreOpen} close={closeModalStore}></ModalStore> 
                 </div>
                 <div>
                     {showing ? <OninputFile /> : null}

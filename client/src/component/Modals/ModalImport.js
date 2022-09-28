@@ -16,16 +16,13 @@ const ModalImport = (props) => {
               &times;
             </button>
           </header>
-          <main>
-            <h1>업로드 ID를 입력해주세요.</h1>
-            <input placeholder='ID를 입력하세요'></input>
-            <button>가져오기</button>
-          </main>
-          <footer>
-            <button className="close" onClick={close}>
-              close
-            </button>
-          </footer>
+            <div className="inputBox">
+              <input placeholder='ID를 입력하세요'></input>
+            </div>
+            <div className='btnBox'>
+              <button className='importBtn' style={{border:'1.8px solid #004483'}}>가져오기</button>
+              <button className="close" style={{border:'1.8px solid #004483'}} onClick={close}>창닫기</button>
+            </div>
         </section>
       ) : null}
     </div>
