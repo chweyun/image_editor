@@ -147,10 +147,8 @@ function MainBoard () {
     }
 
     const storefetch = (props) => {
-        // rand();
         var canvas = document.getElementById('canvasID');
         var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
-        // var rand = rand;
 
         axios.post('http://localhost:8000/upload', {
             id: rand,
@@ -222,7 +220,7 @@ function MainBoard () {
                 </div>
                 <div className="ToprightTool">
                     <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down()}} />
-                    <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); storefetch(); randSet();}}  />
+                    <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); storefetch(); }}  />
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
                 <div>
