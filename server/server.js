@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const port = 8000;
 const cors = require('cors'); 
+const path = require('path');
 app.use(cors());
 const ImageModel = require('./image.model');
 const mime = require('mime-types');
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false }));
+app.use(bodyParser.json({limit: '3000kb'}));
 
 mongoose
     .connect(
@@ -24,17 +25,14 @@ mongoose
 const Storage = multer.diskStorage({
     destination: 'uploads',
     filename:(req, file, cb) => {
-        cb(null, `${mime.extension(file.mimetype)}`);
+        // cb(null, `${mime.extension(file.mimetype)}`);
+        cb(null, new Date().valueOf() + path.extname(file.originalname));
     },
 });
 
 const upload = multer({
     storage:Storage
 }).single('image')
-
-// app.get('/', (req, res) => {
-//     res.send("upload file");
-// });
 
 app.get('/find',(req, res) => {
     // ImageModel.findById("632f01607002b14621d5823d", function(err, result) {
@@ -53,9 +51,9 @@ app.post('/upload', (req, res) => {
         }
         else {
             const newImage = new ImageModel({
-                // id : req.body.id,
+                id : req.body.id,
                 image : {
-                    data: req.file.filename, // TODO
+                    data: req.file, // TODO - req.file.filename 하면 에러남
                     contentType: 'image/png'
                 }
             })

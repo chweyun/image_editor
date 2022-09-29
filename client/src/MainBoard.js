@@ -5,6 +5,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
+import axios from 'axios';
 
 // import Image
 import newProIcon from './Image/newPro.svg';
@@ -140,6 +141,25 @@ function MainBoard () {
         window.location.href=image; 
     }
 
+    const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
+    const randSet = () => {
+        setRand();
+    }
+
+    const storefetch = (props) => {
+        // rand();
+        var canvas = document.getElementById('canvasID');
+        var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
+        // var rand = rand;
+
+        axios.post('http://localhost:8000/upload', {
+            id: rand,
+            image: image
+        }).then(function (response) {
+            console.log(response);
+        })
+    }
+
     // SideBar.js function
     const [selectFilter, setSelectFilter] = useState(false);
     const [selectCrop, setSelectCrop] = useState(false);
@@ -202,8 +222,8 @@ function MainBoard () {
                 </div>
                 <div className="ToprightTool">
                     <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down()}} />
-                    <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
-                    <ModalStore open={modalStoreOpen} close={closeModalStore}></ModalStore> 
+                    <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); storefetch(); randSet();}}  />
+                    <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
                 <div>
                     {showing ? <OninputFile /> : null}
