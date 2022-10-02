@@ -38,13 +38,6 @@ const upload = multer({
     storage:Storage
 }).single('image')
 
-
-
-// (https://intrepidgeeks.com/tutorial/confirm-member-inputduplicate-identity)
-// app.get('/find',async function(req, res, next) { // TODO 해당하는 id가 있으면 result 1, 없으면 result 0이 되도록 할 것
-// res.send('heelo')
-// });
-
 app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
         console.log(req.body);
@@ -55,7 +48,7 @@ app.post('/upload', (req, res) => {
             const newImage = new ImageModel({
                 id : req.body.id,
                 image : {
-                    data: req.body.image, // TODO - req.file.filename 하면 에러남
+                    data: req.body.image,
                     contentType: 'image/png'
                 }
             })

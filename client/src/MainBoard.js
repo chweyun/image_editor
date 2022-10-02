@@ -56,7 +56,7 @@ import oneraserAll from "./component/EraserAllfunc.js";
 import onselect from "./component/Selectfunc.js";
 import { wait } from "@testing-library/user-event/dist/utils";
 
-function MainBoard () {
+const MainBoard = () => {
     
     // TopBar.js function
     const [imageUrl, setImageUrl] = useState(null);
@@ -68,6 +68,13 @@ function MainBoard () {
     let ctx = undefined;
     let image = undefined;
 
+    const [array, SetArray] = useState([]);
+
+    // TODO 해당하는 id의 DB가 있을 시 그 이미지 RGB 배열을 MainBoard의 변수 array로 옮겨오는 것은 성공함.
+    // 다만 array 값을 캔버스에 어떻게 draw하는지를 모르겠음 ......... 더 찾아볼 것
+    const imgArray = (imgsrc) => {
+        SetArray(imgsrc);
+    }
 
     const onChangeImage = () => {
         const reader = new FileReader();
@@ -150,7 +157,7 @@ function MainBoard () {
         var canvas = document.getElementById('canvasID');
         var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
 
-        axios.post('http://localhost:8000/upload', { // TODO image값이 데베에 잘 안 들어가는 것 같음, uploads폴더에도 들어가서 get도 가능하도록 고칠 것
+        axios.post('http://localhost:8000/upload', { 
             id: rand,
             image: image
         }).then(function (response) {
@@ -209,7 +216,7 @@ function MainBoard () {
             <div className="TopBar">
                 <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
                 <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
-                <ModalImport open={modalImportOpen} close={closeModalImport}></ModalImport> 
+                <ModalImport open={modalImportOpen} close={closeModalImport} imgArray={imgArray}></ModalImport> 
                     {/* <input type="file" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                     <Button label="이미지 업로드" onClick={onUploadImageButtonClick} /> */}
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
