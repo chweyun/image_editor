@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 
 const ImageSchema = mongoose.Schema({
     id : {

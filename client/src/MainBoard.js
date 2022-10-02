@@ -150,7 +150,7 @@ function MainBoard () {
         var canvas = document.getElementById('canvasID');
         var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
 
-        axios.post('http://localhost:8000/upload', {
+        axios.post('http://localhost:8000/upload', { // TODO image값이 데베에 잘 안 들어가는 것 같음, uploads폴더에도 들어가서 get도 가능하도록 고칠 것
             id: rand,
             image: image
         }).then(function (response) {
@@ -227,7 +227,6 @@ function MainBoard () {
                     {showing ? <OninputFile /> : null}
                 </div>
                 <React.Fragment>
-                    {/* TODO */}
                 <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
                 <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} 
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 

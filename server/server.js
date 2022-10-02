@@ -1,21 +1,26 @@
+require('dotenv').config();
+const { PORT, MONGO_URI } = process.env;
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const port = 8000;
+// const port = 8000;
 const cors = require('cors'); 
 const path = require('path');
 app.use(cors());
-const ImageModel = require('./image.model');
 const mime = require('mime-types');
+
+const find = require('./routes/find');
+// const router = require('./routes/find');
 
 app.use(bodyParser.urlencoded({ extended : false }));
 app.use(bodyParser.json({limit: '3000kb'}));
+app.use('/find', find);
 
 mongoose
     .connect(
-        "mongodb+srv://choiyun:0918@image-editor.feps7kn.mongodb.net/?retryWrites=true&w=majority",
+        MONGO_URI,
         { useNewUrlParser : true, useUnifiedTopology : true }
     )
     .then(() => console.log("db is connected"))
@@ -25,8 +30,7 @@ mongoose
 const Storage = multer.diskStorage({
     destination: 'uploads',
     filename:(req, file, cb) => {
-        // cb(null, `${mime.extension(file.mimetype)}`);
-        cb(null, new Date().valueOf() + path.extname(file.originalname));
+        cb(null, `${mime.extension(file.mimetype)}`);
     },
 });
 
@@ -34,18 +38,16 @@ const upload = multer({
     storage:Storage
 }).single('image')
 
-app.get('/find',(req, res) => {
-    // ImageModel.findById("632f01607002b14621d5823d", function(err, result) {
-    //     if (err) {
-    //         res.send(err);
-    //     } else {
-    //         res.json(result);
-    //     }
-    // });
-});
+
+
+// (https://intrepidgeeks.com/tutorial/confirm-member-inputduplicate-identity)
+// app.get('/find',async function(req, res, next) { // TODO 해당하는 id가 있으면 result 1, 없으면 result 0이 되도록 할 것
+// res.send('heelo')
+// });
 
 app.post('/upload', (req, res) => {
     upload(req, res, (err) => {
+        console.log(req.body);
         if (err) {
             console.log(err)
         }
@@ -53,7 +55,7 @@ app.post('/upload', (req, res) => {
             const newImage = new ImageModel({
                 id : req.body.id,
                 image : {
-                    data: req.file, // TODO - req.file.filename 하면 에러남
+                    data: req.body.image, // TODO - req.file.filename 하면 에러남
                     contentType: 'image/png'
                 }
             })
@@ -65,6 +67,6 @@ app.post('/upload', (req, res) => {
     })
 });
 
-app.listen(port, () => {
-    console.log(`successfully running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`successfully running at http://localhost:${PORT}`);
 });
