@@ -63,12 +63,38 @@ const MainBoard = () => {
     const getImgId = (imgId) => {
         setImgId(imgId);
     } 
-    
-    // TODO imgId에 값이 들어오면 (해당하는 id를 가진 이미지데이터가 있으면)
-    // TODO `https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com/${imaId}` 에 있는 이미지 파일
-    // TODO 캔버스에 띄우기
-    // TODO 크롬에 북마크한 (--disable-web-security) 사용!!! (CORS 문제 해결)
-    // TODO 주소 삽입해서 테스트해보기
+
+    if (imgId != '') {
+        const canvas = document.getElementById('canvasID');
+        const ctx = canvas.getContext('2d');
+
+        const addImage = function(file) {
+            const image = new Image;
+            image.onload = function() {
+                var canvasArea = ctx.canvas ;
+                var hRatio = canvasArea.width  / image.width    ;
+                var vRatio =  canvasArea.height / image.height  ;
+                var ratio  = Math.min ( hRatio, vRatio );
+                var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+                var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+            }
+            image.src = URL.createObjectURL(file);
+        }
+
+        const getOneImage = async () => {
+            const container = document.getElementById('source');
+
+            const response = await fetch (`http://localhost:5000/api/gallery/${imgId}`, {
+                method : "GET"
+            });
+            const blobImg = await response.blob();
+            const imgUrl = URL.createObjectURL(blobImg);
+            addImage(blobImg);
+        }
+        getOneImage();
+    }
     
     // TopBar.js function
     const [imageUrl, setImageUrl] = useState(null);
@@ -172,7 +198,6 @@ const MainBoard = () => {
     useEffect(() => {
         document.title = 'Image Editor';
     }, [s3Location]);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();

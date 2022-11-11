@@ -15,8 +15,6 @@ const ModalImport = (props) => {
 
   const [imgsrc, setImgsrc] = useState([]);
   const API_URL = 'https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com';
-  // const API_URL = 'localhost:5000/api/gallery';
-  // const API_URL = 'https://localhost:3000';
 
   const erase = () => {
     var el = document.getElementById('input');
@@ -30,9 +28,8 @@ const ModalImport = (props) => {
 
     axios.get(url)
     .then(response => { 
-      console.log(response);
+      // console.log(response);
       getImgId(id);
-
       close();
     })
     .catch(error => {
@@ -45,17 +42,6 @@ const ModalImport = (props) => {
         console.error(error);
       }
     })
-
-        // else { // 해당하는 id값이 db에 있을 경우
-        //   imgImport(req.data);
-        //   props.imgArray(imgsrc); // 해당 값의 이미지 픽셀 데이터를 MainBoard로 보냄
-        //   close();
-        // }
-      // })
-  }
-
-  function imgImport([imgSrc]) {
-    setImgsrc([imgSrc.image][0].data.data);
   }
 
   return (
