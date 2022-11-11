@@ -6,6 +6,7 @@ import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
+import createFormData from './gallery/createFormData';
 
 // import Image
 import newProIcon from './Image/newPro.svg';
@@ -57,6 +58,17 @@ import onselect from "./component/Selectfunc.js";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 const MainBoard = () => {
+
+    const [imgId, setImgId] = useState('');
+    const getImgId = (imgId) => {
+        setImgId(imgId);
+    } 
+    
+    // TODO imgId에 값이 들어오면 (해당하는 id를 가진 이미지데이터가 있으면)
+    // TODO `https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com/${imaId}` 에 있는 이미지 파일
+    // TODO 캔버스에 띄우기
+    // TODO 크롬에 북마크한 (--disable-web-security) 사용!!! (CORS 문제 해결)
+    // TODO 주소 삽입해서 테스트해보기
     
     // TopBar.js function
     const [imageUrl, setImageUrl] = useState(null);
@@ -68,18 +80,15 @@ const MainBoard = () => {
     let ctx = undefined;
     let image = undefined;
 
-    const [array, SetArray] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
 
-    // TODO 해당하는 id의 DB가 있을 시 그 이미지 RGB 배열을 MainBoard의 변수 array로 옮겨오는 것은 성공함.
-    // 다만 array 값을 캔버스에 어떻게 draw하는지를 모르겠음 ......... 더 찾아볼 것
-    const imgArray = (imgsrc) => {
-        SetArray(imgsrc);
-    }
-
-    const onChangeImage = () => {
+    const onChangeImage = (e) => {
         const reader = new FileReader();
         const file = imgRef.current.files[0];
         console.log('onChangeImage 안 file데이터',file);
+
+        const imgFile = (e.target.files[0]);
+        setImageFile(imgFile);
 
         reader.readAsDataURL(file);
 
@@ -142,10 +151,14 @@ const MainBoard = () => {
     setModalImportOpen(false);
     };
 
-    const down = () => { // (https://bit.ly/3xTsMt2)
+    const down = () => { // (https://bit.ly/3xTsMt2) (https://gurtn.tistory.com/177)
         var canvas = document.getElementById('canvasID');
         var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
-        window.location.href=image; 
+
+        const $link = document.createElement("a");
+        $link.download = `${rand}.png`;
+        $link.href = canvas.toDataURL("image/png");
+        $link.click();
     }
 
     const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
@@ -153,17 +166,30 @@ const MainBoard = () => {
         setRand();
     }
 
-    const storefetch = (props) => {
-        var canvas = document.getElementById('canvasID');
-        var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
+    // const [imageFile, setImageFile] = useState(null);
+    const [s3Location, setS3Location] = useState("");
 
-        axios.post('http://localhost:8000/upload', { 
+    useEffect(() => {
+        document.title = 'Image Editor';
+    }, [s3Location]);
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        var canvas = document.getElementById('canvasID');
+        const API_URL = 'http://localhost:5000/api/gallery';
+
+        await axios.post(API_URL, 
+        {
             id: rand,
-            image: image
-        }).then(function (response) {
-            console.log(response);
+            imageFile: imageFile,
+        },
+        {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            },
         })
-    }
+    };
 
     // SideBar.js function
     const [selectFilter, setSelectFilter] = useState(false);
@@ -216,9 +242,7 @@ const MainBoard = () => {
             <div className="TopBar">
                 <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
                 <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
-                <ModalImport open={modalImportOpen} close={closeModalImport} imgArray={imgArray}></ModalImport> 
-                    {/* <input type="file" accept="image/*" ref={inputRef} onChange={onUploadImage} />
-                    <Button label="이미지 업로드" onClick={onUploadImageButtonClick} /> */}
+                <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
                 <div className="TopCenterTool">
                     <img src={backIcon} className="toptoolIcon" onClick={() => onback()}/>
@@ -226,8 +250,10 @@ const MainBoard = () => {
                     <img src={resetIcon} className="toptoolIcon" onClick={() => onreset()} />
                 </div>
                 <div className="ToprightTool">
-                    <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down()}} />
-                    <img src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); storefetch(); }}  />
+                    <form onSubmit={handleSubmit}>
+                        <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down();}} />
+                        <input type='image' style={{background:'none'}} src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                    </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
                 <div>
@@ -235,7 +261,7 @@ const MainBoard = () => {
                 </div>
                 <React.Fragment>
                 <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} 
+                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
