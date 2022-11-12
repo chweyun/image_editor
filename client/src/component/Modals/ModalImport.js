@@ -6,7 +6,7 @@ import App from '../../App';
 
 const ModalImport = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
-  const { open, close, header } = props;
+  const { open, close, header, imgId, getImgId } = props;
   // input에 입력받는 id 값을 value에 저장
   const [value, setValue] = useState(); 
   const onChangeValue = (e) => {
@@ -14,35 +14,38 @@ const ModalImport = (props) => {
   };
 
   const [imgsrc, setImgsrc] = useState([]);
+  const API_URL = 'https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com';
 
-  const getIdfetch = () => {
-    axios.get('http://localhost:8000/find', {
-      params: {
-        id: value
-      }
-    })
-      .then(function(request, response) {
-        if (value == undefined) {
-          alert('ID를 입력하세요!');
-        }
-        else if (request.data == '0') { // 해당하는 id값이 db에 없을 경우
-          alert('해당 id값과 일치하는 프로젝트가 존재하지 않습니다!');
-        }
-        else { // 해당하는 id값이 db에 있을 경우
-          imgImport(request.data);
-          props.imgArray(imgsrc); // 해당 값의 이미지 픽셀 데이터를 MainBoard로 보냄
-          close();
-        }
-      })
+  const erase = () => {
+    var el = document.getElementById('input');
+    el.value = null;
   }
 
-  function imgImport([imgSrc]) {
-    setImgsrc([imgSrc.image][0].data.data);
+  const getIdfetch = async () => {
+
+    const id = value;
+    const url = `http://localhost:5000/api/gallery/${id}`;
+
+    axios.get(url)
+    .then(response => { 
+      // console.log(response);
+      getImgId(id);
+      close();
+    })
+    .catch(error => {
+      if (id == '') {
+        alert('ID를 입력하세요.');
+      }
+      else {
+        alert('해당하는 id값과 일치하는 프로젝트가 존재하지 않습니다.');
+        erase();
+        console.error(error);
+      }
+    })
   }
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    
     <div className={open ? 'openModal modal' : 'modal'}>
       {open ? (
         <section>
