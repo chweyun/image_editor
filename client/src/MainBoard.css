@@ -1,15 +1,18 @@
 /*TopBar.css*/
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
 .TopBar {
     position: absolute;
-    float: left;
     margin-top: 0px;
-    margin-left: 90px;
-
-    border-bottom: thick solid #9FC2DE;
+    margin-left: 0px;
     border-width: 3.4px;
-
     height: 71.4px;
     width: 100vw;
+    min-width: 900px;
 }
 
 .toptoolIcon {
@@ -21,25 +24,33 @@
 }
 
 .topSaveIcon {
-    /* float: right; */
     padding: 10px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
     padding-right: 0;
-
     margin-top: 1%;
+}
 
+.TopLeftTool {
+    margin-left: 74px;
+    float: left;
+    width: 20%;
 }
 
 .TopCenterTool {
+    width: 33%;
     margin-top: -65px;
-    margin-left: 575px;
+    margin: auto;
+    text-align: center;
 }
 
 .ToprightTool {
     margin-top: -65px;
-    margin-left: 1290px;
+    float: right;
+    padding-right: 10px;
+    width: 20%;
+    text-align: end;
 }
 
 .imgSizeControl {
@@ -55,8 +66,8 @@
     position: absolute;
     float: left;
     margin-top: 5%;
-    margin-left: 10%;
-    background-color: #D3D3D3;
+    margin-left: 14%;
+    background-color: #e8e8e8;
 }
 
 /*SideBar.css*/
@@ -72,11 +83,11 @@
     width: 50px;
     height: 50px;
     padding-bottom: 0;
-    
 }
 
 .icon_noneselect{fill:#9DAAB2;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -84,6 +95,7 @@
 
 .icon_select{fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -91,6 +103,7 @@
 
 .shape_noneselect{fill:#59666F;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -99,6 +112,7 @@
 .shape_select{
     fill:#004483;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -107,6 +121,7 @@
 .eraser_noneselect{
     fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -115,6 +130,15 @@
 .eraser_select{
     fill:#004483;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
+    padding-left: 15px;
+    width: 50px;
+    height: 50px;
+    padding-bottom: 0;
+}
+
+.toolIcon2 {
+    padding: 10px;
+    padding-left:15px;
     width: 50px;
     height: 50px;
     padding-bottom: 0;
@@ -128,7 +152,6 @@
 .shortContour {
     background-color: #9FC2DE;
     border: 0;
-    /* width: 60px; */
     width: 80%;
     height: 3px;
     border-radius: 30px;
@@ -139,35 +162,23 @@
 .longContour {
     background-color: #9FC2DE;
     border: 0;
-    width: 2000%;
+    width: 100vw;
     height: 3px;
     border-radius: 30px;
     text-align: left;
 }
 
-/* .verticalLine {
-    border-left: thick solid #9FC2DE;
-    border-width: 4px;
-    border-radius: 3px;
-    height:100%;
-    left: 50%;
-    position: absolute;
-    float: left;
-    margin-left: -685px;
-    margin-top: 5px;
-	padding: 5px;
-} */
-
 .sideBar {
-    /* border: 3px solid red; */
+    position: absolute;
     height: 100vh;
-    width: 100vw;
 }
 
-.tmp {
+.sideLine {
     border-right: thick solid #9FC2DE;
     border-width: 4px;
     border-radius: 3px;
     height: 100vh;
     width: 4vw;
+    min-width: 70px;
+    max-width: 70px;
 }

@@ -1,14 +1,12 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
-// import createFormData from './gallery/createFormData';
 
-// import Image
+// 아이콘 파일
 import newProIcon from './Image/newPro.svg';
 import callProIcon from './Image/callPro.svg';
 import callImgIcon from './Image/callImg.svg';
@@ -32,7 +30,7 @@ import { ReactComponent as EraserIcon } from "./Image/eraser.svg"
 import { ReactComponent as EraserAllIcon } from "./Image/eraserAll.svg"
 import profile from './Image/profile.png';
 
-// import Component
+// 컴포넌트 파일
 import OninputFile from "./component/InputFile.js";
 import onnewpro from "./component/Newprofunc.js";
 import oninputPro from "./component/InputPro.js";
@@ -57,8 +55,10 @@ import oneraserAll from "./component/EraserAllfunc.js";
 import onselect from "./component/Selectfunc.js";
 import { wait } from "@testing-library/user-event/dist/utils";
 
+
 const MainBoard = () => {
 
+    // 이미지 GET
     const [imgId, setImgId] = useState('');
     const getImgId = (imgId) => {
         setImgId(imgId);
@@ -95,89 +95,9 @@ const MainBoard = () => {
         }
         getOneImage();
     }
-    
-    // TopBar.js function
-    const [imageUrl, setImageUrl] = useState(null);
-    const imgRef = useRef();
 
-    const [props, setProps] = useState({});
-
-    let canvas = undefined;
-    let ctx = undefined;
-    let image = undefined;
-
-    const [imageFile, setImageFile] = useState(null);
-
-    const onChangeImage = (e) => {
-        const reader = new FileReader();
-        const file = imgRef.current.files[0];
-        console.log('onChangeImage 안 file데이터',file);
-
-        const imgFile = (e.target.files[0]);
-        setImageFile(imgFile);
-
-        reader.readAsDataURL(file);
-
-        reader.onloadend = () => {
-            setImageUrl(reader.result);
-            console.log("이미지주소", reader.result);
-            /*canvasRef.drawImage(file, 0, 0)*/
-            
-            canvas = document.getElementById('canvasID');
-            ctx = canvas.getContext('2d');
-            image = document.getElementById('source');
-            setProps({canvas, ctx, image});
-            console.log('onChangeImage 안 canvas데이터',canvas);
-            console.log('onChangeImage 안 ctx데이터', ctx);
-            /*ctx.filter = 'grayscale()';*/
-
-            function drawImageData(image, ctx) { 
-                console.log('drawImageData 안 canvas데이터',canvas);
-                console.log('drawImageData 안 ctx데이터', ctx);
-                var canvasArea = ctx.canvas ;
-                var hRatio = canvasArea.width  / image.width    ;
-                var vRatio =  canvasArea.height / image.height  ;
-                var ratio  = Math.min ( hRatio, vRatio );
-                var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-                var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-            };
-            
-            image.addEventListener('load', (e) => {
-                console.log("addEventListener 돌아감");
-                drawImageData(image, ctx);
-                console.log("drawImageData 돌아감");
-                console.log('test0', canvas)
-                console.log('test0', ctx)
-            });
-        };
-        console.log('test', props.canvas)
-        console.log('test', props.ctx)
-    };
-
-    const [showing, setShowing] = useState(false);
-    const onClick = () => {
-        setShowing((prev) => !prev)
-    };
-
-    const [modalStoreOpen, setModalStoreOpen] = useState(false);
-    const [modalImportOpen, setModalImportOpen] = useState(false);
-
-    const openModalStore = () => {
-    setModalStoreOpen(true);
-    };
-    const openModalImport = () => {
-    setModalImportOpen(true);
-    };
-    const closeModalStore = () => {
-    setModalStoreOpen(false);
-    };
-    const closeModalImport = () => {
-    setModalImportOpen(false);
-    };
-
-    const down = () => { // (https://bit.ly/3xTsMt2) (https://gurtn.tistory.com/177)
+    // 이미지 POST 
+    const down = () => {
         var canvas = document.getElementById('canvasID');
         var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  
 
@@ -187,17 +107,8 @@ const MainBoard = () => {
         $link.click();
     }
 
-    const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
-    const randSet = () => {
-        setRand();
-    }
-
-    // const [imageFile, setImageFile] = useState(null);
-    const [s3Location, setS3Location] = useState("");
-
-    useEffect(() => {
-        document.title = 'Image Editor';
-    }, [s3Location]);
+    // const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
+    const rand = Math.floor((Math.random()*(100000000-10000000))+10000000);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -215,9 +126,71 @@ const MainBoard = () => {
             setModalImportOpen(false);
             alert('빈 프로젝트입니다.');
         })
+    }
+
+    // Modal
+    const [modalStoreOpen, setModalStoreOpen] = useState(false);
+    const [modalImportOpen, setModalImportOpen] = useState(false);
+
+    const openModalStore = () => {
+    setModalStoreOpen(true);
+    };
+    const openModalImport = () => {
+    setModalImportOpen(true);
+    };
+    const closeModalStore = () => {
+    setModalStoreOpen(false);
+    };
+    const closeModalImport = () => {
+    setModalImportOpen(false);
+    };
+    
+    // TopBar.js
+    const [imageUrl, setImageUrl] = useState(null);
+    const [props, setProps] = useState({});
+    const [imageFile, setImageFile] = useState(null);
+    const imgRef = useRef();
+
+    let canvas, ctx, image = undefined;
+
+    const onChangeImage = (e) => {
+        const reader = new FileReader();
+        const file = imgRef.current.files[0];
+        const imgFile = (e.target.files[0]);
+
+        setImageFile(imgFile);
+
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImageUrl(reader.result);
+            canvas = document.getElementById('canvasID');
+            ctx = canvas.getContext('2d');
+            image = document.getElementById('source');
+            setProps({canvas, ctx, image});
+
+            function drawImageData(image, ctx) { 
+                var canvasArea = ctx.canvas ;
+                var hRatio = canvasArea.width  / image.width    ;
+                var vRatio =  canvasArea.height / image.height  ;
+                var ratio  = Math.min ( hRatio, vRatio );
+                var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+                var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+            };
+            
+            image.addEventListener('load', (e) => {
+                drawImageData(image, ctx);
+            });
+        };
     };
 
-    // SideBar.js function
+    // const [showing, setShowing] = useState(false);
+    // const onClick = () => {
+    //     setShowing((prev) => !prev)
+    // };
+
+    // SideBar.js
     const [selectFilter, setSelectFilter] = useState(false);
     const [selectCrop, setSelectCrop] = useState(false);
     const [selectTurn, setSelectTurn] = useState(false);
@@ -232,44 +205,44 @@ const MainBoard = () => {
     const [clickEraser, setClickEraser] = useState(false);
     const [clickEraserAll, setClickEraserAll] = useState(false);
 
-    const onClickFilter = () => {
-        setSelectFilter((prev) => !prev);
-        setClickFilter((prev) => !prev);
-    }
-    const onClickCrop = () => {
-        setSelectCrop((prev) => !prev);
-        setClickCrop((prev) => !prev);
-    }
-    const onClickTurn = () => {
-        setSelectTurn((prev) => !prev);
-        setClickTurn((prev) => !prev);
-    }
-    const onClickReverse = () => {
-        setClickReverse((prev) => !prev);
-    }
-    const onClickText = () => {
-        setClickText((prev) => !prev);
-    }
-    const onClickPaint = () => {
-        setClickPaint((prev) => !prev);
-    }
-    const onClickShape = () => {
-        setClickShape((prev) => !prev);
-    }
-    const onClickEraser = () => {
-        setClickEraser((prev) => !prev);
-    }
-    const onClickEraserAll = () => {
-        setClickEraserAll((prev) => !prev);
+
+    const clickControl = (btn, clickVar, setClickVar, setSelectVar) => {
+
+        if (clickVar) {
+            setClickVar(false);
+            setSelectVar(false);
+            return;
+        }
+
+        setClickFilter(false);
+        setClickCrop(false);
+        setClickTurn(false);
+        setClickReverse(false);
+        setClickText(false);
+        setClickPaint(false);
+        setClickShape(false);
+        setClickEraser(false);
+        setClickEraserAll(false);
+
+        setSelectFilter(false);
+        setSelectCrop(false);
+        setSelectTurn(false);
+
+        setClickVar((prev) => !(prev));
+        if (setSelectVar) {
+            setSelectVar((prev) => !(prev));
+        }
     }
 
     return (
         <>
             <div className="TopBar">
-                <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
-                <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
-                <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
-                <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
+                <div className="TopLeftTool">
+                    <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
+                    <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
+                    <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
+                    <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
+                </div>
                 <div className="TopCenterTool">
                     <img src={backIcon} className="toptoolIcon" onClick={() => onback()}/>
                     <img src={reIcon} className="toptoolIcon" onClick={() => onreturn()} />
@@ -277,49 +250,46 @@ const MainBoard = () => {
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>
-                        <img src={saveImgIcon} /*className="toptoolIcon"*/ className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
-                        <input type='image' style={{background:'none'}} src={saveProIcon} /*className="toptoolIcon"*/ className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                        <img src={saveImgIcon} className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
+                        <input type='image' style={{background:'none'}} src={saveProIcon} className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
                     </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
-                <div>
+                {/* <div>
                     {showing ? <OninputFile /> : null}
-                </div>
+                </div> */}
                 <React.Fragment>
-                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
-                /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
-                <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
+                        <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
+                        <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1080px', height:'495px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
+                        /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
+                        <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
             </div>
             <div className="sideBar">
-                {/* <div className="verticalLine"></div> */}
-                <div className="tmp">
+                <div className="sideLine">
                     <img src={hyuIcon} className="toolIcon" />
                     <hr className="longContour" />
-                    <FilterIcon className={clickFilter ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickFilter}/>
+                    <FilterIcon className={clickFilter ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Filter', clickFilter, setClickFilter, setSelectFilter)}/>
                     <hr className="shortContour" align="left"/>
                     <div className="sideArea">
-                        <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickCrop}/>
-                        <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickTurn}/>
-                        <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickReverse}/>
+                        <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl("Crop", clickCrop, setClickCrop, setSelectCrop)}/>
+                        <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Turn', clickTurn, setClickTurn, setSelectTurn)}/>
+                        <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Reverse', clickReverse, setClickReverse)}/>
                         <hr className="shortContour" align="left" />
                     </div>
                     <div className="sideArea">
-                        <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickText}/>
-                        <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickPaint}/>
-                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={onClickShape}/>
+                        <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Text', clickText, setClickText)}/>
+                        <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint)}/>
+                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape)}/>
                         <hr className="shortContour" align="left" />
                     </div>
                     <div className="sideArea">
-                        <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraser}/>
-                        <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraserAll}/>
-                        <img src={selectIcon} className="toolIcon" onClick={() => onselect()} />
+                        <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('Eraser', clickEraser, setClickEraser)}/>
+                        <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('EraserAll', clickEraserAll, setClickEraserAll)}/>
+                        <img src={selectIcon} className="toolIcon2" onClick={() => onselect()} />
                     </div>
                 </div>
                 <div>
-                    {console.log('test2', props.canvas)}
-                    {console.log('test2', props.ctx)}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl}/> : null}
                     {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} /> : null}

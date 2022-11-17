@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import './Filterfunc.css';
 
 function Filterfunc ( {canvas, ctx, image} ) {
