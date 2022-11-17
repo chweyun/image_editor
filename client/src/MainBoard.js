@@ -6,7 +6,7 @@ import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
-import createFormData from './gallery/createFormData';
+// import createFormData from './gallery/createFormData';
 
 // import Image
 import newProIcon from './Image/newPro.svg';
@@ -204,15 +204,16 @@ const MainBoard = () => {
         var canvas = document.getElementById('canvasID');
         const API_URL = 'http://localhost:5000/api/gallery';
 
-        await axios.post(API_URL, 
-        {
+        await axios.post(API_URL, {
             id: rand,
             imageFile: imageFile,
-        },
-        {
+        }, {
             headers: {
             'Content-Type': 'multipart/form-data',
             },
+        }).catch (error => {
+            setModalImportOpen(false);
+            alert('빈 프로젝트입니다.');
         })
     };
 
@@ -276,8 +277,8 @@ const MainBoard = () => {
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>
-                        <img src={saveImgIcon} className="toptoolIcon" onClick={() => {onsaveimg(); down();}} />
-                        <input type='image' style={{background:'none'}} src={saveProIcon} className="toptoolIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                        <img src={saveImgIcon} /*className="toptoolIcon"*/ className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
+                        <input type='image' style={{background:'none'}} src={saveProIcon} /*className="toptoolIcon"*/ className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
                     </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
@@ -292,27 +293,29 @@ const MainBoard = () => {
                 </React.Fragment>
             </div>
             <div className="sideBar">
-                <div className="verticalLine"></div>
-                <img src={hyuIcon} className="toolIcon" />
-                <hr className="longContour" />
-                <FilterIcon className={clickFilter ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickFilter}/>
-                <hr className="shortContour" align="left"/>
-                <div className="sideArea">
-                    <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickCrop}/>
-                    <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickTurn}/>
-                    <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickReverse}/>
-                    <hr className="shortContour" align="left" />
-                </div>
-                <div className="sideArea">
-                    <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickText}/>
-                    <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickPaint}/>
-                    <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={onClickShape}/>
-                    <hr className="shortContour" align="left" />
-                </div>
-                <div className="sideArea">
-                    <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraser}/>
-                    <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraserAll}/>
-                    <img src={selectIcon} className="toolIcon" onClick={() => onselect()} />
+                {/* <div className="verticalLine"></div> */}
+                <div className="tmp">
+                    <img src={hyuIcon} className="toolIcon" />
+                    <hr className="longContour" />
+                    <FilterIcon className={clickFilter ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickFilter}/>
+                    <hr className="shortContour" align="left"/>
+                    <div className="sideArea">
+                        <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickCrop}/>
+                        <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickTurn}/>
+                        <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickReverse}/>
+                        <hr className="shortContour" align="left" />
+                    </div>
+                    <div className="sideArea">
+                        <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickText}/>
+                        <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={onClickPaint}/>
+                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={onClickShape}/>
+                        <hr className="shortContour" align="left" />
+                    </div>
+                    <div className="sideArea">
+                        <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraser}/>
+                        <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={onClickEraserAll}/>
+                        <img src={selectIcon} className="toolIcon" onClick={() => onselect()} />
+                    </div>
                 </div>
                 <div>
                     {console.log('test2', props.canvas)}

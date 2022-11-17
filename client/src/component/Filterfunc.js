@@ -35,76 +35,46 @@ function Filterfunc ( {canvas, ctx, image} ) {
         onblur(canvas, ctx, image);
     }
 
+    function setCanvas (canvas, ctx, image) {
+        var canvasArea = ctx.canvas ;
+        var hRatio = canvasArea.width  / image.width    ;
+        var vRatio =  canvasArea.height / image.height  ;
+        var ratio  = Math.min ( hRatio, vRatio );
+        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+    }
 
     function ongrayscale (canvas, ctx, image) {
         {grayscale ? ctx.filter = 'grayscale()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        setCanvas(canvas, ctx, image);
     };
+
     function oninvert (canvas, ctx, image) {
         {invert ? ctx.filter = 'invert()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        setCanvas(canvas, ctx, image);
     };
+
     function onsepia (canvas, ctx, image) {
         {sepia ? ctx.filter = 'sepia()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        setCanvas(canvas, ctx, image);
     };
     function onbrightness (canvas, ctx, image) {
         {brightness ? ctx.filter = 'brightness(2)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-    };
-    function onsharp (canvas, ctx, image) {
-        {sharp ? ctx.filter = 'contrast(230%)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-    };
-    function onblur (canvas, ctx, image) {
-        {blur ? ctx.filter = 'blur(5px)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        setCanvas(canvas, ctx, image);
     };
 
-    console.log('Filterfunc 내에서', canvas);
-    console.log('Filterfunc 내에서', ctx);
+    function onsharp (canvas, ctx, image) {
+        {sharp ? ctx.filter = 'contrast(230%)' : ctx.filter = 'none'};
+        setCanvas(canvas, ctx, image);
+    };
+
+    function onblur (canvas, ctx, image) {
+        {blur ? ctx.filter = 'blur(5px)' : ctx.filter = 'none'};
+        setCanvas(canvas, ctx, image);
+    };
+    
     return (
         <div>
             <div className="optionverticalLine"></div>
