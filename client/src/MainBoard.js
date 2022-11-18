@@ -107,7 +107,6 @@ const MainBoard = () => {
         $link.click();
     }
 
-    // const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
     const rand = Math.floor((Math.random()*(100000000-10000000))+10000000);
 
     const handleSubmit = async (e) => {
@@ -168,27 +167,22 @@ const MainBoard = () => {
             image = document.getElementById('source');
             setProps({canvas, ctx, image});
 
-            function drawImageData(image, ctx) { 
-                var canvasArea = ctx.canvas ;
-                var hRatio = canvasArea.width  / image.width    ;
-                var vRatio =  canvasArea.height / image.height  ;
-                var ratio  = Math.min ( hRatio, vRatio );
-                var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-                var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-            };
-            
             image.addEventListener('load', (e) => {
                 drawImageData(image, ctx);
             });
         };
     };
 
-    // const [showing, setShowing] = useState(false);
-    // const onClick = () => {
-    //     setShowing((prev) => !prev)
-    // };
+    const drawImageData = (image, ctx) => { 
+        var canvasArea = ctx.canvas ;
+        var hRatio = canvasArea.width  / image.width    ;
+        var vRatio =  canvasArea.height / image.height  ;
+        var ratio  = Math.min ( hRatio, vRatio );
+        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+    };
 
     // SideBar.js
     const [selectFilter, setSelectFilter] = useState(false);
@@ -255,9 +249,6 @@ const MainBoard = () => {
                     </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
-                {/* <div>
-                    {showing ? <OninputFile /> : null}
-                </div> */}
                 <React.Fragment>
                         <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
                         <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1080px', height:'495px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'

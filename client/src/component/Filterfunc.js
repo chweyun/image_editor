@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useRef } from "react";
 import './Filterfunc.css';
 
 function Filterfunc ( {canvas, ctx, image} ) {
@@ -9,6 +9,17 @@ function Filterfunc ( {canvas, ctx, image} ) {
     const [brightness, setBrightness] = useState(true);
     const [sharp, setSharp] = useState(true);
     const [blur, setBlur] = useState(true);
+
+    const setCanvas = (canvas, ctx, image) => {
+        var canvasArea = ctx.canvas ;
+        var hRatio = canvasArea.width  / image.width    ;
+        var vRatio =  canvasArea.height / image.height  ;
+        var ratio  = Math.min ( hRatio, vRatio );
+        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
+        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
+        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+    }
 
     const onClickgrayscale = () => {
         setGrayscale((prev) => !prev);
@@ -33,17 +44,6 @@ function Filterfunc ( {canvas, ctx, image} ) {
     const onClickblur = () => {
         setBlur((prev) => !prev);
         onblur(canvas, ctx, image);
-    }
-
-    function setCanvas (canvas, ctx, image) {
-        var canvasArea = ctx.canvas ;
-        var hRatio = canvasArea.width  / image.width    ;
-        var vRatio =  canvasArea.height / image.height  ;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
-        var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     }
 
     function ongrayscale (canvas, ctx, image) {
