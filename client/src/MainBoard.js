@@ -54,6 +54,7 @@ import oneraser from "./component/Eraserfunc.js";
 import oneraserAll from "./component/EraserAllfunc.js";
 import onselect from "./component/Selectfunc.js";
 import { wait } from "@testing-library/user-event/dist/utils";
+import Shapefunc from "./component/Shapefunc.js";
 
 
 const MainBoard = () => {
@@ -195,6 +196,7 @@ const MainBoard = () => {
     const [selectCrop, setSelectCrop] = useState(false);
     const [selectTurn, setSelectTurn] = useState(false);
     const [selectText, setSelectText] = useState(false);
+    const [selectShape, setSelectShape] = useState(false);
 
     const [clickFilter, setClickFilter] = useState(false);
     const [clickCrop, setClickCrop] = useState(false);
@@ -229,6 +231,7 @@ const MainBoard = () => {
         setSelectCrop(false);
         setSelectTurn(false);
         setSelectText(false);
+        setSelectShape(false);
 
         setClickVar((prev) => !(prev));
         if (setSelectVar) {
@@ -262,8 +265,6 @@ const MainBoard = () => {
     const getIsOkClicked = (isOkClicked) => {
         setIsOkClicked(isOkClicked);
       };
-
-    console.log(isItalic, isBold, isSelected);
 
     // text 기능
     var hasInput = false;
@@ -393,16 +394,70 @@ const MainBoard = () => {
       listId.removeChild(textbox);
     }
 
+    // Shape 기능
+    const context = useRef(null);
+    const [shapeColor, setShapeColor] = useState("");
+    const [isShape, setIsShape] = useState("rect");
+
+    const getShapeColor = (shapeColor) => {
+        setShapeColor(shapeColor);
+    }
+    const getIsShape = (isShape) => {
+        setIsShape(isShape);
+    }
+
+    useEffect(() => { 
+        /* ctx 가 null or undefined로 뜨는 오류 해결 (임시로 ctx 변수 대신 context.current 사용) */
+        if (canvasId.current) { 
+            context.current = canvasId.current.getContext("2d"); 
+        } 
+    }, []);
+
+    const [pos, setPos] = useState([]); // 시작 좌표
+    const [isDraw, setIsDraw] = useState(false);
 
 
+    function drawStart(e) {
+        setIsDraw(true);
+        var bound = canvasId.current.getBoundingClientRect();
+        setPos([(e.clientX - bound.left) * (canvasId.current.width / bound.width), (e.clientY - bound.top) * (canvasId.current.height / bound.height)]);
+    }
 
+    function drawSquare(e) {
+        if (!isDraw) {
+            return;
+        }
+        context.current.strokeStyle = shapeColor; 
+        context.current.fillStyle = shapeColor; 
+        var bound = canvasId.current.getBoundingClientRect();
 
+        if (isShape == 'rect') {
+            context.current.fillRect(pos[0], pos[1], (e.clientX - bound.left) * (canvasId.current.width / bound.width) - pos[0], (e.clientY - bound.top) * (canvasId.current.height / bound.height) - pos[1]);
+        }
+        else if (isShape == 'triangle') {
+            var endX = (e.clientX - bound.left) * (canvasId.current.width / bound.width) - pos[0];
+            var endY = (e.clientY - bound.top) * (canvasId.current.height / bound.height) - pos[1];
+            context.current.beginPath();
+            context.current.moveTo(pos[0], pos[1]);
+            context.current.lineTo(pos[0]-150, pos[1]+150);
+            context.current.lineTo(pos[0]+150, pos[1]+150);
+            context.current.closePath();
+            context.current.fill();
+        }
+        else if (isShape == 'circle') {
+            var radiusX = (e.clientX - bound.left) * (canvasId.current.width / bound.width) - pos[0];
+            var radiusY = (e.clientY - bound.top) * (canvasId.current.height / bound.height) - pos[1];
 
+            context.current.beginPath();
+            context.current.ellipse(pos[0], pos[1], radiusX, radiusY, 0, 0, Math.PI*2);
+            context.current.fill();
+        }
+    }
 
-
-
-
-
+    function drawEnd(e) {
+        setIsDraw(false);
+    }
+    
     return (
         <>
             <div className="TopBar">
@@ -428,6 +483,9 @@ const MainBoard = () => {
                 <React.Fragment>
                 <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
                 <canvas className="canvas" id="canvasID" ref={canvasId} width="1920" height="1080" style= {{width:'1200px', height:'550px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
+                onMouseDown={selectShape ? drawStart : null}
+                onMouseMove={selectShape ? drawSquare : null}
+                onMouseUp={selectShape ? drawEnd : null}
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
@@ -447,7 +505,7 @@ const MainBoard = () => {
                     <div className="sideArea">
                         <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Text', clickText, setClickText, setSelectText)}/>
                         <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint)}/>
-                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape)}/>
+                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
                         <hr className="shortContour" align="left" />
                     </div>
                     <div className="sideArea">
@@ -468,6 +526,10 @@ const MainBoard = () => {
                                         getIsClr={getIsClr}
                                         getIsOkClicked={getIsOkClicked}
                                     /> : null }
+                    {selectShape ? <Shapefunc 
+                                        getShapeColor={getShapeColor}
+                                        getIsShape={getIsShape}
+                                    /> : null}
                 </div>
             </div>
             <div id="inputList"></div> 
