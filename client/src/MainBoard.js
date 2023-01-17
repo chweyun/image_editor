@@ -457,6 +457,10 @@ const MainBoard = () => {
     function drawEnd(e) {
         setIsDraw(false);
     }
+
+    // Undo, Redo, Reset 기능
+    
+
     
     return (
         <>
@@ -472,8 +476,12 @@ const MainBoard = () => {
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>
-                        <img src={saveImgIcon} className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
-                        <input type='image' style={{background:'none'}} src={saveProIcon} className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                        <div className="rightDiv">
+                            <img src={saveImgIcon} className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
+                        </div>
+                        <div className="rightDiv">
+                            <input type='image' style={{background:'none'}} src={saveProIcon} className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
+                        </div>
                     </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
