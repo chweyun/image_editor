@@ -17,7 +17,6 @@ const getGallery = asyncHandler(async (req, res) => {
     console.log(req.query);
     res.status(200).json({message:'get photos'});
     res.status(200).send(data.key)
-
 });
 
 module.exports = {

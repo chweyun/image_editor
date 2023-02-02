@@ -15,14 +15,14 @@ const {
 
 const storage = multer.diskStorage({
     destination(req, file, callback) {
-        callback(null, 'uploads');
+        callback(null, 'backend/uploads/');
     },
     filename(req,file,callback) {
         callback(null, req.body.id);
     }
 })
 
-const upload = multer({storage});
+const upload = multer({storage: storage});
 
 const BUCKET_URL = process.env.AWS_BUCKET_URL;
 
@@ -42,18 +42,20 @@ router.route('/:imgId').get(function(req, res, next) {
     // res.header("Access-Control-Allow-Origin", "*")
 
     let id  = req.params.imgId;
-    
+
     // (https://talkit.tistory.com/580)
     var params = { Bucket: process.env.AWS_BUCKET_NAME, Key: id};
     var s3file = s3.getObject(params);
 
+    console.log(s3file);
     // fs.readFile(`${id}`, function(err, data) {
         // res.writeHead(200, {"Content-type": "image/png"});
         // res.write(data);
     // });
-    // res.sendFile(process.cwd() + `/uploads/${id}`);
+    res.sendFile(process.cwd() + `/uploads/${id}`);
 
-    res.redirect(`https://${BUCKET_URL}/${id}`);
+    // res.redirect(`https://${BUCKET_URL}/${id}`);
+    res.redirect(`${BUCKET_URL}/${id}`);
 })
 
 router.route('/').post(upload.single('imageFile'), createGallery);

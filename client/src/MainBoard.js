@@ -178,6 +178,7 @@ const MainBoard = () => {
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+                console.log(image.src);
             };
             
             image.addEventListener('load', (e) => {
@@ -392,6 +393,7 @@ const MainBoard = () => {
       var listId = document.getElementById('inputList');
       var textbox = document.getElementById('textbox');
       listId.removeChild(textbox);
+      cPush();
     }
 
     // Shape 기능
@@ -455,13 +457,62 @@ const MainBoard = () => {
     }
 
     function drawEnd(e) {
+        cPush();
         setIsDraw(false);
     }
 
     // Undo, Redo, Reset 기능
-    
+    const [cPushArray, setCPushArray] = useState([]);
+    const [cStep, setCStep] = useState(-1);
 
+    const increaseCStep = () => {
+        setCStep(cStep + 1);
+    }
+    const decreaseCStep = () => {
+        setCStep(cStep - 1);
+    }
+
+    function cPush() {
+        console.log('push!');
+        increaseCStep();
+        if (cStep < cPushArray.length) { cPushArray.length = cStep; }
+        let copy = cPushArray;
+        copy.push(canvasId.current.toDataURL());
+        setCPushArray(copy);
+    }
     
+    function cUndo() {
+        console.log('undo!');
+        if (cStep > 0) {
+            decreaseCStep();
+            var canvasPic = new Image;
+            // todo 여기부터 다시 해보기 (이전 단계로 canvas에 그려지긴 하는데 순서가 엉킴)
+            canvasPic.src = cPushArray[cStep-1];
+            // context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+            // canvasPic.onload = function() {
+                // setImageUrl(canvasPic.src);
+                // context.current.drawImage(canvasPic, 0, 0, canvasPic.width, canvasPic.height);
+            // }
+        }
+    }
+
+    console.log(cStep, cPushArray);
+
+    function cRedo() {
+        console.log('redo!');
+        if (cStep < cPushArray.length-1) {
+            increaseCStep();
+            var canvasPic = new Image();
+            canvasPic.src = cPushArray[cStep-1];
+            canvasPic.onload = function() { context.current.drawImage(canvasPic, 0, 0); }
+        }
+    }
+
+    function cReset() {
+        // todo 기존에 있던 이미지는 안 없어지게 할 것
+        context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+    }
+
     return (
         <>
             <div className="TopBar">
@@ -470,9 +521,9 @@ const MainBoard = () => {
                 <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
                 <div className="TopCenterTool">
-                    <img src={backIcon} className="toptoolIcon" onClick={() => onback()}/>
-                    <img src={reIcon} className="toptoolIcon" onClick={() => onreturn()} />
-                    <img src={resetIcon} className="toptoolIcon" onClick={() => onreset()} />
+                    <img src={backIcon} className="toptoolIcon" onClick={() => cUndo()}/>
+                    <img src={reIcon} className="toptoolIcon" onClick={() => cRedo()} />
+                    <img src={resetIcon} className="toptoolIcon" onClick={() => cReset()} />
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>

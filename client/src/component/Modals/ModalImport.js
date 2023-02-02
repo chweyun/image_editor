@@ -14,7 +14,8 @@ const ModalImport = (props) => {
   };
 
   const [imgsrc, setImgsrc] = useState([]);
-  const API_URL = 'https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com';
+  // const API_URL = 'https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com';
+  const API_URL = 'https://image-editor-s3.s3-ap-northeast-2.amazonaws.com';
 
   const erase = () => {
     var el = document.getElementById('input');
@@ -25,10 +26,11 @@ const ModalImport = (props) => {
 
     const id = value;
     const url = `http://localhost:5000/api/gallery/${id}`;
+    // const url = `https://image-editor-s3.s3.ap-northeast-2.amazonaws.com/${id}`;
 
     axios.get(url)
     .then(response => { 
-      // console.log(response);
+      console.log(response);
       getImgId(id);
       close();
     })
