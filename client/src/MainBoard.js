@@ -180,6 +180,7 @@ const MainBoard = () => {
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+                console.log(cPushArray.length);
                 console.log(image.src);
             };
             
@@ -187,6 +188,7 @@ const MainBoard = () => {
                 drawImageData(image, ctx);
             });
         };
+        cPush();
     };
 
     // const [showing, setShowing] = useState(false);
@@ -471,7 +473,7 @@ const MainBoard = () => {
         console.log('cPushArray.length',cPushArray.length);
 
         if (cStep < cPushArray.length && cStep !== -1) {
-            console.log('괄호 안으로 들어감');
+            // console.log('괄호 안으로 들어감');
             setCStep(cPushArray.length);
         }
         setImageUrl(canvasId.current.toDataURL());
@@ -519,14 +521,37 @@ const MainBoard = () => {
             }
         }
     }
+
+    const cReset = () => {
+        console.log('reset');
+
+        var canvasPic = new Image();
+        canvasPic.src = cPushArray[2];
+        canvasPic.onload = function() {
+            var canvasArea = context.current.canvas ;
+            var hRatio = canvasArea.width  / canvasPic.width    ;
+            var vRatio =  canvasArea.height / canvasPic.height  ;
+            var ratio  = Math.min ( hRatio, vRatio );
+            var centerShift_x = ( canvasArea.width - canvasPic.width*ratio ) / 2;
+            var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;  
+
+            context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+            context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
+        }
+
+        setCStep(0);
+        cPushArray.length = 1;
+        
+
+        // var canvasPic = new Image();
+        // canvasPic.src = cPushArray[0];
+        // console.log(cPushArray[0]);
+        // canvasPic.onload = function() {
+        //     context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+        //     context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
+        // }
+    }
     
-
-
-
-
-
-
-
     return (
         <>
             <div className="TopBar">
@@ -537,7 +562,7 @@ const MainBoard = () => {
                 <div className="TopCenterTool">
                     <img src={backIcon} className="toptoolIcon" onClick={() => {cUndo()} } />
                     <img src={reIcon} className="toptoolIcon" onClick={() => {cRedo()}}/>
-                    <img src={resetIcon} className="toptoolIcon" />
+                    <img src={resetIcon} className="toptoolIcon" onClick={() => {cReset()}} />
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>
