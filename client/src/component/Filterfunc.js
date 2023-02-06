@@ -34,7 +34,7 @@ function Filterfunc ( {canvas, ctx, image} ) {
         setBlur((prev) => !prev);
         onblur(canvas, ctx, image);
     }
-
+console.log(image);
 
     function ongrayscale (canvas, ctx, image) {
         {grayscale ? ctx.filter = 'grayscale()' : ctx.filter = 'none'};

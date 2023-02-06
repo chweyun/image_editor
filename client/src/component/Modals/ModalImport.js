@@ -14,7 +14,6 @@ const ModalImport = (props) => {
   };
 
   const [imgsrc, setImgsrc] = useState([]);
-  // const API_URL = 'https://bucket-asxlsj.s3.ap-northeast-2.amazonaws.com';
   const API_URL = 'https://image-editor-s3.s3-ap-northeast-2.amazonaws.com';
 
   const erase = () => {

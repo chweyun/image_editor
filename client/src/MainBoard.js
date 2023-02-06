@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
 import axios from 'axios';
+import { fabric } from "fabric";
+import 'fabric-history';
 
 // 아이콘 파일
 import newProIcon from './Image/newPro.svg';
@@ -145,7 +147,7 @@ const MainBoard = () => {
     const closeModalImport = () => {
         setModalImportOpen(false);
     };
-    
+
     // TopBar.js
     const [imageUrl, setImageUrl] = useState(null);
     const [props, setProps] = useState({});
@@ -208,7 +210,6 @@ const MainBoard = () => {
     const [clickShape, setClickShape] = useState(false);
     const [clickEraser, setClickEraser] = useState(false);
     const [clickEraserAll, setClickEraserAll] = useState(false);
-
 
     const clickControl = (btn, clickVar, setClickVar, setSelectVar) => {
 
@@ -363,7 +364,6 @@ const MainBoard = () => {
       var fontStyle = [];
   
       ctx.textBaseline = "top";
-    //   ctx.textAlign = "left";
       ctx.textAlign = isSelected;
   
       if (isItalic) {
@@ -457,61 +457,75 @@ const MainBoard = () => {
     }
 
     function drawEnd(e) {
-        cPush();
         setIsDraw(false);
+        cPush();
     }
 
-    // Undo, Redo, Reset 기능
+    // undo, redo 기능
     const [cPushArray, setCPushArray] = useState([]);
     const [cStep, setCStep] = useState(-1);
+    const [cPushStep, setCPushStep] = useState(-1);
 
-    const increaseCStep = () => {
-        setCStep(cStep + 1);
-    }
-    const decreaseCStep = () => {
-        setCStep(cStep - 1);
+    useEffect(() => {
+        console.log('cStep',cStep);
+        console.log('cPushArray.length',cPushArray.length);
+
+        if (cStep < cPushArray.length && cStep !== -1) {
+            console.log('괄호 안으로 들어감');
+            setCStep(cPushArray.length);
+        }
+        setImageUrl(canvasId.current.toDataURL());
+        cPushArray.push(imageUrl); // 이미지 데이터
+    }, [cPushStep]);
+    
+    const cPush = () => {
+        console.log('push');
+        setCStep(prev => prev+1);
+        setCPushStep(prev => prev+1);
     }
 
-    function cPush() {
-        console.log('push!');
-        increaseCStep();
-        if (cStep < cPushArray.length) { cPushArray.length = cStep; }
-        let copy = cPushArray;
-        copy.push(canvasId.current.toDataURL());
-        setCPushArray(copy);
+    const cUndo = () => {
+        console.log('undo');
+
+        if (cStep<cPushArray.length) { 
+            // 마지막이 push가 안 되는 에러를 위한 조건문
+            setImageUrl(canvasId.current.toDataURL());
+            cPushArray.push(imageUrl);
+        }
+
+        if (cStep >= 0) {
+            setCStep(cStep-1);
+            var canvasPic = new Image();
+            canvasPic.src = cPushArray[cStep];
+            canvasPic.onload = function() {
+                context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+                context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
+            }
+        }
+    }
+
+    const cRedo = () => {
+        console.log('redo');
+
+        if (cStep < cPushArray.length) {
+            console.log('redo if');
+            setCStep(cStep+1);
+
+            var canvasPic = new Image();
+            canvasPic.src = cPushArray[cStep+2];
+            canvasPic.onload = function() {
+                context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+                context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
+            }
+        }
     }
     
-    function cUndo() {
-        console.log('undo!');
-        if (cStep > 0) {
-            decreaseCStep();
-            var canvasPic = new Image;
-            // todo 여기부터 다시 해보기 (이전 단계로 canvas에 그려지긴 하는데 순서가 엉킴)
-            canvasPic.src = cPushArray[cStep-1];
-            // context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
-            // canvasPic.onload = function() {
-                // setImageUrl(canvasPic.src);
-                // context.current.drawImage(canvasPic, 0, 0, canvasPic.width, canvasPic.height);
-            // }
-        }
-    }
 
-    console.log(cStep, cPushArray);
 
-    function cRedo() {
-        console.log('redo!');
-        if (cStep < cPushArray.length-1) {
-            increaseCStep();
-            var canvasPic = new Image();
-            canvasPic.src = cPushArray[cStep-1];
-            canvasPic.onload = function() { context.current.drawImage(canvasPic, 0, 0); }
-        }
-    }
 
-    function cReset() {
-        // todo 기존에 있던 이미지는 안 없어지게 할 것
-        context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
-    }
+
+
+
 
     return (
         <>
@@ -521,9 +535,9 @@ const MainBoard = () => {
                 <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
                 <div className="TopCenterTool">
-                    <img src={backIcon} className="toptoolIcon" onClick={() => cUndo()}/>
-                    <img src={reIcon} className="toptoolIcon" onClick={() => cRedo()} />
-                    <img src={resetIcon} className="toptoolIcon" onClick={() => cReset()} />
+                    <img src={backIcon} className="toptoolIcon" onClick={() => {cUndo()} } />
+                    <img src={reIcon} className="toptoolIcon" onClick={() => {cRedo()}}/>
+                    <img src={resetIcon} className="toptoolIcon" />
                 </div>
                 <div className="ToprightTool">
                     <form onSubmit={handleSubmit}>

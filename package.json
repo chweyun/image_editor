@@ -28,6 +28,8 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
+    "fabric": "^5.3.0",
+    "fabric-history": "^1.7.0",
     "multer": "^1.4.5-lts.1",
     "util": "^0.12.5"
   },
