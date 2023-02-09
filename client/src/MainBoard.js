@@ -157,14 +157,15 @@ const MainBoard = () => {
     let canvas, ctx, image = undefined;
 
     const onChangeImage = (e) => {
+        console.log('here');
         const reader = new FileReader();
         const file = imgRef.current.files[0];
         const imgFile = (e.target.files[0]);
-
         setImageFile(imgFile);
 
         reader.readAsDataURL(file);
         reader.onloadend = () => {
+            
             setImageUrl(reader.result);
             canvas = document.getElementById('canvasID');
             ctx = canvas.getContext('2d');
@@ -190,11 +191,6 @@ const MainBoard = () => {
         };
         cPush();
     };
-
-    // const [showing, setShowing] = useState(false);
-    // const onClick = () => {
-    //     setShowing((prev) => !prev)
-    // };
 
     // SideBar.js
     const [selectFilter, setSelectFilter] = useState(false);
@@ -541,21 +537,23 @@ const MainBoard = () => {
 
         setCStep(0);
         cPushArray.length = 1;
-        
+    }
 
-        // var canvasPic = new Image();
-        // canvasPic.src = cPushArray[0];
-        // console.log(cPushArray[0]);
-        // canvasPic.onload = function() {
-        //     context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
-        //     context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
-        // }
+    // 새 프로젝트 기능
+    const newProject = () => {
+        // canvas 초기화
+        context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+
+        // cPushArray 배열 초기화 (undo, redo, reset 용)
+        setCPushArray([]);
+        setCStep(-1);
+        setCPushStep(-1);
     }
     
     return (
         <>
             <div className="TopBar">
-                <img src={newProIcon} className="toptoolIcon" onClick={() => onnewpro()} />
+                <img src={newProIcon} className="toptoolIcon" onClick={() => newProject()} />
                 <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
                 <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
                 <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
