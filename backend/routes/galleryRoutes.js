@@ -26,7 +26,6 @@ const upload = multer({storage: storage});
 
 const BUCKET_URL = process.env.AWS_BUCKET_URL;
 
-// router.route('/').get(getGallery);
 router.route('/').get(function(req,res){
     // const {pathname} = url.parse(req.url, true)
     // res.redirect(`https://cors-anywhere.herokuapp.com/https://${BUCKET_URL}${pathname}`)
@@ -36,11 +35,6 @@ router.route('/').get(function(req,res){
 })
 
 router.route('/:imgId').get(function(req, res, next) {
-    // let imgId  = url.parse(req.url, true);
-    // var path = imgId.path;
-    // const header = res.setHeader('Content-Type', 'application/json');
-    // res.header("Access-Control-Allow-Origin", "*")
-
     let id  = req.params.imgId;
 
     // (https://talkit.tistory.com/580)
@@ -48,13 +42,8 @@ router.route('/:imgId').get(function(req, res, next) {
     var s3file = s3.getObject(params);
 
     console.log(s3file);
-    // fs.readFile(`${id}`, function(err, data) {
-        // res.writeHead(200, {"Content-type": "image/png"});
-        // res.write(data);
-    // });
-    res.sendFile(process.cwd() + `/uploads/${id}`);
+    // res.sendFile(process.cwd() + `/uploads/${id}`);
 
-    // res.redirect(`https://${BUCKET_URL}/${id}`);
     res.redirect(`${BUCKET_URL}/${id}`);
 })
 

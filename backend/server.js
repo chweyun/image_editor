@@ -3,7 +3,6 @@ const cors = require('cors');
 const url = require('url');
 
 require('dotenv').config();
-// const BUCKET_URL = process.env.AWS_BUCKET_URL;
 
 const app = express();
 
@@ -21,6 +20,12 @@ const PORT = process.nextTick.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
-// const urlStr = url;
-// const urlObj = url.parse(urlStr, true);
-// const path = id.path;
+// const maria = require('./database/connect/maria');
+// maria.connect();
+
+// maria.query('SELECT * from imagedata', (error, rows, fields) => {
+//     if (error) throw error;
+//     console.log('User info is: ', rows);
+//   });
+
+// connection.end();
