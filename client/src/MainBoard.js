@@ -32,6 +32,8 @@ import { ReactComponent as EraserIcon } from "./Image/eraser.svg"
 import { ReactComponent as EraserAllIcon } from "./Image/eraserAll.svg"
 import profile from './Image/profile.png';
 
+import filterIcon from './Image/filter.svg';
+
 // 컴포넌트 파일
 import OninputFile from "./component/InputFile.js";
 import onnewpro from "./component/Newprofunc.js";
@@ -553,62 +555,47 @@ const MainBoard = () => {
     return (
         <>
             <div className="TopBar">
-                <img src={newProIcon} className="toptoolIcon" onClick={() => newProject()} />
-                <img src={callProIcon} className="toptoolIcon" onClick={() => openModalImport()} />
-                <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
-                <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
-                <div className="TopCenterTool">
-                    <img src={backIcon} className="toptoolIcon" onClick={() => {cUndo()} } />
-                    <img src={reIcon} className="toptoolIcon" onClick={() => {cRedo()}}/>
-                    <img src={resetIcon} className="toptoolIcon" onClick={() => {cReset()}} />
+                <div className="LeftTop">
+                    <img src={hyuIcon} className="lefttop1" />
+                    <img src={newProIcon} className="lefttop2" onClick={() => newProject()} />
+                    <img src={callProIcon} className="lefttop3" onClick={() => openModalImport()} />
+                    <ModalImport open={modalImportOpen} close={closeModalImport} imgId={imgId} getImgId={getImgId}></ModalImport> 
+                    <label for="input-file">
+                        <img src={callImgIcon} className="lefttop4" id="callImg"/>
+                    </label>
                 </div>
-                <div className="ToprightTool">
+                <div className="CenterTop">
+                    <img src={backIcon} className="centertop1" onClick={() => {cUndo()} } />
+                    <img src={reIcon} className="centertop2" onClick={() => {cRedo()}}/>
+                    <img src={resetIcon} className="centertop3" onClick={() => {cReset()}} />
+                </div>
+                <div className="RightTop">
                     <form onSubmit={handleSubmit}>
-                        <div className="rightDiv">
-                            <img src={saveImgIcon} className="topSaveIcon" onClick={() => {onsaveimg(); down();}} />
-                        </div>
-                        <div className="rightDiv">
-                            <input type='image' style={{background:'none'}} src={saveProIcon} className="topSaveIcon" onClick={() => {onsavepro(); openModalStore(); }}  />
-                        </div>
+                            <input type='image' src={saveProIcon} className="righttop2" onClick={() => {onsavepro(); openModalStore(); }}  />
+                            <img src={saveImgIcon} className="righttop1" onClick={() => {onsaveimg(); down();}} />
                     </form>
                     <ModalStore open={modalStoreOpen} close={closeModalStore} rand={rand}></ModalStore> 
                 </div>
-                <div>
-                    {/* {showing ? <OninputFile /> : null} */}
-                </div>
-                <React.Fragment>
-                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" ref={canvasId} width="1920" height="1080" style= {{width:'1200px', height:'550px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
-                onMouseDown={selectShape ? drawStart : null}
-                onMouseMove={selectShape ? drawSquare : null}
-                onMouseUp={selectShape ? drawEnd : null}
-                /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
-                <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
-                </React.Fragment>
             </div>
-            <div className="sideBar">
-                <div className="tmp">
-                    <img src={hyuIcon} className="toolIcon" />
-                    <hr className="longContour" />
-                    <FilterIcon className={clickFilter ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Filter', clickFilter, setClickFilter, setSelectFilter)}/>
-                    <hr className="shortContour" align="left"/>
-                    <div className="sideArea">
-                        <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl("Crop", clickCrop, setClickCrop, setSelectCrop)}/>
-                        <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Turn', clickTurn, setClickTurn, setSelectTurn)}/>
-                        <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Reverse', clickReverse, setClickReverse)}/>
-                        <hr className="shortContour" align="left" />
-                    </div>
-                    <div className="sideArea">
-                        <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Text', clickText, setClickText, setSelectText)}/>
-                        <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint)}/>
-                        <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
-                        <hr className="shortContour" align="left" />
-                    </div>
-                    <div className="sideArea">
-                        <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('Eraser', clickEraser, setClickEraser)}/>
-                        <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('EraserAll', clickEraserAll, setClickEraserAll)}/>
-                        <img src={selectIcon} className="toolIcon" onClick={() => onselect()} />
-                    </div>
+
+            <div className="SideBar">
+                <div className="side1">
+                    <FilterIcon className={clickFilter ? ("iconStyle", "icon_select1") : ("iconStyle", "icon_noneselect1")} onClick={() => clickControl('Filter', clickFilter, setClickFilter, setSelectFilter)}/>
+                </div>
+                <div className="side2">
+                    <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl("Crop", clickCrop, setClickCrop, setSelectCrop)}/>
+                    <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Turn', clickTurn, setClickTurn, setSelectTurn)}/>
+                    <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Reverse', clickReverse, setClickReverse)}/>
+                </div>
+                <div className="side3">
+                    <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Text', clickText, setClickText, setSelectText)}/>
+                    <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint)}/>
+                    <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
+                </div>
+                <div className="side4">
+                    <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('Eraser', clickEraser, setClickEraser)}/>
+                    <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('EraserAll', clickEraserAll, setClickEraserAll)}/>
+                    <img src={selectIcon} className="side4-3" onClick={() => onselect()} />
                 </div>
                 <div>
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image}/> : null}
@@ -628,8 +615,19 @@ const MainBoard = () => {
                                     /> : null}
                 </div>
             </div>
+
+            <React.Fragment>
+            <div className="CanvasArea">
+                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
+                <canvas className="canvas" id="canvasID" ref={canvasId} width="1920" height="1080" style= {{width:'960px', height:'440px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
+                    onMouseDown={selectShape ? drawStart : null}
+                    onMouseMove={selectShape ? drawSquare : null}
+                    onMouseUp={selectShape ? drawEnd : null} /> 
+                    {/* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐   */}
+                <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
+            </div>
+            </React.Fragment>
             <div id="inputList"></div> 
-            {/* todo */}
         </>
     );
 };

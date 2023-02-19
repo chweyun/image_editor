@@ -106,9 +106,9 @@ input {
   margin-top: 5%;
   border-radius: 10px;
   border-style: none;
-  background-color: #9FC2DE;
+  /* background-color: #9FC2DE; */
   font-size: 22px;
-  padding-left: 5%;
+  /* padding-left: 5%; */
 }
 input::placeholder {
   color: white;
