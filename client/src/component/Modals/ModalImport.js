@@ -57,7 +57,7 @@ const ModalImport = (props) => {
             </button>
           </header>
             <div className="inputBox">
-              <input placeholder='ID를 입력하세요' id='input' onChange={onChangeValue}></input>
+              <input className="inputModal" placeholder='ID를 입력하세요' id='input' onChange={onChangeValue}></input>
             </div>
             <div className='btnBox'>
               <button className='importBtn' style={{border:'1.8px solid #004483'}} onClick={() => getIdfetch()}>가져오기</button>

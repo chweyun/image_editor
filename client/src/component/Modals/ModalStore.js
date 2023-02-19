@@ -16,7 +16,7 @@ const ModalStore = (props) => {
             <button className="close" onClick={close}>&times;</button>
           </header>
             <h1>고유 ID : {rand}</h1>
-            <h2>작업 내역을 추후 서버로부터 가져오려면 <br />고유 ID를 반드시 저장해두세요 :)</h2>
+            <h2 className="sub">작업 내역을 추후 서버로부터 가져오려면 <br />고유 ID를 반드시 저장해두세요 :)</h2>
             <div className='btnBox'>
               <button className="checkBtn" onClick={close}>확인</button>
             </div>

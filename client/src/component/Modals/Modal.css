@@ -25,11 +25,13 @@
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.6);
 }
+
 .modal button {
   outline: none;
   cursor: pointer;
   border: 0;
 }
+
 .modal > section {
   width: 44%;
   max-width: 800px;
@@ -44,6 +46,7 @@
   animation: modal-show 0.3s;
   overflow: hidden;
 }
+
 .modal > section > header {
   position: relative;
   padding: 36px 64px 16px 16px;
@@ -51,6 +54,7 @@
   font-weight: 700;
   height: 3%;
 }
+
 .modal > section > header button { 
     /* 창닫기 버튼 */
   position: absolute;
@@ -63,17 +67,20 @@
   color: white;
   background-color: transparent;
 }
+
 .modal > section > main {
   padding: 16px;
   border-bottom: 1px solid #dee2e6;
   border-top: 1px solid #dee2e6;
 }
+
 .modal.openModal {
   display: flex;
   align-items: center;
   /* 팝업이 열릴때 스르륵 열리는 효과 */
   animation: modal-bg-show 0.3s;
 }
+
 @keyframes modal-show {
   from {
     opacity: 0;
@@ -98,15 +105,16 @@
   height: 110px;
   margin-top: 10%;
   margin-bottom: 2%;
+  /* background-color: red; */
 }
 
-input {
+.inputModal {
   width: 71%;
   height: 66%;
   margin-top: 5%;
   border-radius: 10px;
   border-style: none;
-  /* background-color: #9FC2DE; */
+  background-color: #9FC2DE;
   font-size: 22px;
   /* padding-left: 5%; */
 }
@@ -156,16 +164,18 @@ h1 {
   font-size: 36px;
   text-align: center;
   margin-top: 10%;
+  height: auto;
 }
 
-h2 {
+.sub {
+  color: #59666F;
   text-align: center;
   font-family: 'nanumL';
   font-size: 20px;
-  color: #59666F;
   margin-top: 4%;
   margin-bottom: 4%;
   line-height: 180%;
+  height: auto;
 }
 
 .checkBtn {
