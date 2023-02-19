@@ -105,15 +105,24 @@ console.log(image);
 
     console.log('Filterfunc 내에서', canvas);
     console.log('Filterfunc 내에서', ctx);
+
     return (
         <div>
-            <div className="optionverticalLine"></div>
+            {/* <div className="optionverticalLine"></div>
             <div onClick={onClickgrayscale}><p className="filterOption1">회색조</p></div>
             <div onClick={onClickinvert}><p className="filterOption2">반전</p></div>
             <div onClick={onClicksepia}><p className="filterOption3">세피아</p></div>
             <div onClick={onClickbrightness}><p className="filterOption4">밝게</p></div>
             <div onClick={onClicksharp}><p className="filterOption5">선명</p></div>
-            <div onClick={onClickblur}><p className="filterOption6">블러</p></div>
+            <div onClick={onClickblur}><p className="filterOption6">블러</p></div> */}
+            <div className='sideline'>
+                <div className="filterOption1-1" onClick={onClickgrayscale}><p className="filterOption1">회색조</p></div>
+                <div className="filterOption2-1" onClick={onClickinvert}><p className="filterOption2">반전</p></div>
+                <div className="filterOption3-1" onClick={onClicksepia}><p className="filterOption3">세피아</p></div>
+                <div className="filterOption4-1" onClick={onClickbrightness}><p className="filterOption4">밝게</p></div>
+                <div className="filterOption5-1" onClick={onClicksharp}><p className="filterOption5">선명</p></div>
+                <div className="filterOption6-1" onClick={onClickblur}><p className="filterOption6">블러</p></div>
+            </div>
         </div>
     );
 };

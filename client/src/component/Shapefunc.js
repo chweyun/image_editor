@@ -31,19 +31,18 @@ const Shapefunc = ( {getShapeColor, getIsShape} ) => {
     }
 
     return (
-        <div className="shapeBar">
-            <div className="optionverticalLine"></div>
-            <div>
+        <div className="sideline">
+            <div className="shapeDiv1">
                 <ShapeIcon 
-                className='shapeIcon'
+                className='shapeIcon1'
                 ref={colorInfo1}
                 style={isSelected=='rect' ? {stroke: '#59666F', fill: color} : {fill: '#59666F'}}
                 onClick={isSelected!=='rect' ? () => {setIsSelected('rect'); getIsShape('rect'); setShowColorPicker(showColorPicker => !showColorPicker)} : () => setShowColorPicker(showColorPicker => !showColorPicker)} 
                 />
             </div>
-            <div>
+            <div className="shapeDiv2">
                 <ShapeCircleIcon 
-                className='shapeIcon'
+                className='shapeIcon2'
                 ref={colorInfo2}
                 style={isSelected=='circle' ? {stroke: '#59666F', fill: color} : {fill: '#59666F'}}
                 onClick={isSelected!=='circle' ? () => {setIsSelected('circle'); getIsShape('circle'); setShowColorPicker(showColorPicker => !showColorPicker)} : () => setShowColorPicker(showColorPicker => !showColorPicker)} />
@@ -55,11 +54,10 @@ const Shapefunc = ( {getShapeColor, getIsShape} ) => {
                     onChange={updatedColor => {setColor(updatedColor.hex); {getShapeColor(updatedColor.hex)} {setRect(updatedColor);}}}
                     /></div>
                 )}
-
             </div>
-            <div>
+            <div className="shapeDiv3">
                 <ShapeTriangleIcon 
-                className='shapeIcon'
+                className='shapeIcon3'
                 ref={colorInfo3}
                 style={isSelected=='triangle' ? {stroke: '#59666F', fill: color} : {fill: '#59666F'}}
                 onClick={isSelected!=='triangle' ? () => {setIsSelected('triangle'); getIsShape('triangle'); setShowColorPicker(showColorPicker => !showColorPicker)} : () => setShowColorPicker(showColorPicker => !showColorPicker)} />

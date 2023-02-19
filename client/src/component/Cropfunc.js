@@ -14,8 +14,7 @@ function Cropfunc ( {canvas, ctx, image, imageURL} ) {
 
     return (
         <div>
-            <div className="optionverticalLine"></div>
-            <div>
+            <div className="sideline">
                 <CropIcon className="iconStyle cropOption1" />
                 <div onClick={CropDemo(imageURL)}><p className="cropOption1Text">비지정</p></div>
             </div>

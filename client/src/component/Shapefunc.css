@@ -5,63 +5,27 @@
     font-style: normal;
 }
 
-.shapeBar {
-    display: inline-block;
-    position: absolute;
-    top: 400px;
-    margin-left: 130px;
-}
-
-.optionverticalLine {
-    border-left: thick solid #9FC2DE;
-    border-width: 4px;
-    border-radius: 3px;
-    height:90%;
-    left: 50%;
-    position: absolute;
-    float: left;
-    /* margin-left: -615px;
-    margin-top: -660px; */
-	padding: 5px;
-}
-
-.shapeOption1 {
-    /* float: left; */
-    display: inline-block;
-    margin-bottom: 30px;
-}
-
 .colorBox {
     display: inline-block;
-}
-
-.rect {
-    width: 22px;
-    height: 22px;
-    float: right;
-    border-radius: 4px;
-    margin-right: 28px;    
 }
 
 .colorPicker {
     position: absolute;
     display: inline-block;
+    height: 20px;
+    margin-top: 30px;
+    margin-left: 20px;
 }
 
-.shapeOption2 {
-    margin-bottom: 30px;
-}
-.shapeOption3 {
-    margin-bottom: 30px;
-}
-.shapeOption4 {
-    margin-bottom: 30px;
+.shapeDiv1, .shapeDiv2, .shapeDiv3 {
+    height: 10px;
 }
 
-.shapeIcon {
+.shapeIcon1, .shapeIcon2, .shapeIcon3 {
     fill:#59666F;stroke:#9DAAB2;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
     width: 50px;
     height: 50px;
-    padding-bottom: 0;
+    float: left;
+    margin-top: 20px;
+    margin-left: 2px;
 }

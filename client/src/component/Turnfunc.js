@@ -63,13 +63,12 @@ function Turnfunc ( {canvas, ctx, image} ) {
     };
 
     return (
-        <div>
-            <div className="optionverticalLine"></div>
-            <div onClick={onClickimageLeftRotate}>
+        <div className="sideline">
+            <div className="turnDiv1" onClick={onClickimageLeftRotate}>
                 <TurnIcon className="iconStyle turnOption1" />
                 <div><p className="turnOption1Text">왼쪽</p></div>
             </div>
-            <div onClick={onClickimageRightRotate}>
+            <div className="turnDiv2" onClick={onClickimageRightRotate}>
                 <TurnIcon className="iconStyle turnOption2" />
                 <div><p className="turnOption2Text">오른쪽</p></div>
             </div>
