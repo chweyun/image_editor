@@ -18,6 +18,14 @@
 	padding: 5px;
 }
 
+.option1 {
+    padding-top: 138px;
+}
+
+.option2 {
+
+}
+
 .turnOption1 {
     float: left;
     margin-top: -650px;
@@ -45,34 +53,13 @@
     margin-left: 91px;
 }
 
-.filterOption2 {
+.turnOption3Text {
     float: left;
-    margin-top: -605px;
-    margin-left: 85px;
-}
-
-.filterOption3 {
-    float: left;
-    margin-top: -570px;
-    margin-left: 85px;
-}
-
-.filterOption4 {
-    float: left;
-    margin-top: -535px;
-    margin-left: 85px;
-}
-
-.filterOption5 {
-    float: left;
-    margin-top: -500px;
-    margin-left: 85px;
-}
-
-.filterOption6 {
-    float: left;
-    margin-top: -465px;
-    margin-left: 85px;
+    color: #004483;
+    font-size: 17px;
+    font-weight: 800;
+    margin-top: -470px;
+    margin-left: 96px;
 }
 
 p {

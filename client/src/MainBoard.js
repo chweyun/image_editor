@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import './MainBoard.css';
 import domtoimage from 'dom-to-image';
 import { saveAs } from 'file-saver';
+import EasyCrop from "./component/EasyCrop";
+import Cropper from 'react-easy-crop';
+import getCroppedImg from "./component/Crop";
 
 // import Image
 import newProIcon from './Image/newPro.svg';
@@ -45,10 +46,11 @@ import ModalImport from "./component/Modals/ModalImport.js";
 import Filterfunc from "./component/Filterfunc.js";
 import Cropfunc from "./component/Cropfunc.js";
 import Turnfunc from "./component/Turnfunc.js";
+import Reversefunc from "./component/Reversefunc.js";
 import onturn from "./component/Turnfunc.js";
 import onreverse from "./component/Reversefunc.js";
 import ontext from "./component/Textfunc.js";
-import onpaint from "./component/Paintfunc.js";
+import Paintfunc from "./component/Paintfunc.js";
 import onshape from "./component/Shapefunc.js";
 import oneraser from "./component/Eraserfunc.js";
 import oneraserAll from "./component/EraserAllfunc.js";
@@ -60,33 +62,71 @@ function MainBoard () {
     // TopBar.js function
     const [imageUrl, setImageUrl] = useState(null);
     const imgRef = useRef();
+    const canvasRef = useRef(null);
 
     const [props, setProps] = useState({});
 
+    //Paintfunc과 props 전달용
+    const [brush, setBrush] = useState();
+    const [endCrop, setEndCrop] = useState();
+    const [endFilter, setEndFilter] = useState();
+    const [endReverse, setEndReverse] = useState();
+    const [endTurn, setEndTurn] = useState();
+
+    const [updateURL, setUpdateURL] = useState();
+    const [cropURLstr, setCropURLstr] = useState();
+
     let canvas = undefined;
-    let ctx = undefined;
+    let ctx = undefined;  
     let image = undefined;
+
+    let orgImage = undefined;
+
+    const getData = (brush) => {
+        setBrush(brush);
+        setCropURLstr(brush);
+        setUpdateURL(loadingImg);
+    }
+    const getData_crop = (endCrop) => { // 예외처리때문에 자식 props 전달용 
+        setEndCrop(endCrop);  
+        setCropURLstr(endCrop);  
+        setUpdateURL(loadingImg2);  
+    }
+    const getData_filter = (endFilter) => {
+        setEndFilter(endFilter);
+        setUpdateURL(loadingImg3);
+        setCropURLstr(endFilter);
+    }
+    const getData_reverse = (endReverse) => {
+        setEndReverse(endReverse);
+        setUpdateURL(loadingImg4);
+        setCropURLstr(endReverse);
+    }
+    const getData_turn = (endTurn) => {
+        setEndTurn(endTurn);
+        setUpdateURL(loadingImg5);
+        setCropURLstr(endTurn);
+    }
+
+    console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
 
 
     const onChangeImage = () => {
         const reader = new FileReader();
         const file = imgRef.current.files[0];
-        console.log('onChangeImage 안 file데이터',file);
 
         reader.readAsDataURL(file);
-
         reader.onloadend = () => {
             setImageUrl(reader.result);
-            console.log("이미지주소", reader.result);
-            /*canvasRef.drawImage(file, 0, 0)*/
-            
+            setCropURLstr(reader.result);
+
             canvas = document.getElementById('canvasID');
             ctx = canvas.getContext('2d');
             image = document.getElementById('source');
-            setProps({canvas, ctx, image});
-            console.log('onChangeImage 안 canvas데이터',canvas);
-            console.log('onChangeImage 안 ctx데이터', ctx);
-            /*ctx.filter = 'grayscale()';*/
+            orgImage = image;
+            setUpdateURL(image);
+
+            setProps({canvas, ctx, image, imageUrl, canvasRef});
 
             function drawImageData(image, ctx) { 
                 console.log('drawImageData 안 canvas데이터',canvas);
@@ -100,15 +140,13 @@ function MainBoard () {
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             };
-            
+
+            console.log("MainBoard에서 image state값", image);
             image.addEventListener('load', (e) => {
-                console.log("addEventListener 돌아감");
                 drawImageData(image, ctx);
-                console.log("drawImageData 돌아감");
-                console.log('test0', canvas)
-                console.log('test0', ctx)
             });
         };
+
         console.log('test', props.canvas)
         console.log('test', props.ctx)
     };
@@ -144,6 +182,8 @@ function MainBoard () {
     const [selectFilter, setSelectFilter] = useState(false);
     const [selectCrop, setSelectCrop] = useState(false);
     const [selectTurn, setSelectTurn] = useState(false);
+    const [selectReverse, setSelectReverse] = useState(false);
+    const [selectPaint, setSelectPaint] = useState(false);
 
     const [clickFilter, setClickFilter] = useState(false);
     const [clickCrop, setClickCrop] = useState(false);
@@ -154,6 +194,12 @@ function MainBoard () {
     const [clickShape, setClickShape] = useState(false);
     const [clickEraser, setClickEraser] = useState(false);
     const [clickEraserAll, setClickEraserAll] = useState(false);
+
+    var loadingImg = document.getElementById("loadImage"); 
+    var loadingImg2 = document.getElementById("loadImage_crop");
+    var loadingImg3 = document.getElementById("loadImage_filter");
+    var loadingImg4 = document.getElementById("loadImage_reverse");
+    var loadingImg5 = document.getElementById("loadImage_turn");
 
     const onClickFilter = () => {
         setSelectFilter((prev) => !prev);
@@ -168,12 +214,14 @@ function MainBoard () {
         setClickTurn((prev) => !prev);
     }
     const onClickReverse = () => {
+        setSelectReverse((prev) => !prev);
         setClickReverse((prev) => !prev);
     }
     const onClickText = () => {
         setClickText((prev) => !prev);
-    }
+}
     const onClickPaint = () => {
+        setSelectPaint((prev) => !prev);
         setClickPaint((prev) => !prev);
     }
     const onClickShape = () => {
@@ -184,7 +232,10 @@ function MainBoard () {
     }
     const onClickEraserAll = () => {
         setClickEraserAll((prev) => !prev);
-    }
+    } 
+
+    console.log("MainBoard에서 updateURL배열내용", updateURL);
+
 
     return (
         <>
@@ -194,7 +245,7 @@ function MainBoard () {
                 <ModalImport open={modalImportOpen} close={closeModalImport} header="Modal heading"></ModalImport> 
                     {/* <input type="file" accept="image/*" ref={inputRef} onChange={onUploadImage} />
                     <Button label="이미지 업로드" onClick={onUploadImageButtonClick} /> */}
-                <label for="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
+                <label htmlFor="input-file"><img src={callImgIcon} className="toptoolIcon" id="callImg"/></label>
                 <div className="TopCenterTool">
                     <img src={backIcon} className="toptoolIcon" onClick={() => onback()}/>
                     <img src={reIcon} className="toptoolIcon" onClick={() => onreturn()} />
@@ -209,9 +260,8 @@ function MainBoard () {
                     {showing ? <OninputFile /> : null}
                 </div>
                 <React.Fragment>
-                    {/* TODO */}
-                <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" width="1920" height="1080" style= {{width:'1200px', height:'550px', backgroundColor:'red'}} 
+                <img src={imageUrl} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
+                <canvas ref={canvasRef} className="canvas" id="canvasID" width="1200" height="550" style= {{width:'1200px', height:'550px'}}
                 /* 컴퓨터 해상도로 기존 사이즈 맞춰주고 스타일로 캔버스 크기 조정해줘야 화질 안깨짐 */ /> 
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
                 </React.Fragment>
@@ -242,10 +292,23 @@ function MainBoard () {
                 <div>
                     {console.log('test2', props.canvas)}
                     {console.log('test2', props.ctx)}
-                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image}/> : null}
-                    {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl}/> : null}
-                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} /> : null}
+                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL}/> : null}
+                    {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageUrl={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr}/> : null}
+                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage}/> : null}
+                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse}/> : null}
+                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL}/> : null}
+                    <img id='loadImage' src={brush} style={{display: 'none'}}/>
+                    <img id='loadImage_crop' src={endCrop} style={{display: 'none'}}/> {/*여기서 위에 페인트이미지는 잘 뜨는데 크롭이미지는 하얗게 뜨고 이미지가 안뜬다. 프롭스데이터 넘어올때 뭔가 잘못된 듯. 일단 여기서 크롭이미지가 잘 뜨게 해야함*/}
+                    <img id='loadImage_filter' src={endFilter} style={{display: 'none'}}/>
+                    <img id='loadImage_reverse' src={endReverse} style={{display: 'none'}}/>
+                    <img id='loadImage_turn' src={endTurn} style={{display: 'none'}}/>
                 </div>
+            </div>
+            <div className="App" style={{display: 'none'}}>
+                <header className="App-header">
+                    Upload Image
+                    {/* <EasyCrop image={imageUrl} endCrop={endCrop} getData_crop={getData_crop}/> */}
+                </header>
             </div>
         </>
     );

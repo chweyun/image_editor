@@ -1,0 +1,33 @@
+.bigContainer { /* 이거 width랑 heigth 조절해서 일단 그 크롭영역 사이즈 조절 됨 */
+    width : 1200px;
+    height : 550px;
+    background-color: #D3D3D3;
+    position: absolute;
+    display: float;
+    top: 100px;
+    left: 230px;
+}
+
+.container {
+    width : 1200px;
+    height : 550px;
+    background-color: #D3D3D3;
+}
+
+.crop-container { 
+    width : 1200px;
+    height : 550px;
+}
+
+
+.cropped-image { /*크롭된 사진*/
+    max-height: 550px;
+    max-width: 1200px;
+    height: auto;
+    width: auto;
+}
+  
+.cropped-image-container { /*크롭 완료된 이미지 띄워주는 영역*/
+    display: flex;
+    flex-direction: column;
+}

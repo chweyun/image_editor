@@ -1,0 +1,76 @@
+.paintOption1 {
+    float: left;
+    margin-top: -300px;
+    margin-left: 93px;
+}
+
+.paintOption2 {
+    float: left;
+    margin-top: -265px;
+    margin-left: 93px;
+}
+
+.paintOption3 {
+    color: #004483;
+    font-weight: 600;
+    float: left;
+    margin-top: -230px;
+    margin-left: 93px;
+}
+
+
+.colorpicker {
+    z-index: 2;
+    float: left;
+    margin-top: -265px;
+    margin-left: 90px;
+}
+
+.optionverticalLine_paint {
+    border-left: thick solid #9FC2DE;
+    border-width: 4px;
+    border-radius: 3px;
+    height:90%;
+    left: 50%;
+    position: absolute;
+    float: left;
+    margin-left: -615px;
+    margin-top: -660px;
+	padding: 5px;
+}
+
+.brushWeight {
+    width: 160px;
+    height: 40px;
+    border-style: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px gray ;
+    background-color: white;
+    float: left;
+    position: absolute;
+    z-index: 2;
+    margin-top: -235px;
+    margin-left: 90px;
+}
+
+.lineOption {
+    color: #004483;
+    font-size: 17px;
+    font-weight: 800;
+    display: inline;
+    float: left;
+    margin-top: 8px;
+    margin-left: 12px;
+    margin-right: 2px;
+}
+
+/* .weightmenu {
+    position:relative;
+    margin: 50px; padding: 20px;
+    width:200px; height:60px;
+    color: #000;
+    border-radius: 10px;
+    background-color: #FFF;
+}
+
+.weightmenu:after {content:""; position: absolute; top: -40px; right: 175px; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 30px solid #FFF; } */

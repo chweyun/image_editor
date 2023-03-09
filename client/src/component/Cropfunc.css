@@ -20,15 +20,41 @@
 
 .cropOption1 {
     float: left;
-    margin-top: -650px;
+    margin-top: -570px;
+    margin-left: 77px;
+}
+
+.cropOption2 {
+    float: left;
+    margin-top: -485px;
+    margin-left: 77px;
+}
+
+.cropOption3 {
+    float: left;
+    margin-top: -400px;
     margin-left: 77px;
 }
 
 .cropOption1Text {
     float: left;
     font-size: 15px;
-    margin-top: -590px;
-    margin-left: 90px;
+    margin-top: -510px;
+    margin-left: 91px;
+}
+
+.cropOption2Text {
+    float: left;
+    font-size: 15px;
+    margin-top: -425px;
+    margin-left: 97px;
+}
+
+.cropOption3Text {
+    float: left;
+    font-size: 15px;
+    margin-top: -340px;
+    margin-left: 92px;
 }
 
 .filterOption2 {
@@ -74,3 +100,35 @@ p {
     height: 45px;
     padding-bottom: 0;
 }
+
+/* 밑에 Crop컴포넌트 관련 CSS 복사해온 거*/
+
+.App {
+  background-color: #c4c4c4;
+  font-family: 'Helvetica Neue', sans-serif;
+    
+}
+  
+  label {
+    font-weight: bold;
+    padding-left: 10px;
+  }
+  
+  button {
+    z-index: 2;
+    cursor: pointer;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    padding: 10px 0;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+
+
+  
