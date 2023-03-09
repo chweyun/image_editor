@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+.colorBox {
+    display: inline-block;
+}
+
+.colorPicker {
+    position: absolute;
+    display: inline-block;
+    height: 20px;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.shapeDiv1, .shapeDiv2, .shapeDiv3 {
+    height: 10px;
+}
+
+.shapeIcon1, .shapeIcon2, .shapeIcon3 {
+    fill:#59666F;stroke:#9DAAB2;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 50px;
+    height: 50px;
+    float: left;
+    margin-top: 20px;
+    margin-left: 2px;
+}

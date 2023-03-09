@@ -77,16 +77,23 @@ function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn} ) {
 
     return (
         <div>
-            <div className="optionverticalLine"></div>
+            {/* <div className="optionverticalLine"></div>
             <div onClick={onClickimageLeftRotate} className="option1">
                 <TurnIcon className="iconStyle turnOption1" />
                 <div><p className="turnOption1Text">왼쪽</p></div>
             </div>
-            <div onClick={onClickimageRightRotate} className="option2">
-                <TurnIcon className="iconStyle turnOption2" />
-                <div><p className="turnOption2Text">오른쪽</p></div>
+            <div onClick={onClickimageRightRotate} className="option2"> */}
+            <div className="sideline">
+                <div className="turnDiv1" onClick={onClickimageLeftRotate}>
+                    <TurnIcon className="iconStyle turnOption1" />
+                    <div><p className="turnOption1Text">왼쪽</p></div>
+                </div>
+                <div className="turnDiv2" onClick={onClickimageRightRotate}>
+                    <TurnIcon className="iconStyle turnOption2" />
+                    <div><p className="turnOption2Text">오른쪽</p></div>
+                </div>
+                <div onClick={onClickEndTurn}><p className="turnOption3Text">종료</p></div>
             </div>
-            <div onClick={onClickEndTurn}><p className="turnOption3Text">종료</p></div>
         </div>
     );
 };

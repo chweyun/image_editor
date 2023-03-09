@@ -5,65 +5,56 @@
     font-style: normal;
 }
 
-.optionverticalLine {
-    border-left: thick solid #9FC2DE;
-    border-width: 4px;
-    border-radius: 3px;
-    height:90%;
-    left: 50%;
+.sideline {
+    border-right: 2px solid #9FC2DE;
     position: absolute;
-    float: left;
-    margin-left: -615px;
-    margin-top: -660px;
-	padding: 5px;
+    width: 60px;
+    height: 90vh;
+    top: 68px;
+    left: 62px;
+    text-align: center;
+}
+
+.filterOption1-1, .filterOption2-1, .filterOption3-1, .filterOption4-1, .filterOption5-1, .filterOption6-1, .filterOption7-1 {
+    height: 10px;
 }
 
 .filterOption1 {
     float: left;
-    margin-top: -640px;
-    margin-left: 85px;
+    margin-top: 90px;
 }
 
 .filterOption2 {
     float: left;
-    margin-top: -605px;
-    margin-left: 85px;
 }
 
 .filterOption3 {
     float: left;
-    margin-top: -570px;
-    margin-left: 85px;
 }
 
 .filterOption4 {
     float: left;
-    margin-top: -535px;
-    margin-left: 85px;
 }
 
 .filterOption5 {
     float: left;
-    margin-top: -500px;
-    margin-left: 85px;
 }
 
 .filterOption6 {
     float: left;
-    margin-top: -465px;
-    margin-left: 85px;
 }
 
 .filterOption7 {
-    color: #004483;
+    float: left;
+    /* color: #004483;
     font-weight: 600;
     float: left;
     margin-top: -430px;
-    margin-left: 85px;
+    margin-left: 85px; */
 }
 
 p {
     color: #888;
     font-family: 'Pretendard-Regular';
-    font-size: 20px;
-}
+    font-size: 16px;
+} 

@@ -5,17 +5,8 @@
     font-style: normal;
 }
 
-.optionverticalLine {
-    border-left: thick solid #9FC2DE;
-    border-width: 4px;
-    border-radius: 3px;
-    height:90%;
-    left: 50%;
-    position: absolute;
-    float: left;
-    margin-left: -615px;
-    margin-top: -660px;
-	padding: 5px;
+.turnDiv1, .turnDiv2 {
+    height: 0px;
 }
 
 .option1 {
@@ -28,18 +19,15 @@
 
 .turnOption1 {
     float: left;
-    margin-top: -650px;
-    margin-left: 80px;
+    margin-top: 20px;
 }
 
 .turnOption2 {
     float: left;
-    margin-top: -570px;
-    margin-left: 77px;
     transform: scaleX(-1);
 }
 
-.turnOption1Text {
+/* .turnOption1Text {
     float: left;
     font-size: 15px;
     margin-top: -590px;
@@ -60,12 +48,16 @@
     font-weight: 800;
     margin-top: -470px;
     margin-left: 96px;
-}
+} 
 
-p {
+p { */
+    
+.turnOption1Text, .turnOption2Text, .turnOption3Text {
     color: #888;
     font-family: 'Pretendard-Regular';
-    font-size: 20px;
+    float: left;
+    font-size: 15px;
+    height: 0px;
 }
 
 .iconStyle {

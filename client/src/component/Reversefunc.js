@@ -6,6 +6,8 @@ import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
 function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse} ) {
 
+    console.log("Reverse컴포넌트 돌아감");
+
     const [reverse_h, setReverse_h] = useState(true);
     const [reverse_v, setReverse_v] = useState(true);
     const [resetCount, setResetCount] = useState(0);
@@ -82,10 +84,11 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse} ) {
 
     return (
         <div>
-            <div className="optionverticalLine"></div>
-            <ReverseIcon className="iconStyle reverseOption1" onClick={onClick_HReverse}/>
-            <ReverseIcon className="iconStyle reverseOption2" onClick={onClick_VReverse}/>
-            <div onClick={onClickEndReverse}><p className="reverseOption3">종료</p></div>
+            <div className='sideline'>
+                <div className="reverseOption1-1"><ReverseIcon className="iconStyle reverseOption1" onClick={onClick_HReverse}/></div>
+                <div className="reverseOption2-1"><ReverseIcon className="iconStyle reverseOption2" onClick={onClick_VReverse}/></div>
+                <div className="reverseOption3-1" onClick={onClickEndReverse}><p className="reverseOption3">종료</p></div>
+            </div>
         </div>
     );
 };

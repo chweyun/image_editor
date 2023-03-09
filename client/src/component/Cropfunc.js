@@ -39,18 +39,13 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
 
     return (
         <div>
-            <div className="optionverticalLine"></div>
-            <div onClick={onClickCrop}>
-                <CropIcon className="iconStyle cropOption1" />
-                <div><p className="cropOption1Text">정방형</p></div>
-            </div>
-            <div onClick={onClickCrop2}>
-                <CropIcon className="iconStyle cropOption2" />
-                <div><p className="cropOption2Text">4 : 3</p></div>
-            </div>
-            <div onClick={onClickCrop3}>
-                <CropIcon className="iconStyle cropOption3" />
-                <div><p className="cropOption3Text">16 : 9</p></div>
+            <div className="sideline">
+                <div className="cropOption1-1" onClick={onClickCrop}><CropIcon className="iconStyle cropOption1" /></div>
+                <div className="cropOption2-1"><p className="cropOption1Text">정방형</p></div>
+                <div className="cropOption3-1" onClick={onClickCrop2}><CropIcon className="iconStyle cropOption2" /></div>
+                <div className="cropOption4-1"><p className="cropOption2Text">4 : 3</p></div>
+                <div className="cropOption5-1" onClick={onClickCrop3}><CropIcon className="iconStyle cropOption3" /></div>
+                <div className="cropOption6-1"><p className="cropOption3Text">16 : 9</p></div>
             </div>
             {/* 밑에 부분은 긁어온 부분.. */}
             {crop1 == true

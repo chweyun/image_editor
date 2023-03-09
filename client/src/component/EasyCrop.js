@@ -95,7 +95,7 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
         {croppedImage && <button onClick={onClickClose}>close</button>}
       </div>
     </div> : null }
-    <img id='loadCropImage' src={croppedImage} style={{display: 'none'}}/> {/* 문제없이 크롭된 URL이 img로 잘 나타남. */}
+    <img id='loadCropImage' src={croppedImage} style={{display: 'none'}}/> {/* 여기 displaynone인데 회색으로 보임 ㅠ */}
   </div>
   );
 };

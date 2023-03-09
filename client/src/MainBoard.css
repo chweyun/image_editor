@@ -1,139 +1,166 @@
-/*TopBar.css*/
+* {
+    width: 100%;
+    height: 100%;
+}
+
 .TopBar {
     position: absolute;
-    float: left;
-    margin-top: 0px;
-    margin-left: 90px;
+    z-index: 2;
+    height: 60px;
+    border-bottom: 2px solid #9FC2DE;
+    display: flex;
+    flex-direction: row;
 }
 
-.toptoolIcon {
-    padding: 10px;
+.LeftTop {
+    float: left;
+    width: 33%;
+    height: 100%;
+    min-width: 250px;
+}
+.lefttop1 {
+    width: 46px;
+    height: 46px;
+    float: left;
+    padding: 6px;
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-right: 10px;
+}
+.lefttop2, .lefttop3, .lefttop4 {
     width: 50px;
     height: 50px;
-    padding-bottom: 0;
-    padding-right: 0;
+    margin-right: 6px;
+    margin-top: 4px;
+    float: left;
 }
 
-.TopCenterTool {
-    margin-top: -65px;
-    margin-left: 575px;
+.CenterTop {
+    float: left;
+    flex: 1;
+    height: 100%;
+    text-align: center;
+    min-width: 250px;
+}
+.centertop1, .centertop2, .centertop3 {
+    width: 60px;
 }
 
-.ToprightTool {
-    margin-top: -65px;
-    margin-left: 1290px;
+.RightTop {    
+    float: right;
+    width: 33%;
+    height: 100%;
+    min-width: 150px;
+    margin-bottom: 10px;
+}
+.righttop1, .righttop2 {
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin-top: 6px;
+    margin-right: 6px;
 }
 
-.imgSizeControl {
-    margin-left: 15%;
-    margin-top: 5%;
-    max-width:1200px;
-    max-height:550px;
-    width: auto;
-    height: auto;
+.SideBar {
+    z-index: 1;
+    position: absolute;
+    width: 60px;
+    border-right: 2px solid #9FC2DE;
+}
+.side1 {
+    border-bottom: 2px solid #9FC2DE;
+    height: 120px;
+}
+
+.side2, .side3 {
+    border-bottom: 2px solid #9FC2DE;
+    height: 170px;
+}
+
+.side4 {
+    height: 160px;
+}
+
+.CanvasArea {
+    /* margin-top: 70px; */
+    width: 100vw;
 }
 
 .canvas {
-    position: absolute;
-    float: left;
-    margin-top: 5%;
-    margin-left: 10%;
+    margin-top: max(20vh, 100px);
+    margin-left: min(20%,260px);
     background-color: #D3D3D3;
     /*background-color: #00000000; //배경 투명하게*/
 }
 
-/*SideBar.css*/
-.toolIcon {
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
-}
-
 .iconStyle {
+    fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
-    
-}
-
-.icon_noneselect{fill:#9DAAB2;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;}
-
-.icon_select{fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     padding-bottom: 0;
 }
 
-.shape_noneselect{fill:#59666F;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
+.icon_noneselect1{
+    fill:#9DAAB2;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: 64px;
+    margin-left: 6px;
+}
+
+.icon_select1{
+    fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: 64px;
+    margin-left: 6px;
+}
+
+.icon_noneselect{
+    fill:#9DAAB2;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
+}
+
+.icon_select{
+    fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
+}
+
+.shape_noneselect{
+    fill:#59666F;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
 }
 
 .shape_select{
     fill:#004483;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
 }
 
 .eraser_noneselect{
     fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
 }
 
-.eraser_select{
+.eraser_select, .side4-3 {
     fill:#004483;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
-    padding: 10px;
-    width: 50px;
-    height: 50px;
-    padding-bottom: 0;
-}
-
-.sideArea {
-    display: flex;
-    flex-direction: column;
-}
-
-.shortContour {
-    background-color: #9FC2DE;
-    border: 0;
-    width: 60px;
-    height: 3px;
-    border-radius: 30px;
-    margin-left: 8px;
-}
-
-.longContour {
-    background-color: #9FC2DE;
-    border: 0;
-    width: 99%;
-    height: 3px;
-    border-radius: 30px;
-    text-align: left;
-}
-
-.verticalLine {
-    border-left: thick solid #9FC2DE;
-    border-width: 4px;
-    border-radius: 3px;
-    height:100%;
-    left: 50%;
-    position: absolute;
-    float: left;
-    margin-left: -685px;
-    margin-top: 5px;
-	padding: 5px;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
 }

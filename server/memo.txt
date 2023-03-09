@@ -1,5 +1,0 @@
-server 
-
-# uploads : DB에 업로드한 이미지 관리
-# image.model.js : image schema 모델 
-# server.js : 서버 관리

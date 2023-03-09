@@ -1,28 +1,28 @@
 .bigContainer { /* 이거 width랑 heigth 조절해서 일단 그 크롭영역 사이즈 조절 됨 */
-    width : 1200px;
-    height : 550px;
+    width : 960px;
+    height : 50px;
     background-color: #D3D3D3;
     position: absolute;
     display: float;
     top: 100px;
-    left: 230px;
+    left: 260px;
 }
 
 .container {
-    width : 1200px;
-    height : 550px;
+    width : 960px;
+    height : 440px;
     background-color: #D3D3D3;
 }
 
 .crop-container { 
-    width : 1200px;
-    height : 550px;
+    width : 960px;
+    height : 440px;
 }
 
 
 .cropped-image { /*크롭된 사진*/
-    max-height: 550px;
-    max-width: 1200px;
+    max-height: 440px;
+    max-width: 960px;
     height: auto;
     width: auto;
 }
