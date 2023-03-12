@@ -39,7 +39,7 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
 
     return (
         <div>
-            <div className="sideline">
+            <div className="sideline"> 
                 <div className="cropOption1-1" onClick={onClickCrop}><CropIcon className="iconStyle cropOption1" /></div>
                 <div className="cropOption2-1"><p className="cropOption1Text">정방형</p></div>
                 <div className="cropOption3-1" onClick={onClickCrop2}><CropIcon className="iconStyle cropOption2" /></div>
@@ -47,9 +47,8 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
                 <div className="cropOption5-1" onClick={onClickCrop3}><CropIcon className="iconStyle cropOption3" /></div>
                 <div className="cropOption6-1"><p className="cropOption3Text">16 : 9</p></div>
             </div>
-            {/* 밑에 부분은 긁어온 부분.. */}
             {crop1 == true
-            ? <div className="App">
+            ? <div className="App"> {/* 이 App클래스 가진 div때문에 아래 영역 넓어짐 */}
                 <header>
                     <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={1} aspect_Y={1}/>
                     {/* EasyCrop - Cropfunc - MainBoard - Turnfunc

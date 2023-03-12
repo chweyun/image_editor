@@ -703,7 +703,7 @@ const MainBoard = () => {
                     <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('EraserAll', clickEraserAll, setClickEraserAll)}/>
                     <img src={selectIcon} className="side4-3" onClick={() => onselect()} />
                 </div>
-                <div>
+                <div style={{height: '0px'}}> {/* 이 부분 한강생겨서 height값 조정해서 없애주기 */}
                     {/* {console.log('test2', props.canvas)}
                     {console.log('test2', props.ctx)}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL}/> : null}
@@ -716,13 +716,13 @@ const MainBoard = () => {
                     <img id='loadImage_filter' src={endFilter} style={{display: 'none'}}/>
                     <img id='loadImage_reverse' src={endReverse} style={{display: 'none'}}/>
                     <img id='loadImage_turn' src={endTurn} style={{display: 'none'}}/>
-                </div>
-            </div>
-            <div className="App" style={{display: 'none'}}>
-                <header className="App-header">
-                    Upload Image
-                </header>
-            </div> */}
+                        </div>
+                    </div>
+                    <div className="App" style={{display: 'none'}}>
+                        <header className="App-header">
+                            Upload Image
+                        </header>
+                    </div> */}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr}/> : null}
                     {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage}/> : null}
@@ -751,7 +751,7 @@ const MainBoard = () => {
             <React.Fragment>
             <div className="CanvasArea">
                 <img src={imageUrl ? imageUrl : profile} alt="편집이미지" id="source" className="imgSizeControl" style={{display: 'none'}}/> 
-                <canvas className="canvas" id="canvasID" ref={canvasId} width="1920" height="1080" style= {{width:'960px', height:'440px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
+                <canvas className="canvas" id="canvasID" ref={canvasId} width="1152" height="528" style= {{width:'1152px', height:'528px'}} type='file' name='imageFile' accept='image/jpeg, image/jp, image/png'
                     onMouseDown={selectShape ? drawStart : null}
                     onMouseMove={selectShape ? drawSquare : null}
                     onMouseUp={selectShape ? drawEnd : null} /> 

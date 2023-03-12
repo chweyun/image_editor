@@ -35,14 +35,15 @@
 }
 
 .colorpicker {
-    /* float: left;
-    margin-top: 25px;
-    margin-left: 80px; */
     float: left;
     margin-top: 25px;
     margin-left: 80px;
     width: 200px;
-    height: 100px;
+    height: 90px;
+}
+
+.colorpicker > div {
+    display: none;
 }
 
 .brushWeight {

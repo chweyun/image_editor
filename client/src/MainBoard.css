@@ -88,7 +88,7 @@
 
 .canvas {
     margin-top: max(20vh, 100px);
-    margin-left: min(20%,260px);
+    margin-left: min(15%,260px);
     background-color: #D3D3D3;
     /*background-color: #00000000; //배경 투명하게*/
 }

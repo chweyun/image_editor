@@ -4,14 +4,14 @@
     background-color: #D3D3D3;
     position: absolute;
     display: float;
-    top: 100px;
+    top: 105px;
     left: 260px;
 }
 
 .container {
     width : 960px;
     height : 440px;
-    background-color: #D3D3D3;
+    background-color: #fff;
 }
 
 .crop-container { 

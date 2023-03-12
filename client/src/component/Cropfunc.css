@@ -101,32 +101,26 @@
 
 /* 밑에 Crop컴포넌트 관련 CSS 복사해온 거*/
 
-.App {
-  background-color: #c4c4c4;
-  font-family: 'Helvetica Neue', sans-serif;
-    
+.App { /* 여기가 바닥에 한강 생기는 원인.. 이 div가 자리차지하고 있음 */
+  font-family: 'Helvetica Neue', sans-serif;  
 }
   
-  label {
-    font-weight: bold;
-    padding-left: 10px;
-  }
-  
-  button {
-    z-index: 2;
-    cursor: pointer;
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    padding: 10px 0;
-  }
+label {
+font-weight: bold;
+padding-left: 10px;
+}
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  
+button {
+z-index: 2;
+cursor: pointer;
+width: 100%;
+background-color: #000;
+color: #fff;
+padding: 10px 0;
+}
 
-
-  
+.container {
+display: flex;
+flex-direction: column;
+position: relative;
+}

@@ -49,17 +49,17 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
     }
 
     const onClickthin = () => {
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 2;
         setcolorWeight((prev) => !prev);
     }
 
     const onClicknomal = () => {
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 4;
         setcolorWeight((prev) => !prev);
     }
 
     const onClickbold = () => {
-        ctx.lineWidth = 12;
+        ctx.lineWidth = 6;
         setcolorWeight((prev) => !prev);
     }
 
@@ -76,7 +76,7 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         let startX = 0;
         let startY = 0;
 
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 4;
         ctx.strokeStyle = lineColor;
 
 
@@ -120,13 +120,14 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         <div>
             <div className='sideline'>
                 { colorPicker ? <GithubPicker className="colorpicker" color={selectedColor} onChangeComplete={ handleChangeComplete }/> : null } 
-                    <div className="paintOption1-1" onClick={onClickcolor}><p className="paintOption1">색상</p></div>
-                    <div className="paintOption2-1" onClick={onClickweight}><p className="paintOption2">두께</p></div>
-                    <div className="paintOption3-1" onClick={onClickend}><p className="paintOption3">종료</p></div>
+                <div className="paintOption1-1" onClick={onClickcolor}><p className="paintOption1">색상</p></div>
+                <div className="paintOption2-1" onClick={onClickweight}><p className="paintOption2">두께</p></div>
+                <div className="paintOption3-1" onClick={onClickend}><p className="paintOption3">종료</p></div>
+                
                 { colorweight ? <div className="brushWeight">
-                <div className="paintOption4-1" onClick={onClickthin}><p className="lineOption">얇게</p></div>
-                <div className="paintOption5-1" onClick={onClicknomal}><p className="lineOption">기본</p></div>
-                <div className="paintOption6-1" onClick={onClickbold}><p className="lineOption">두껍게</p></div>
+                    <div className="paintOption4-1" onClick={onClickthin}><p className="lineOption">얇게</p></div>
+                    <div className="paintOption5-1" onClick={onClicknomal}><p className="lineOption">기본</p></div>
+                    <div className="paintOption6-1" onClick={onClickbold}><p className="lineOption">두껍게</p></div>
                 </div> : null }
             </div>
         </div>
