@@ -380,7 +380,7 @@ const MainBoard = () => {
 
     const createText = (e) => {
       if (hasInput) return;
-      addInput(60, 40);
+        addInput(40, 40);
     };
   
     if (isOkClicked) {
@@ -407,6 +407,7 @@ const MainBoard = () => {
 
       input.style.textAlign = isSelected;
       input.style.position = "absolute";
+    //   input.style.position = "fixed";
       input.style.left = x - 4 + "%";
       input.style.top = y - 4 + "%";
       input.style.fontSize = '14px';
@@ -478,22 +479,22 @@ const MainBoard = () => {
       if (isBold) {
         fontStyle.push("bold ");
       }
-      fontStyle.push("26px Courier");
+      fontStyle.push("14px Courier");
       fontStyle = fontStyle.join("");
       ctx.font = fontStyle;
       ctx.fillStyle = isClr;
 
       if (isSelected == 'left') {
-        x += 106;
+        x += 148;
       }
       else if (isSelected == 'center') {
-        x += 234;
+        x += 222;
       }
       else if (isSelected == 'right') {
-        x += 340;
+        x += 298;
       }
   
-      ctx.fillText(txt, x, y - 4 + 30);
+      ctx.fillText(txt, x, y+48);
       setIsOkClicked(false);
 
       var listId = document.getElementById('inputList');
@@ -759,7 +760,9 @@ const MainBoard = () => {
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
             </div>
             </React.Fragment>
-            <div id="inputList" style={{display: 'none'}}></div> 
+            <div id="inputList" 
+            // style={{display: 'none'}}
+            ></div> 
         </>
     );
 };
