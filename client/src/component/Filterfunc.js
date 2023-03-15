@@ -46,12 +46,12 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter } ) {
         //onPint ? onblur(canvas, ctx, brush) : onblur(canvas, ctx, image);
     }
     const onClickend = () => {
+        ctx.filter = 'none';
         const filterImg = canvas.toDataURL('image/png');
         getData_filter(filterImg);
     }
 
     var loadingImg = document.getElementById("loadImage"); 
-
 
     function ongrayscale (canvas, ctx, image) {
         ctx.reset();

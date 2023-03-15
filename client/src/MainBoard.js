@@ -171,27 +171,32 @@ const MainBoard = () => {
     const getData = (brush) => {
         setBrush(brush);
         setCropURLstr(brush);
+        setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg);
     }
     const getData_crop = (endCrop) => { // 예외처리때문에 자식 props 전달용 
         setEndCrop(endCrop);  
         setCropURLstr(endCrop);  
+        setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg2);  
     }
     const getData_filter = (endFilter) => {
         setEndFilter(endFilter);
-        setUpdateURL(loadingImg3);
         setCropURLstr(endFilter);
+        setImageUrl(canvasId.current.toDataURL()); 
+        setUpdateURL(loadingImg3);
     }
     const getData_reverse = (endReverse) => {
         setEndReverse(endReverse);
-        setUpdateURL(loadingImg4);
         setCropURLstr(endReverse);
+        setImageUrl(canvasId.current.toDataURL()); 
+        setUpdateURL(loadingImg4);
     }
     const getData_turn = (endTurn) => {
         setEndTurn(endTurn);
-        setUpdateURL(loadingImg5);
         setCropURLstr(endTurn);
+        setImageUrl(canvasId.current.toDataURL()); 
+        setUpdateURL(loadingImg5);
     }
 
     // console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
@@ -216,7 +221,6 @@ const MainBoard = () => {
     const imgRef = useRef();
 
     const onChangeImage = (e) => {
-        console.log('here');
         const reader = new FileReader();
         const file = imgRef.current.files[0];
 
@@ -246,16 +250,17 @@ const MainBoard = () => {
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-                // console.log(cPushArray.length);
-                // console.log(image.src);
             };
 
             console.log("MainBoard에서 image state값", image);
             image.addEventListener('load', (e) => {
                 drawImageData(image, ctx);
+
+                setImageUrl(image.src);
+                // setUpdateURL(image.src);
+                cPush();
             });
         };
-        cPush();
     };
 
     const [showing, setShowing] = useState(false);
@@ -522,7 +527,7 @@ const MainBoard = () => {
     
       setImageUrl(canvasId.current.toDataURL()); 
       setUpdateURL(image);
-      cPush();
+    //   cPush();
     }
 
     // Shape 기능
@@ -580,7 +585,7 @@ const MainBoard = () => {
         setIsDraw(false);
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(image);
-        cPush();
+        // cPush();
     }
 
     // undo, redo 기능
@@ -589,17 +594,26 @@ const MainBoard = () => {
     const [cPushStep, setCPushStep] = useState(-1);
 
     useEffect(() => {
-        console.log('cStep',cStep);
-        console.log('cPushArray.length',cPushArray.length);
+        console.log('ussEffect 돌아감');
 
         if (cStep < cPushArray.length && cStep !== -1) {
             setCStep(cPushArray.length);
         }
         // todo 필터 넣고 shape 툴 사용하면 계속 필터가 중첩되는 문제
-        // setImageUrl(canvasId.current.toDataURL()); 
+        // setImageUrl(canvasId.current.toDataURL());
 
-        cPushArray.push(imageUrl); // 이미지 데이터
+        if (imageUrl !== null) {
+            console.log('if문 돌아감');
+            cPushArray.push(imageUrl); // 이미지 데이터
+        }
+
+        console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
+        console.log('cPush Test',cPushArray[cPushArray.length-1]);
     }, [cPushStep]);
+
+    useEffect(() => {
+        console.log('cstep useEffect : ', cStep, cPushArray.length);
+    }, [cStep]);
     
     const cPush = () => {
         console.log('push');
@@ -610,19 +624,27 @@ const MainBoard = () => {
     const cUndo = () => {
         console.log('undo');
 
-        if (cStep<cPushArray.length) { 
-            // 마지막이 push가 안 되는 에러를 위한 조건문
-            // setImageUrl(canvasId.current.toDataURL());
-            cPushArray.push(imageUrl);
-        }
+        // if (cStep<cPushArray.length) { 
+        //     // 마지막이 push가 안 되는 에러를 위한 조건문
+        //     // setImageUrl(canvasId.current.toDataURL());
+
+        //     cPushArray.push(imageUrl);
+        // }
 
         if (cStep >= 0) {
-            setCStep(cStep-1);
+            setCStep(cStep => cStep - 1);
             var canvasPic = new Image();
-            canvasPic.src = cPushArray[cStep];
+            canvasPic.src = cPushArray[cStep-1];
             canvasPic.onload = function() {
                 context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
-                context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
+
+                var canvasArea = document.getElementById('canvasID');
+                var hRatio = canvasArea.width  / canvasPic.width    ;
+                var vRatio =  canvasArea.height / canvasPic.height  ;
+                var ratio  = Math.min ( vRatio, hRatio );
+                var centerShift_x = ( canvasArea.width - canvasPic.width*ratio ) / 2;
+                var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;
+                context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
             }
         }
     }
@@ -630,12 +652,12 @@ const MainBoard = () => {
     const cRedo = () => {
         console.log('redo');
 
-        if (cStep < cPushArray.length) {
+        if (cStep < cPushArray.length - 1) {
             console.log('redo if');
-            setCStep(cStep+1);
+            setCStep(cStep => cStep + 1);
 
             var canvasPic = new Image();
-            canvasPic.src = cPushArray[cStep+2];
+            canvasPic.src = cPushArray[cStep + 1];
             canvasPic.onload = function() {
                 context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
                 context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
@@ -647,17 +669,18 @@ const MainBoard = () => {
         console.log('reset');
 
         var canvasPic = new Image();
-        canvasPic.src = cPushArray[2];
+        canvasPic.src = cPushArray[0];
         canvasPic.onload = function() {
-            var canvasArea = context.current.canvas ;
+            context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+
+            var canvasArea = document.getElementById('canvasID');
             var hRatio = canvasArea.width  / canvasPic.width    ;
             var vRatio =  canvasArea.height / canvasPic.height  ;
-            var ratio  = Math.min ( hRatio, vRatio );
+            var ratio  = Math.min ( vRatio, hRatio );
             var centerShift_x = ( canvasArea.width - canvasPic.width*ratio ) / 2;
-            var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;  
-
-            context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
+            var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;
             context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
+        
         }
 
         setCStep(0);
