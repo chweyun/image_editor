@@ -24,11 +24,11 @@ function upload(file) {
         Body: fileStream,
         ContentType: 'image/png',
     };
-    // return s3.upload(uploadParams).promise();
-    return s3.upload(uploadParams, function(err, data) {
-        console.log(err);
-        console.log(data);
-    });
+    return s3.upload(uploadParams).promise();
+    // return s3.upload(uploadParams, function(err, data) {
+    //     console.log(err);
+    //     console.log(data);
+    // });
 }
 
 module.exports = {upload};

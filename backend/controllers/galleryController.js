@@ -30,15 +30,15 @@ const getGallery = asyncHandler(async (req, res) => {
     res.status(200).send(data.key)
 
     var sql = 'SELECT * from imagedata where id = (?)';
-    maria.query(sql, id, function(error, result, fields) {
-        if (error) throw error;
-        else if (result[0] !== undefined) { // 해당하는 id값 존재
+    // maria.query(sql, id, function(error, result, fields) {
+    //     if (error) throw error;
+    //     else if (result[0] !== undefined) { // 해당하는 id값 존재
 
-        } else { // 해당하는 id값 없음
+    //     } else { // 해당하는 id값 없음
 
-        }
+    //     }
         
-    });
+    // });
 
 
 });

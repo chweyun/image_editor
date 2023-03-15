@@ -14,9 +14,9 @@ const {
 } = require('../controllers/galleryController');
 
 const storage = multer.diskStorage({
-    destination(req, file, callback) {
-        callback(null, 'backend/uploads/');
-    },
+    // destination(req, file, callback) {
+    //     callback(null, 'backend/uploads/');
+    // },
     filename(req,file,callback) {
         callback(null, req.body.id);
     }
@@ -42,7 +42,7 @@ router.route('/:imgId').get(function(req, res, next) {
     var s3file = s3.getObject(params);
 
     console.log(s3file);
-    // res.sendFile(process.cwd() + `/uploads/${id}`);
+    res.sendFile(process.cwd() + `/uploads/${id}`);
 
     res.redirect(`${BUCKET_URL}/${id}`);
 })

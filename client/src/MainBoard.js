@@ -68,6 +68,15 @@ import Shapefunc from "./component/Shapefunc.js";
 const MainBoard = () => {
 
     const canvasRef = useRef(null);
+    const canvasId = React.useRef(null);
+    const context = useRef(null);
+
+    useEffect(() => { 
+        /* ctx 가 null or undefined로 뜨는 오류 해결 (임시로 ctx 변수 대신 context.current 사용) */
+        if (canvasId.current) { 
+            context.current = canvasId.current.getContext("2d"); 
+        } 
+    }, []);
 
     // 이미지 GET
     const [imgId, setImgId] = useState('');
@@ -185,7 +194,7 @@ const MainBoard = () => {
         setCropURLstr(endTurn);
     }
 
-    console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
+    // console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
 
     const openModalStore = () => {
         setModalStoreOpen(true);
@@ -205,8 +214,6 @@ const MainBoard = () => {
     const [props, setProps] = useState({});
     const [imageFile, setImageFile] = useState(null);
     const imgRef = useRef();
-
-    // let canvas, ctx, image = undefined;
 
     const onChangeImage = (e) => {
         console.log('here');
@@ -228,7 +235,7 @@ const MainBoard = () => {
             orgImage = image;
             setUpdateURL(image);
 
-            setProps({canvas, ctx, image, imageUrl, canvasRef});
+            setProps({canvas, ctx, image, imageUrl, canvasRef, context});
 
             function drawImageData(image, ctx) { 
                 var canvasArea = ctx.canvas ;
@@ -239,8 +246,8 @@ const MainBoard = () => {
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-                console.log(cPushArray.length);
-                console.log(image.src);
+                // console.log(cPushArray.length);
+                // console.log(image.src);
             };
 
             console.log("MainBoard에서 image state값", image);
@@ -377,11 +384,10 @@ const MainBoard = () => {
 
     // text 기능
     var hasInput = false;
-    const canvasId = React.useRef(null);
 
     const createText = (e) => {
       if (hasInput) return;
-      addInput(60, 40);
+        addInput(40, 40);
     };
   
     if (isOkClicked) {
@@ -466,12 +472,10 @@ const MainBoard = () => {
     }
   
     function drawText(txt, x, y) {
-      var canvas = canvasId.current;
-      var ctx = canvas.getContext("2d");
       var fontStyle = [];
   
-      ctx.textBaseline = "top";
-      ctx.textAlign = isSelected;
+      context.current.textBaseline = "top";
+      context.current.textAlign = isSelected;
   
       if (isItalic) {
         fontStyle.push("italic ");
@@ -479,32 +483,49 @@ const MainBoard = () => {
       if (isBold) {
         fontStyle.push("bold ");
       }
-      fontStyle.push("26px Courier");
+      fontStyle.push("14px Courier");
       fontStyle = fontStyle.join("");
-      ctx.font = fontStyle;
-      ctx.fillStyle = isClr;
+      context.current.font = fontStyle;
+      context.current.fillStyle = isClr;
 
       if (isSelected == 'left') {
-        x += 106;
+        x += 148;
       }
       else if (isSelected == 'center') {
-        x += 234;
+        x += 222;
       }
       else if (isSelected == 'right') {
-        x += 340;
+        x += 298;
       }
   
-      ctx.fillText(txt, x, y - 4 + 30);
+      context.current.fillText(txt, x, y+70);
       setIsOkClicked(false);
 
       var listId = document.getElementById('inputList');
       var textbox = document.getElementById('textbox');
       listId.removeChild(textbox);
+
+      var canvasArea = document.getElementById('canvasID');
+      var tmpImage = document.getElementById('source');
+
+      var hRatio = canvasArea.width  / tmpImage.width    ;
+      var vRatio =  canvasArea.height / tmpImage.height  ;
+      var ratio  = Math.min ( vRatio, hRatio );
+      var centerShift_x = ( canvasArea.width - tmpImage.width*ratio ) / 2;
+      var centerShift_y = ( canvasArea.height - tmpImage.height*ratio ) / 2;
+    //   document.getElementById('source').onloadend = function() {
+    //       canvasId.current.getContext("2d").drawImage(image, 0, 0);
+    //       // todo image 변수 인식이 안 됨
+    //   };
+    //   setImageUrl(ctx.current.toDataURL());
+    //   setUpdateURL(image);
+    
+      setImageUrl(canvasId.current.toDataURL()); 
+      setUpdateURL(image);
       cPush();
     }
 
     // Shape 기능
-    const context = useRef(null);
     const [shapeColor, setShapeColor] = useState("");
     const [isShape, setIsShape] = useState("rect");
 
@@ -515,16 +536,8 @@ const MainBoard = () => {
         setIsShape(isShape);
     }
 
-    useEffect(() => { 
-        /* ctx 가 null or undefined로 뜨는 오류 해결 (임시로 ctx 변수 대신 context.current 사용) */
-        if (canvasId.current) { 
-            context.current = canvasId.current.getContext("2d"); 
-        } 
-    }, []);
-
     const [pos, setPos] = useState([]); // 시작 좌표
     const [isDraw, setIsDraw] = useState(false);
-
 
     function drawStart(e) {
         setIsDraw(true);
@@ -565,6 +578,8 @@ const MainBoard = () => {
 
     function drawEnd(e) {
         setIsDraw(false);
+        setImageUrl(canvasId.current.toDataURL()); 
+        setUpdateURL(image);
         cPush();
     }
 
@@ -578,10 +593,11 @@ const MainBoard = () => {
         console.log('cPushArray.length',cPushArray.length);
 
         if (cStep < cPushArray.length && cStep !== -1) {
-            // console.log('괄호 안으로 들어감');
             setCStep(cPushArray.length);
         }
-        setImageUrl(canvasId.current.toDataURL());
+        // todo 필터 넣고 shape 툴 사용하면 계속 필터가 중첩되는 문제
+        // setImageUrl(canvasId.current.toDataURL()); 
+
         cPushArray.push(imageUrl); // 이미지 데이터
     }, [cPushStep]);
     
@@ -596,7 +612,7 @@ const MainBoard = () => {
 
         if (cStep<cPushArray.length) { 
             // 마지막이 push가 안 되는 에러를 위한 조건문
-            setImageUrl(canvasId.current.toDataURL());
+            // setImageUrl(canvasId.current.toDataURL());
             cPushArray.push(imageUrl);
         }
 
@@ -760,7 +776,9 @@ const MainBoard = () => {
                 <input type="file" ref={imgRef} onChange={onChangeImage} id="input-file" style={{display: 'none'}}></input>
             </div>
             </React.Fragment>
-            <div id="inputList" style={{display: 'none'}}></div> 
+            <div id="inputList" 
+            // style={{display: 'none'}}
+            ></div> 
         </>
     );
 };

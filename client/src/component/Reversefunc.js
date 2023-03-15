@@ -77,7 +77,6 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse} ) {
         ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
         // const reverseImg = canvas.toDataURL('image/png');
         // getData_reverse(reverseImg);
-        
         ctx.restore();
         setResetCount(resetCount+1);
     };

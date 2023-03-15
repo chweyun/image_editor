@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import './Filterfunc.css';
 
-function Filterfunc ( {canvas, ctx, image, updateURL, getData_filter} ) {
+function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter } ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -48,7 +48,6 @@ function Filterfunc ( {canvas, ctx, image, updateURL, getData_filter} ) {
     const onClickend = () => {
         const filterImg = canvas.toDataURL('image/png');
         getData_filter(filterImg);
-        console.log("onClickend 안에서", filterImg);
     }
 
     var loadingImg = document.getElementById("loadImage"); 
@@ -96,6 +95,7 @@ function Filterfunc ( {canvas, ctx, image, updateURL, getData_filter} ) {
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
         ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
         ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        // ctx.restore();
     };
     function onbrightness (canvas, ctx, image) {
         ctx.reset();
@@ -136,20 +136,11 @@ function Filterfunc ( {canvas, ctx, image, updateURL, getData_filter} ) {
 
     //ctx.restore()
 
-    console.log("Filterfunc / image", image);
-    console.log("Filterfunc / loadingImg", loadingImg);
-    // console.log('Filterfunc 내에서', canvas);
-    // console.log('Filterfunc 내에서', ctx);
+    // console.log("Filterfunc / image", image);
+    // console.log("Filterfunc / loadingImg", loadingImg);
 
     return (
         <div>
-            {/* <div className="optionverticalLine"></div>
-            <div onClick={onClickgrayscale}><p className="filterOption1">회색조</p></div>
-            <div onClick={onClickinvert}><p className="filterOption2">반전</p></div>
-            <div onClick={onClicksepia}><p className="filterOption3">세피아</p></div>
-            <div onClick={onClickbrightness}><p className="filterOption4">밝게</p></div>
-            <div onClick={onClicksharp}><p className="filterOption5">선명</p></div>
-            <div onClick={onClickblur}><p className="filterOption6">블러</p></div> */}
             <div className='sideline'>
                 <div className="filterOption1-1" onClick={onClickgrayscale}><p className="filterOption1">회색조</p></div>
                 <div className="filterOption2-1" onClick={onClickinvert}><p className="filterOption2">반전</p></div>
