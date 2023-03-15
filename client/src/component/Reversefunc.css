@@ -32,6 +32,8 @@
     /* margin-top: -380px;
     margin-left: 83px;*/
     transform: rotate(90deg);
+    margin-left: 5px;
+    margin-top: 20px;
 }
 
 .reverseOption3 {
@@ -41,6 +43,9 @@
     margin-left: 93px;
     font-size: 20px;
     font-weight: 800; */
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 800;
 }
 
 p {
@@ -52,7 +57,7 @@ p {
 .iconStyle {
     fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     padding-bottom: 0;
 }

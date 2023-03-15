@@ -22,35 +22,44 @@
 .filterOption1 {
     float: left;
     margin-top: 90px;
+    font-size: 16px;
 }
 
 .filterOption2 {
     float: left;
+    font-size: 16px;
 }
 
 .filterOption3 {
     float: left;
+    font-size: 16px;
 }
 
 .filterOption4 {
     float: left;
+    font-size: 16px;
 }
 
 .filterOption5 {
     float: left;
+    font-size: 16px;
 }
 
 .filterOption6 {
     float: left;
+    font-size: 16px;
 }
 
 .filterOption7 {
     float: left;
+    font-size: 16px;
     /* color: #004483;
     font-weight: 600;
     float: left;
     margin-top: -430px;
     margin-left: 85px; */
+    font-weight: 800;
+    color: #004483;
 }
 
 p {

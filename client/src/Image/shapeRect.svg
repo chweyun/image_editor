@@ -7,6 +7,6 @@
 </style>
 <g>
 	<!-- <rect x="14" y="14" class="st0" width="52" height="52"/> -->
-	<rect x="14" y="14" class="" width="52" height="52"/>
+	<rect x="14" y="14" class="" width="52" height="52"  style=stroke-width:6;width:52px;height:52px/>
 </g>
 </svg>

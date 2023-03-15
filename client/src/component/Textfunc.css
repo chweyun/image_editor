@@ -8,7 +8,7 @@
 p {
     color: #888;
     font-family: 'Pretendard-Regular';
-    font-size: 14px;
+    font-size: 15px;
 } 
 
 .colorBox, .textDiv {
@@ -27,7 +27,7 @@ p {
 
 .textOption2, .textOption3, .textOption4, .textOption5, .textOption6 {
     background-color:transparent;
-    margin-top: 0px;
+    margin-top: -10px;
     height: 46px;
     border: none;
 }
@@ -43,7 +43,7 @@ p {
     width: 22px;
     height: 22px;
     border-radius: 4px;
-    margin-left: 14px;
+    margin-left: 19px;
     margin-bottom: -10px;
 }
 

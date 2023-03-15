@@ -707,13 +707,13 @@ const MainBoard = () => {
                 </div>
                 <div className="side2">
                     <CropIcon className={clickCrop ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl("Crop", clickCrop, setClickCrop, setSelectCrop)}/>
-                    <TurnIcon className={clickTurn ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Turn', clickTurn, setClickTurn, setSelectTurn)}/>
+                    <TurnIcon className={clickTurn ? ("iconStyle", "turn_select") : ("iconStyle", "turn_noneselect")} onClick={() => clickControl('Turn', clickTurn, setClickTurn, setSelectTurn)}/>
                     <ReverseIcon className={clickReverse ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Reverse', clickReverse, setClickReverse, setSelectReverse)}/>
                 </div>
                 <div className="side3">
                     <TextIcon className={clickText ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Text', clickText, setClickText, setSelectText)}/>
                     <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint, setSelectPaint)}/>
-                    <ShapeIcon className={clickShape ? ("iconStyle", "st7") : ("iconStyle", "st6")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
+                    <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
                 </div>
                 <div className="side4">
                     <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('Eraser', clickEraser, setClickEraser)}/>

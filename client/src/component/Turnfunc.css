@@ -20,11 +20,14 @@
 .turnOption1 {
     float: left;
     margin-top: 20px;
+    margin-left: 0px;
 }
 
 .turnOption2 {
     float: left;
     transform: scaleX(-1);
+    margin-left: -3px;
+    margin-top: 10px;
 }
 
 /* .turnOption1Text {
@@ -52,7 +55,7 @@
 
 p { */
     
-.turnOption1Text, .turnOption2Text, .turnOption3Text {
+.turnOption1Text, .turnOption2Text {
     color: #888;
     font-family: 'Pretendard-Regular';
     float: left;
@@ -60,10 +63,23 @@ p { */
     height: 0px;
 }
 
+.turnOption3Text {
+    color: #004483;
+    padding-top: 10px;
+    font-family: 'Pretendard-Regular';
+    float: left;
+    font-size: 15px;
+    height: 0px;
+    font-weight: 800;
+}
+
+
+
 .iconStyle {
     fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
     width: 45px;
     height: 45px;
     padding-bottom: 0;
+    margin-bottom: -8px;
 }

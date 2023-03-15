@@ -18,10 +18,12 @@
     margin-left: 93px; */
     float: left;
     margin-top: 90px;
+    font-size: 16px;
 }
 
 .paintOption2 {
     float: left;
+    font-size: 16px;
     /* margin-top: -265px;
     margin-left: 93px; */
 }
@@ -30,6 +32,7 @@
     color: #004483;
     font-weight: 600;
     float: left;
+    font-size: 16px;
     /* margin-top: -230px;
     margin-left: 93px; */
 }

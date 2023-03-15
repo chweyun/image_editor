@@ -3,13 +3,13 @@
 <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st1{fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st2{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;font-size:12px;}
-	.st3{font-family:'NanumSquare_acR';}
-	.st4{font-size:12px;}
-	.eraser_select{}
-	.eraser_noneselect{}
+   <!-- .st0{fill:none;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+   .st1{fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+   .st3{font-family:'NanumSquare_acR';}
+   .st4{font-size:12px;}
+   .eraser_select{}
+   .eraser_noneselect{} -->
 </style>
 <g>
 	<path class="" d="M49.57,70H30.43C24.14,70,19,64.86,19,58.57V21.43C19,15.14,24.14,10,30.43,10h19.15
