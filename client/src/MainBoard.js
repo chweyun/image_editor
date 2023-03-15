@@ -305,6 +305,7 @@ const MainBoard = () => {
         setClickTurn((prev) => !prev);
     }
     const onClickShape = () => {
+        setSelectShape((prev) => !prev);
         setClickShape((prev) => !prev);
     }
     const onClickEraser = () => {

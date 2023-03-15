@@ -7,7 +7,7 @@
     position: absolute;
     z-index: 2;
     height: 60px;
-    border-bottom: 2px solid #9FC2DE;
+    border-bottom: 3px solid #9FC2DE;
     display: flex;
     flex-direction: row;
 }
@@ -64,16 +64,16 @@
 .SideBar {
     z-index: 1;
     position: absolute;
-    width: 60px;
-    border-right: 2px solid #9FC2DE;
+    width: 62px;
+    border-right: 3px solid #9FC2DE;
 }
 .side1 {
-    border-bottom: 2px solid #9FC2DE;
+    border-bottom: 3px solid #9FC2DE;
     height: 120px;
 }
 
 .side2, .side3 {
-    border-bottom: 2px solid #9FC2DE;
+    border-bottom: 3px solid #9FC2DE;
     height: 170px;
 }
 
@@ -96,8 +96,8 @@
 .iconStyle {
     fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     padding: 10px;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     padding-bottom: 0;
 }
 
@@ -134,7 +134,11 @@
 }
 
 .shape_noneselect{
-    fill:#59666F;stroke:#9DAAB2;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    fill:#4C5F68;
+    stroke:#9DAAB2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-miterlimit:10;
     width: 40px;
     height: 40px;
     margin-top: 4px;
@@ -142,7 +146,8 @@
 }
 
 .shape_select{
-    fill:#004483;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    fill:#004483;
+    stroke:#9DAAB2;
     width: 40px;
     height: 40px;
     margin-top: 4px;

@@ -4,8 +4,8 @@
 	 y="0px" viewBox="0 0 80 80" style="enable-background:new 0 0 80 80;" xml:space="preserve">
 <style type="text/css">
 </style>
-<polygon class="" id="" points="24.62,42 11.74,61.5 37.5,61.5 " style=fill:#9DAAB2;stroke-width:6/>
-<polygon class="" id="" points="47.57,34.5 29.74,61.5 65.41,61.5 " style=fill:#9DAAB2;stroke-width:6/>
-<rect x="40" y="19" class="" id="" width="29" height="42" style=fill:#4C5F68;opacity:0.22;stroke:none />
-<rect x="10.25" y="17.97" class="" id="" width="59.5" height="44.05" style=fill:none;stroke-width:6/>
+<polygon class="" id="" points="24.62,52 11.74,71.5 38.5,71.5" style=fill:#9DAAB2;stroke-width:6/>
+<polygon class="" id="" points="52.57,44.5 29.74,71.5 72.41,71.5" style=fill:#9DAAB2;stroke-width:6/>
+<rect x="40" y="19" class="" id="" width="29" height="42" style=fill:#4C5F68;opacity:0.22;stroke:none;width:39px;height:52px />
+<rect x="10.25" y="17.97" class="" id="" width="59.5" height="44.05" style=fill:none;stroke-width:6;width:66.5px;height:54.05px/>
 </svg>

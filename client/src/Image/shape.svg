@@ -4,15 +4,29 @@
 	 y="0px" viewBox="0 0 40 40" style="enable-background:new 0 0 80 80;" xml:space="preserve">
 <style type="text/css">
 	.st3{
-		fill:#59666F;
+		fill:#4C5F68;
 		stroke:#9DAAB2;
 		stroke-width:10;
 		stroke-linecap:round;
 		stroke-linejoin:round;
 		stroke-miterlimit:10;
 	}
+	<!-- .shape_select{
+		fill:#004483;stroke:#9DAAB2;
+		width: 40px;
+		height: 40px;
+		margin-top: 4px;
+		margin-left: 6px;
+	}
+	.shape_noneselect{
+		fill:#4C5F68;stroke:#9DAAB2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+		width: 40px;
+		height: 40px;
+		margin-top: 4px;
+		margin-left: 6px;
+	} -->
 </style>
 <g>
-	<rect x="0" y="0" class="st3" width="40" height="40" />
+	<rect x="0" y="0" class="st3" width="40" height="40" style=stroke-width:8/>
 </g>
 </svg>

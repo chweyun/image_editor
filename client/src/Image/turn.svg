@@ -8,7 +8,7 @@
 </style>
 <g>
 	<!-- <rect x="15.94" y="28.12" class="" width="38.5" height="38.5" style=fill:none;stroke-width:7/> -->
-	<rect x="15.94" y="28.12" class="" width="38.5" height="38.5" style=fill:none;stroke-width:7/>
+	<rect x="15.94" y="28.12" class="" width="38.5" height="38.5" style=fill:none;stroke-width:7;width:38.5px;height:38.5px/>
 	<g>
 		<g>
 			<path class="" d="M63.84,39.82c1.76-12.66-7.42-22.17-18.95-22.37" style=fill:none;stroke-width:5/>
