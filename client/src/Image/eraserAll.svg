@@ -5,7 +5,7 @@
 <style type="text/css">
 	.st0{fill:none;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st1{fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st2{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;font-size:12px;}
 	.st3{font-family:'NanumSquare_acR';}
 	.st4{font-size:12px;}
 	.eraser_select{}
@@ -17,7 +17,7 @@
 	<path class="" d="M53.84,38.5h-28.8c-3.32,0-6.04-2.72-6.04-6.04V21.43C19,15.14,24.14,10,30.43,10h19.15
 		C55.86,10,61,15.14,61,21.43v9.91C61,35.28,57.78,38.5,53.84,38.5z" style=stroke-width:7/>
 	<g>
-		<text transform="matrix(1 0 0 1 36.2129 37.9785)" class="st2 st3 st4">ALL</text>
+		<text transform="matrix(1 0 0 1 36.2129 37.9785)" class="st2">ALL</text>
 	</g>
 </g>
 </svg>

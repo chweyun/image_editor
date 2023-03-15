@@ -154,6 +154,22 @@
     margin-left: 6px;
 }
 
+.st6{
+    fill:#4C5F68;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
+}
+
+.st7{
+    fill:#004483;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-left: 6px;
+}
+
 .eraser_noneselect{
     fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
     width: 40px;
