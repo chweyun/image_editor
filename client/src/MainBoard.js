@@ -71,12 +71,25 @@ const MainBoard = () => {
     const canvasId = React.useRef(null);
     const context = useRef(null);
 
+    
+    const [imageUrl, setImageUrl] = useState(null);
+    const [props, setProps] = useState({});
+    const [imageFile, setImageFile] = useState(null);
+    const imgRef = useRef();
+
     useEffect(() => { 
         /* ctx 가 null or undefined로 뜨는 오류 해결 (임시로 ctx 변수 대신 context.current 사용) */
         if (canvasId.current) { 
             context.current = canvasId.current.getContext("2d"); 
         } 
     }, []);
+
+
+    useEffect(() => {
+        console.log('imageUrl 바뀜'
+        // , imageUrl
+        );
+    }, [imageUrl]);
 
     // 이미지 GET
     const [imgId, setImgId] = useState('');
@@ -189,17 +202,17 @@ const MainBoard = () => {
     const getData_reverse = (endReverse) => {
         setEndReverse(endReverse);
         setCropURLstr(endReverse);
-        setImageUrl(canvasId.current.toDataURL()); 
+        // setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg4);
     }
     const getData_turn = (endTurn) => {
         setEndTurn(endTurn);
         setCropURLstr(endTurn);
-        setImageUrl(canvasId.current.toDataURL()); 
+        // console.log(endTurn);
+        setImageUrl(endTurn);
+        // setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg5);
     }
-
-    // console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
 
     const openModalStore = () => {
         setModalStoreOpen(true);
@@ -215,10 +228,6 @@ const MainBoard = () => {
     };
 
     // TopBar.js
-    const [imageUrl, setImageUrl] = useState(null);
-    const [props, setProps] = useState({});
-    const [imageFile, setImageFile] = useState(null);
-    const imgRef = useRef();
 
     const onChangeImage = (e) => {
         const reader = new FileReader();
@@ -252,10 +261,11 @@ const MainBoard = () => {
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             };
 
-            console.log("MainBoard에서 image state값", image);
+            // console.log("MainBoard에서 image state값", image);
             image.addEventListener('load', (e) => {
                 drawImageData(image, ctx);
 
+                console.log('maindboard-image.addEventListener 돌아감', image.src);
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
                 cPush();
@@ -450,7 +460,7 @@ const MainBoard = () => {
           // 클릭한 위치로 textarea 이동
           posX = e.clientX;
           posY = e.clientY;
-          console.log(posX, posY);
+        //   console.log(posX, posY);
           inputbox.style.left = posX - 75 + "px";
           inputbox.style.top = posY - 40 + "px";
         }
@@ -518,16 +528,12 @@ const MainBoard = () => {
       var ratio  = Math.min ( vRatio, hRatio );
       var centerShift_x = ( canvasArea.width - tmpImage.width*ratio ) / 2;
       var centerShift_y = ( canvasArea.height - tmpImage.height*ratio ) / 2;
-    //   document.getElementById('source').onloadend = function() {
-    //       canvasId.current.getContext("2d").drawImage(image, 0, 0);
-    //       // todo image 변수 인식이 안 됨
-    //   };
-    //   setImageUrl(ctx.current.toDataURL());
-    //   setUpdateURL(image);
-    
+
       setImageUrl(canvasId.current.toDataURL()); 
-      setUpdateURL(image);
-    //   cPush();
+    //   setUpdateURL(image);
+    //   setUpdateURL(canvasId.current.toDataURL());
+      setCropURLstr(canvasId.current.toDataURL());  
+    
     }
 
     // Shape 기능
@@ -584,8 +590,9 @@ const MainBoard = () => {
     function drawEnd(e) {
         setIsDraw(false);
         setImageUrl(canvasId.current.toDataURL()); 
-        setUpdateURL(image);
-        // cPush();
+        // setUpdateURL(image);
+        setCropURLstr(canvasId.current.toDataURL());  
+        
     }
 
     // undo, redo 기능
@@ -599,20 +606,19 @@ const MainBoard = () => {
         if (cStep < cPushArray.length && cStep !== -1) {
             setCStep(cPushArray.length);
         }
-        // todo 필터 넣고 shape 툴 사용하면 계속 필터가 중첩되는 문제
-        // setImageUrl(canvasId.current.toDataURL());
 
         if (imageUrl !== null) {
             console.log('if문 돌아감');
             cPushArray.push(imageUrl); // 이미지 데이터
         }
 
-        console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
-        console.log('cPush Test',cPushArray[cPushArray.length-1]);
+        // console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
+        // console.log('cPush Test',cPushArray[cPushArray.length-1]);
     }, [cPushStep]);
 
     useEffect(() => {
         console.log('cstep useEffect : ', cStep, cPushArray.length);
+        // console.log(document.getElementById('canvasID').toDataURL());
     }, [cStep]);
     
     const cPush = () => {
@@ -624,12 +630,12 @@ const MainBoard = () => {
     const cUndo = () => {
         console.log('undo');
 
-        // if (cStep<cPushArray.length) { 
-        //     // 마지막이 push가 안 되는 에러를 위한 조건문
-        //     // setImageUrl(canvasId.current.toDataURL());
+        if (cStep<cPushArray.length) { 
+            // 마지막이 push가 안 되는 에러를 위한 조건문
+            // setImageUrl(canvasId.current.toDataURL());
 
-        //     cPushArray.push(imageUrl);
-        // }
+            cPushArray.push(imageUrl);
+        }
 
         if (cStep >= 0) {
             setCStep(cStep => cStep - 1);

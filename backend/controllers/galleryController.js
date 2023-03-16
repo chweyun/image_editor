@@ -24,7 +24,7 @@ const createGallery = asyncHandler(async (req, res) => {
 });
 
 const getGallery = asyncHandler(async (req, res) => {
-    const id = req.query.id; //todo
+    const id = req.query.id; 
     console.log(req.query);
     res.status(200).json({message:'get photos'});
     res.status(200).send(data.key)

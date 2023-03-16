@@ -16,8 +16,8 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
         imageUrl = cropURLstr;
     }
 
-    console.log("Cropfunc에서 imageUrl", imageUrl);
-    console.log("Cropfunc에서 cropURLstr", cropURLstr);
+    // console.log("Cropfunc에서 imageUrl", imageUrl);
+    // console.log("Cropfunc에서 cropURLstr", cropURLstr);
     const [crop1, setCrop1] = useState(false);
     const [crop2, setCrop2] = useState(false);
     const [crop3, setCrop3] = useState(false);

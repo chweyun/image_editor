@@ -28,7 +28,10 @@ function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn, setSelectTurn,
     }
 
     const onClickEndTurn = () => { // 이미지 회전 할때마다 이미지 URL로 빼내면.. 워크보드까지 같이 캡쳐되는 문제가 아직 해결되지 않아서 무한정 사진이 작아지는... 무한함수같은 문제가 생기기때문에.. 종료버튼 누를때의 상태만 캡쳐되도록 종료버튼 클릭시 함수에 toDataURL함수 사용
+        console.log('onClickEndTurn 시작');
         const turnImg = canvas.toDataURL('image/png');
+        console.log(turnImg);
+        // TODO 이새키만 넣으면 종료 누를때 두번 돌아감
         getData_turn(turnImg);
         // 종료 버튼 누르면 사이드 바 닫히게
         setSelectTurn(false);
