@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import './Filterfunc.css';
 
-function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter } ) {
+function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelectFilter, setClickFilter } ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -49,6 +49,8 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter } ) {
         ctx.filter = 'none';
         const filterImg = canvas.toDataURL('image/png');
         getData_filter(filterImg);
+        setSelectFilter(false);
+        setClickFilter(false);
     }
 
     var loadingImg = document.getElementById("loadImage"); 

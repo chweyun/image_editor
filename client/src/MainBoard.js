@@ -763,10 +763,10 @@ const MainBoard = () => {
                             Upload Image
                         </header>
                     </div> */}
-                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL}/> : null}
+                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr}/> : null}
-                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage}/> : null}
-                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse}/> : null}
+                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn}/> : null}
+                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse}/> : null}
                     {selectText ? <Textfunc 
                                         getTxtColor={getTxtColor}
                                         getIsItalic={getIsItalic}
@@ -775,7 +775,7 @@ const MainBoard = () => {
                                         getIsClr={getIsClr}
                                         getIsOkClicked={getIsOkClicked}
                                     /> : null }
-                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL}/> : null}
+                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint}/> : null}
                     {selectShape ? <Shapefunc 
                                         getShapeColor={getShapeColor}
                                         getIsShape={getIsShape}

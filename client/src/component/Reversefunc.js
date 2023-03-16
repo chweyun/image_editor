@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import './Reversefunc.css';
 import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
-function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse} ) {
+function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
 
     console.log("Reverse컴포넌트 돌아감");
 
@@ -30,6 +30,9 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse} ) {
         const reverseImg = canvas.toDataURL('image/png');
         getData_reverse(reverseImg);
         setResetCount(0); // 반전툴 사용 이후 또 다시 회전툴 사용 - 반전툴 사용 플로우로 툴 사용할 경우 reset안해주면 또 에러나니까 종료할땐 0으로 초기화시켜줘서 다시 회전툴 사용 이후 들어올때 또 최초 1회엔 reset 돌아가도록 
+
+        setClickReverse(false);
+        setSelectReverse(false);
     }
 
     function drawimageReverse_h(ctx, image){

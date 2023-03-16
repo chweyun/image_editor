@@ -17,6 +17,7 @@
 
 .filterOption1-1, .filterOption2-1, .filterOption3-1, .filterOption4-1, .filterOption5-1, .filterOption6-1, .filterOption7-1 {
     height: 10px;
+    cursor:pointer;
 }
 
 .filterOption1 {

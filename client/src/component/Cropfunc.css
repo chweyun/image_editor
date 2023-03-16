@@ -17,6 +17,7 @@
 
 .cropOption1-1, .cropOption2-1, .cropOption3-1, .cropOption4-1, .cropOption5-1, .cropOption6-1 {
     height: 10px;
+    cursor:pointer;
 }
 
 .cropOption1 {

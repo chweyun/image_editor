@@ -4,7 +4,7 @@ import './Paintfunc.css';
 import { GithubPicker } from 'react-color';
 
 
-function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage} ) {
+function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint} ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -46,6 +46,9 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
     const onClickend = () => {
         ondrawImg(canvas, ctx, image); // (마찬가지) drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
         drawTool(canvas, ctx, '#00000000');
+
+        setClickPaint(false);
+        setSelectPaint(false);
     }
 
     const onClickthin = () => {

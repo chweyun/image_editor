@@ -17,6 +17,7 @@
 
 .reverseOption1-1, .reverseOption2-1, .reverseOption3-1 {
     height: 10px;
+    cursor:pointer;
 }
 
 .reverseOption1 {

@@ -61,6 +61,8 @@ p { */
     float: left;
     font-size: 15px;
     height: 0px;
+
+    cursor:pointer;
 }
 
 .turnOption3Text {
@@ -71,6 +73,8 @@ p { */
     font-size: 15px;
     height: 0px;
     font-weight: 800;
+
+    cursor:pointer;
 }
 
 
