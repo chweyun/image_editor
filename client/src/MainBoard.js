@@ -71,7 +71,6 @@ const MainBoard = () => {
     const canvasId = React.useRef(null);
     const context = useRef(null);
 
-    
     const [imageUrl, setImageUrl] = useState(null);
     const [props, setProps] = useState({});
     const [imageFile, setImageFile] = useState(null);
@@ -86,9 +85,7 @@ const MainBoard = () => {
 
 
     useEffect(() => {
-        console.log('imageUrl 바뀜'
-        // , imageUrl
-        );
+        console.log('imageUrl 바뀜');
     }, [imageUrl]);
 
     // 이미지 GET
@@ -140,7 +137,6 @@ const MainBoard = () => {
         $link.click();
     }
 
-    // const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
     const rand = Math.floor((Math.random()*(100000000-10000000))+10000000);
 
     const handleSubmit = async (e) => {
@@ -202,15 +198,13 @@ const MainBoard = () => {
     const getData_reverse = (endReverse) => {
         setEndReverse(endReverse);
         setCropURLstr(endReverse);
-        // setImageUrl(canvasId.current.toDataURL()); 
+        setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg4);
     }
     const getData_turn = (endTurn) => {
         setEndTurn(endTurn);
         setCropURLstr(endTurn);
-        // console.log(endTurn);
-        setImageUrl(endTurn);
-        // setImageUrl(canvasId.current.toDataURL()); 
+        setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg5);
     }
 
@@ -258,14 +252,13 @@ const MainBoard = () => {
                 var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+                console.log(image);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             };
 
-            // console.log("MainBoard에서 image state값", image);
             image.addEventListener('load', (e) => {
+                console.log('image.addEventListener');
                 drawImageData(image, ctx);
-
-                console.log('maindboard-image.addEventListener 돌아감', image.src);
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
                 cPush();
@@ -601,7 +594,7 @@ const MainBoard = () => {
     const [cPushStep, setCPushStep] = useState(-1);
 
     useEffect(() => {
-        console.log('ussEffect 돌아감');
+        console.log('cPushStep ussEffect 돌아감');
 
         if (cStep < cPushArray.length && cStep !== -1) {
             setCStep(cPushArray.length);
@@ -609,16 +602,20 @@ const MainBoard = () => {
 
         if (imageUrl !== null) {
             console.log('if문 돌아감');
-            cPushArray.push(imageUrl); // 이미지 데이터
+            cPushArray.push(imageUrl); // 이미지 데이터 TODO
+            // cPushArray.push(canvasId.current.toDataURL());
         }
 
         // console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
-        // console.log('cPush Test',cPushArray[cPushArray.length-1]);
+        console.log('cPush Test',cPushArray[cPushArray.length-1]);
     }, [cPushStep]);
+
+    // useEffect(() => {
+    //     console.log('cPushArray 바뀜!!!!!!', cPushArray[cPushArray.length-1]);
+    // }, [cPushArray.length]);
 
     useEffect(() => {
         console.log('cstep useEffect : ', cStep, cPushArray.length);
-        // console.log(document.getElementById('canvasID').toDataURL());
     }, [cStep]);
     
     const cPush = () => {
@@ -630,17 +627,17 @@ const MainBoard = () => {
     const cUndo = () => {
         console.log('undo');
 
-        if (cStep<cPushArray.length) { 
-            // 마지막이 push가 안 되는 에러를 위한 조건문
-            // setImageUrl(canvasId.current.toDataURL());
+        // if (cStep<cPushArray.length) { 
+        //     // 마지막이 push가 안 되는 에러를 위한 조건문
+        //     // setImageUrl(canvasId.current.toDataURL());
+        //     console.log('cUndo if문');
+        //     cPushArray.push(imageUrl);
+        // }
 
-            cPushArray.push(imageUrl);
-        }
-
-        if (cStep >= 0) {
-            setCStep(cStep => cStep - 1);
+        if (cStep > 0) {
             var canvasPic = new Image();
             canvasPic.src = cPushArray[cStep-1];
+            console.log(canvasPic.src);
             canvasPic.onload = function() {
                 context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
 
@@ -650,8 +647,10 @@ const MainBoard = () => {
                 var ratio  = Math.min ( vRatio, hRatio );
                 var centerShift_x = ( canvasArea.width - canvasPic.width*ratio ) / 2;
                 var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;
+                context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
                 context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
             }
+            setCStep(cStep => cStep - 1);
         }
     }
 
@@ -699,9 +698,9 @@ const MainBoard = () => {
         context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
 
         // cPushArray 배열 초기화 (undo, redo, reset 용)
-        setCPushArray([]);
-        setCStep(-1);
-        setCPushStep(-1);
+        // setCPushArray([]);
+        // setCStep(-1);
+        // setCPushStep(-1);
     }
     
     return (

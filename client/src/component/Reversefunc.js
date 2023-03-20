@@ -69,12 +69,15 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
         console.log(image.width, image.height);
         ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
+        
+        // 종료 후 두 번 돌아가고 꼬이는 문제가 축을 한번 더 바꿔주면 해결됨. 이유는 모르겠음 ...
+        ctx.scale(-1, 1); // 좌우반전 (X축)
+        ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
+
         // const reverseImg = canvas.toDataURL('image/png');
         // getData_reverse(reverseImg);
-
         ctx.restore();
         setResetCount(resetCount+1); // 최초 1회 이후엔 reset돌아가지 않게
-        // console.log('2',image.width);
     };
 
     function drawimageReverse_v(ctx, image){
@@ -96,6 +99,10 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         ctx.scale(1, -1); // 상하반전 (Y축)
         ctx.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
         ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
+        
+        ctx.scale(1, -1); // 상하반전 (Y축)
+        ctx.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
+        
         // const reverseImg = canvas.toDataURL('image/png');
         // getData_reverse(reverseImg);
         ctx.restore();
