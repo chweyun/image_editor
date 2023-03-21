@@ -158,6 +158,7 @@ const MainBoard = () => {
     const [endFilter, setEndFilter] = useState();
     const [endReverse, setEndReverse] = useState();
     const [endTurn, setEndTurn] = useState();
+    const [shapeInfo, setShapeInfo] = useState(false);
 
     const [updateURL, setUpdateURL] = useState();
     const [cropURLstr, setCropURLstr] = useState();
@@ -197,6 +198,9 @@ const MainBoard = () => {
         setCropURLstr(endTurn);
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg5);
+    }
+    const getData_shapeInfo = (shapeInfo) => {
+        setShapeInfo(shapeInfo);
     }
 
     // console.log("페인트함수 사용하고 나서 cropURLstr변수값", cropURLstr);
@@ -775,10 +779,12 @@ const MainBoard = () => {
                                         getIsClr={getIsClr}
                                         getIsOkClicked={getIsOkClicked}
                                     /> : null }
-                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint}/> : null}
+                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint} shapeInfo={shapeInfo} setShapeInfo={setShapeInfo}/> : null}
                     {selectShape ? <Shapefunc 
                                         getShapeColor={getShapeColor}
                                         getIsShape={getIsShape}
+                                        getData_shapeInfo={getData_shapeInfo}
+                                        ctx={props.ctx}
                                     /> : null}
                     <img id='loadImage' src={brush} style={{display: 'none'}}/>
                     <img id='loadImage_crop' src={endCrop} style={{display: 'none'}}/>

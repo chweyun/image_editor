@@ -9,7 +9,7 @@ import { ReactComponent as ShapeTriangleIcon } from "../Image/shapeTriangle.svg"
 // css 파일
 import './Shapefunc.css';
 
-const Shapefunc = ( {getShapeColor, getIsShape} ) => {
+const Shapefunc = ( {getShapeColor, getIsShape, ctx, getData_shapeInfo} ) => {
 
     const [isSelected, setIsSelected] = useState('');
     const colorInfo1 = useRef([]);
@@ -29,6 +29,10 @@ const Shapefunc = ( {getShapeColor, getIsShape} ) => {
             colorInfo3.current.style.fill = updatedColor.hex;
         }
     }
+
+    // ctx.stroke = '#00000000';
+    ctx.stroke = 'none';
+    getData_shapeInfo(true);
 
     return (
         <div className="sideline">
