@@ -27,7 +27,7 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
     const onClickEndReverse = () => {
 
         // const reverseImg = document.getElementById('canvasID').toDataURL('image/png');
-        const reverseImg = document.getElementById('source').src; //todo
+        const reverseImg = document.getElementById('source').src;
 
         getData_reverse(reverseImg);
         setResetCount(0); // 반전툴 사용 이후 또 다시 회전툴 사용 - 반전툴 사용 플로우로 툴 사용할 경우 reset안해주면 또 에러나니까 종료할땐 0으로 초기화시켜줘서 다시 회전툴 사용 이후 들어올때 또 최초 1회엔 reset 돌아가도록 

@@ -202,7 +202,6 @@ const MainBoard = () => {
         console.log(canvasId.current.width, canvasId.current.height);
         canvasId.current.style.width = `${sizeW}px`;
         canvasId.current.style.height = `${sizeH}px`;
-        //todo
     }
     const getData_filter = (endFilter) => {
         setEndFilter(endFilter);
@@ -474,7 +473,6 @@ const MainBoard = () => {
           // 클릭한 위치로 textarea 이동
           posX = e.clientX;
           posY = e.clientY;
-        //   console.log(posX, posY);
           inputbox.style.left = posX - 75 + "px";
           inputbox.style.top = posY - 40 + "px";
         }
@@ -489,9 +487,7 @@ const MainBoard = () => {
           const tmp = canvas.getBoundingClientRect();
           const tmpX = (posX - tmp.left) * (canvas.width / tmp.width);
           const tmpY = (posY - tmp.top) * (canvas.height / tmp.height);
-  
           drawText(this.value, tmpX - 220, tmpY - 105);
-  
           document.body.removeChild(textbox);
           hasInput = false;
         }
@@ -612,6 +608,7 @@ const MainBoard = () => {
     const [cPushArray, setCPushArray] = useState([]);
     const [cStep, setCStep] = useState(-1);
     const [cPushStep, setCPushStep] = useState(-1);
+    const [cPushSize, setCPushSize] = useState([]);
 
     useEffect(() => {
         console.log('cPushStep ussEffect 돌아감');
@@ -623,6 +620,7 @@ const MainBoard = () => {
         if (imageUrl !== null) {
             console.log('if문 돌아감');
             cPushArray.push(imageUrl); // 이미지 데이터 TODO
+            console.log(cPushSize);
             // cPushArray.push(canvasId.current.toDataURL());
         }
 
@@ -640,6 +638,7 @@ const MainBoard = () => {
     
     const cPush = () => {
         console.log('push');
+        cPushSize.push([canvasId.current.width, canvasId.current.height]);
         setCStep(prev => prev+1);
         setCPushStep(prev => prev+1);
     }
@@ -655,6 +654,11 @@ const MainBoard = () => {
         // }
 
         if (cStep > 0) {
+            canvasId.current.width = cPushSize[cStep-1][0];
+            canvasId.current.height = cPushSize[cStep-1][1];
+            canvasId.current.style.width = `${cPushSize[cStep-1][0]}px`;
+            canvasId.current.style.height = `${cPushSize[cStep-1][1]}px`;
+
             var canvasPic = new Image();
             canvasPic.src = cPushArray[cStep-1];
             console.log(canvasPic.src);
@@ -681,6 +685,11 @@ const MainBoard = () => {
             console.log('redo if');
             setCStep(cStep => cStep + 1);
 
+            canvasId.current.width = cPushSize[cStep+1][0];
+            canvasId.current.height = cPushSize[cStep+1][1];
+            canvasId.current.style.width = `${cPushSize[cStep+1][0]}px`;
+            canvasId.current.style.height = `${cPushSize[cStep+1][1]}px`;
+
             var canvasPic = new Image();
             canvasPic.src = cPushArray[cStep + 1];
             canvasPic.onload = function() {
@@ -695,7 +704,12 @@ const MainBoard = () => {
 
         var canvasPic = new Image();
         canvasPic.src = cPushArray[0];
-        canvasPic.onload = function() {
+        canvasPic.onload = function() {           
+            canvasId.current.width = cPushSize[0][0];
+            canvasId.current.height = cPushSize[0][1];
+            canvasId.current.style.width = `${cPushSize[0][0]}px`;
+            canvasId.current.style.height = `${cPushSize[0][1]}px`;
+
             context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
 
             var canvasArea = document.getElementById('canvasID');
@@ -710,6 +724,7 @@ const MainBoard = () => {
 
         setCStep(0);
         cPushArray.length = 1;
+        cPushSize.length = 1;
     }
 
     // 새 프로젝트 기능
