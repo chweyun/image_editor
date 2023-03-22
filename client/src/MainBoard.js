@@ -226,8 +226,8 @@ const MainBoard = () => {
     };
 
     // TopBar.js
-
     const onChangeImage = (e) => {
+        console.log('onchange!!!!!!!!!!!');
         const reader = new FileReader();
         const file = imgRef.current.files[0];
 
@@ -698,13 +698,7 @@ const MainBoard = () => {
 
     // 새 프로젝트 기능
     const newProject = () => {
-        // canvas 초기화
-        context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
-
-        // cPushArray 배열 초기화 (undo, redo, reset 용)
-        // setCPushArray([]);
-        // setCStep(-1);
-        // setCPushStep(-1);
+        window.location.replace("/")
     }
     
     return (

@@ -45,9 +45,6 @@ function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn, setSelectTurn,
 
         setRotate(true);
         setRCnt(0);
-
-        var canvasArea = ctx.canvas ;
-        ctx.translate(canvasArea.width/2, -canvasArea.height/2);
     }
 
     function drawimageRotate_h(ctx, image, degrees) {
@@ -61,11 +58,12 @@ function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn, setSelectTurn,
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;
         // 회전시켜서 캔버스 리렌더링됨 -> 뒤에 캔버스 백그라운드에는 필터 제거하고 회색 컬러 채워주기
         // 이미지에는 앞서 입혀준 필터값이 있으면 해당 필터 다시 입혀주기 
-        // ctx.filter = 'none';
+        ctx.filter = 'none';
         
         ctx.clearRect(0,0,1152,528);
         // ctx.fillStyle = "#D3D3D3";
         // ctx.fillRect(0,0,canvasArea.width, canvasArea.height);
+        console.log(canvasArea.width/2, canvasArea.height/2);
         ctx.translate(canvasArea.width/2, canvasArea.height/2); 
         ctx.rotate(degrees * Math.PI/180);
         ctx.translate(-canvasArea.width/2, -canvasArea.height/2); // 회전후 - 붙여서 회전 축 다시 리셋해줘야 동일한 축 중심으로 회전 계속 함
@@ -85,11 +83,14 @@ function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn, setSelectTurn,
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;
         ctx.filter = 'none';
-        ctx.fillStyle = "#D3D3D3";
+        // ctx.fillStyle = "#D3D3D3";
+
         // 세로가 더 긴 이미지의 경우 이유를 모르겠지만... fillRect시 캔버스 크기가 작은지 이전 이미지가 완전히 가려지지 않음.
         // 그래서 clearRect를 주고 임의의 좌표.. 크기로 캔버스를 지워줬는데..되긴됨.. 근데 이제 왜 되는지는 모르는...
-        ctx.clearRect(0,-(image.width)*2,canvasArea.width*5, canvasArea.height*5);
-        ctx.fillRect(0,0,canvasArea.width, canvasArea.height);  
+        // ctx.clearRect(0,-(image.width)*2,canvasArea.width*5, canvasArea.height*5);
+        // ctx.fillRect(0,0,canvasArea.width, canvasArea.height);  
+        ctx.clearRect(0,0,1152,528);
+
         ctx.translate(canvasArea.width/2, canvasArea.height/2); 
         ctx.rotate(degrees * Math.PI/180);
         ctx.translate(-canvasArea.width/2, -canvasArea.height/2);
