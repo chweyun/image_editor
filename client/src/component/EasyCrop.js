@@ -4,7 +4,7 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "./Crop";
 import './EasyCrop.css';
 
-const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_Y}) => {
+const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_Y, getData_cropSize, canvasId }) => {
   //console.log("EasyCrop안에서 image", image);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -42,6 +42,9 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
   function drawCropImage (canvas, ctx, croppedImageURL) { // 크롭한 이미지 캔버스에 그리기
     //setEndCrop((prev) => !prev);
     ctx.reset();
+
+    getData_cropSize(croppedImageURL.width, croppedImageURL.height);
+
     var canvasArea = ctx.canvas ;
     var hRatio = canvasArea.width  / croppedImageURL.width    ;
     var vRatio =  canvasArea.height / croppedImageURL.height  ;

@@ -49,6 +49,7 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelect
     const onClickend = () => {
         ctx.filter = 'none';
         const filterImg = canvas.toDataURL('image/png');
+        console.log(image.width, image.height);
         getData_filter(filterImg);
         setSelectFilter(false);
         setClickFilter(false);
@@ -57,6 +58,7 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelect
     var loadingImg = document.getElementById("loadImage"); 
 
     function ongrayscale (canvas, ctx, image) {
+        console.log(image.width, image.height);
         ctx.reset();
         ctx.save();
         {grayscale ? ctx.filter = 'grayscale()' : ctx.filter = 'none'};
@@ -136,11 +138,6 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelect
         ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
         ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     };
-
-    //ctx.restore()
-
-    // console.log("Filterfunc / image", image);
-    // console.log("Filterfunc / loadingImg", loadingImg);
 
     return (
         <div>
