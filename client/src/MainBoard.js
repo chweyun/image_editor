@@ -169,7 +169,6 @@ const MainBoard = () => {
     const [endFilter, setEndFilter] = useState();
     const [endReverse, setEndReverse] = useState();
     const [endTurn, setEndTurn] = useState();
-    const [shapeInfo, setShapeInfo] = useState(false);
 
     const [updateURL, setUpdateURL] = useState();
     const [cropURLstr, setCropURLstr] = useState();
@@ -223,9 +222,6 @@ const MainBoard = () => {
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg5);
     }
-    const getData_shapeInfo = (shapeInfo) => {
-        setShapeInfo(shapeInfo);
-    }
 
     const openModalStore = () => {
         setModalStoreOpen(true);
@@ -276,8 +272,8 @@ const MainBoard = () => {
 
             image.addEventListener('load', (e) => {
                 // canvas 사이즈를 이미지로 맞춰 캔버스가 이미지로 인식되는 문제, 회전시 점점 이미지가 작아지는 문제 해결
-                canvasId.current.width = document.getElementById('source').width;
-                canvasId.current.height = document.getElementById('source').height;
+                // canvasId.current.width = document.getElementById('source').width;
+                // canvasId.current.height = document.getElementById('source').height;
                 canvasId.current.style.width = `${document.getElementById('source').width}px`;
                 canvasId.current.style.height = `${document.getElementById('source').height}px`;
                 console.log(canvasId.current.width, canvasId.current.height);
@@ -794,11 +790,10 @@ const MainBoard = () => {
                                         getIsClr={getIsClr}
                                         getIsOkClicked={getIsOkClicked}
                                     /> : null }
-                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint} shapeInfo={shapeInfo} setShapeInfo={setShapeInfo}/> : null}
+                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint} selectPaint={selectPaint}/> : null}
                     {selectShape ? <Shapefunc 
                                         getShapeColor={getShapeColor}
                                         getIsShape={getIsShape}
-                                        getData_shapeInfo={getData_shapeInfo}
                                         ctx={props.ctx}
                                     /> : null}
                     <img id='loadImage' src={brush} style={{display: 'none'}}/>

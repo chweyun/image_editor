@@ -4,7 +4,7 @@ import './Paintfunc.css';
 import { GithubPicker } from 'react-color';
 
 
-function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint, shapeInfo, setShapeInfo} ) {
+function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint, selectPaint} ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -27,26 +27,19 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
 
     const [selectedColor, setSelectedColor] = useState('#00000000');
     const [onPaint, setOnPaint] = useState(true);
-
-    let onColor = 1;
     
     // 색상 변경 후 호출 및 적용할 함수(onChange로 대체 가능하다)
     const handleChangeComplete = (color) => {
         ondrawImg(canvas, ctx, image); // drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
-        drawTool(canvas, ctx, color.hex);
+        drawTool(canvas, ctx, color.hex, 4);
         // getData_lineColor(color.hex);
         setcolorPicker((prev) => !prev);
 
-        if(shapeInfo == true) { // ㅎr Shapefunc컴포넌트에서 stroke 투명색으로 바꿔주면 브러쉬 안그려지는데 대신 또 안꺼진다 ㅠ ;;; 아오
-            ctx.stroke = color.hex;
-        }
     };
     
 
     const onClickcolor = () => {
         setcolorPicker((prev) => !prev);
-
-        console.log("onColor변수값", onColor);
     }
 
     const onClickweight = () => {
@@ -54,12 +47,8 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
     }
 
     const onClickend = () => {
-        console.log("onColor변수값(end시점에 setOnColor 써주기 직전)", onColor);
-        onColor = 0;
-        console.log("onColor변수값(end시점)", onColor);
         ondrawImg(canvas, ctx, image); // (마찬가지) drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
-        drawTool(canvas, ctx, '#00000000');
-        setShapeInfo(false);
+        drawTool(canvas, ctx, '#0000000', 0.001); // 여기서 아예 안보이게끔 어케 조치를 취해야겠음
 
         setClickPaint(false);
         setSelectPaint(false);
@@ -80,7 +69,7 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         setcolorWeight((prev) => !prev);
     }
 
-    function drawTool (canvas, ctx, lineColor) {
+    function drawTool (canvas, ctx, lineColor, lineWidth) {
         ctx.filter = 'none' // 필터 씌웠을 경우 브러쉬는 필터 적용을 받지 않아야 함 
 
         let drawing = false;
@@ -93,7 +82,7 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         let startX = 0;
         let startY = 0;
 
-        ctx.lineWidth = 4;
+        ctx.lineWidth = lineWidth;
         ctx.strokeStyle = lineColor;
 
 
