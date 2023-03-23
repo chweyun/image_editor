@@ -76,13 +76,15 @@ const MainBoard = () => {
     const [imageFile, setImageFile] = useState(null);
     const imgRef = useRef();
 
+    const [orgWH, setOrgWH] = useState([0, 0]);
+    const [isOrgWH, setIsOrgWH] = useState(false);
+
     useEffect(() => { 
         /* ctx 가 null or undefined로 뜨는 오류 해결 (임시로 ctx 변수 대신 context.current 사용) */
         if (canvasId.current) { 
             context.current = canvasId.current.getContext("2d"); 
         } 
     }, []);
-
 
     useEffect(() => {
         console.log('imageUrl 바뀜');
@@ -185,10 +187,22 @@ const MainBoard = () => {
         setUpdateURL(loadingImg);
     }
     const getData_crop = (endCrop) => { // 예외처리때문에 자식 props 전달용 
+        console.log(canvasId.current.width);
+
         setEndCrop(endCrop);  
         setCropURLstr(endCrop);  
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg2);  
+
+        console.log(document.getElementById('source').width, document.getElementById('source').height);
+    }
+    const getData_cropSize = (sizeW, sizeH) => {
+        canvasId.current.width = sizeW;
+        canvasId.current.height = sizeH;
+        console.log(sizeH, sizeW);
+        console.log(canvasId.current.width, canvasId.current.height);
+        canvasId.current.style.width = `${sizeW}px`;
+        canvasId.current.style.height = `${sizeH}px`;
     }
     const getData_filter = (endFilter) => {
         setEndFilter(endFilter);
@@ -201,6 +215,7 @@ const MainBoard = () => {
         setCropURLstr(endReverse);
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg4);
+        console.log(document.getElementById('source').width);
     }
     const getData_turn = (endTurn) => {
         setEndTurn(endTurn);
@@ -227,7 +242,6 @@ const MainBoard = () => {
 
     // TopBar.js
     const onChangeImage = (e) => {
-        console.log('onchange!!!!!!!!!!!');
         const reader = new FileReader();
         const file = imgRef.current.files[0];
 
@@ -256,13 +270,19 @@ const MainBoard = () => {
                 var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-                console.log(image);
+                // console.log(image);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             };
 
             image.addEventListener('load', (e) => {
-                console.log('image.addEventListener');
-                drawImageData(image, ctx);
+                // canvas 사이즈를 이미지로 맞춰 캔버스가 이미지로 인식되는 문제, 회전시 점점 이미지가 작아지는 문제 해결
+                canvasId.current.width = document.getElementById('source').width;
+                canvasId.current.height = document.getElementById('source').height;
+                canvasId.current.style.width = `${document.getElementById('source').width}px`;
+                canvasId.current.style.height = `${document.getElementById('source').height}px`;
+                console.log(canvasId.current.width, canvasId.current.height);
+
+                drawImageData(image, ctx); 
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
                 cPush();
@@ -457,7 +477,6 @@ const MainBoard = () => {
           // 클릭한 위치로 textarea 이동
           posX = e.clientX;
           posY = e.clientY;
-        //   console.log(posX, posY);
           inputbox.style.left = posX - 75 + "px";
           inputbox.style.top = posY - 40 + "px";
         }
@@ -472,9 +491,7 @@ const MainBoard = () => {
           const tmp = canvas.getBoundingClientRect();
           const tmpX = (posX - tmp.left) * (canvas.width / tmp.width);
           const tmpY = (posY - tmp.top) * (canvas.height / tmp.height);
-  
           drawText(this.value, tmpX - 220, tmpY - 105);
-  
           document.body.removeChild(textbox);
           hasInput = false;
         }
@@ -589,13 +606,13 @@ const MainBoard = () => {
         setImageUrl(canvasId.current.toDataURL()); 
         // setUpdateURL(image);
         setCropURLstr(canvasId.current.toDataURL());  
-        
     }
 
     // undo, redo 기능
     const [cPushArray, setCPushArray] = useState([]);
     const [cStep, setCStep] = useState(-1);
     const [cPushStep, setCPushStep] = useState(-1);
+    const [cPushSize, setCPushSize] = useState([]);
 
     useEffect(() => {
         console.log('cPushStep ussEffect 돌아감');
@@ -607,11 +624,12 @@ const MainBoard = () => {
         if (imageUrl !== null) {
             console.log('if문 돌아감');
             cPushArray.push(imageUrl); // 이미지 데이터 TODO
+            console.log(cPushSize);
             // cPushArray.push(canvasId.current.toDataURL());
         }
 
         // console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
-        console.log('cPush Test',cPushArray[cPushArray.length-1]);
+        // console.log('cPush Test',cPushArray[cPushArray.length-1]);
     }, [cPushStep]);
 
     // useEffect(() => {
@@ -624,6 +642,7 @@ const MainBoard = () => {
     
     const cPush = () => {
         console.log('push');
+        cPushSize.push([canvasId.current.width, canvasId.current.height]);
         setCStep(prev => prev+1);
         setCPushStep(prev => prev+1);
     }
@@ -639,6 +658,11 @@ const MainBoard = () => {
         // }
 
         if (cStep > 0) {
+            canvasId.current.width = cPushSize[cStep-1][0];
+            canvasId.current.height = cPushSize[cStep-1][1];
+            canvasId.current.style.width = `${cPushSize[cStep-1][0]}px`;
+            canvasId.current.style.height = `${cPushSize[cStep-1][1]}px`;
+
             var canvasPic = new Image();
             canvasPic.src = cPushArray[cStep-1];
             console.log(canvasPic.src);
@@ -665,6 +689,11 @@ const MainBoard = () => {
             console.log('redo if');
             setCStep(cStep => cStep + 1);
 
+            canvasId.current.width = cPushSize[cStep+1][0];
+            canvasId.current.height = cPushSize[cStep+1][1];
+            canvasId.current.style.width = `${cPushSize[cStep+1][0]}px`;
+            canvasId.current.style.height = `${cPushSize[cStep+1][1]}px`;
+
             var canvasPic = new Image();
             canvasPic.src = cPushArray[cStep + 1];
             canvasPic.onload = function() {
@@ -679,7 +708,12 @@ const MainBoard = () => {
 
         var canvasPic = new Image();
         canvasPic.src = cPushArray[0];
-        canvasPic.onload = function() {
+        canvasPic.onload = function() {           
+            canvasId.current.width = cPushSize[0][0];
+            canvasId.current.height = cPushSize[0][1];
+            canvasId.current.style.width = `${cPushSize[0][0]}px`;
+            canvasId.current.style.height = `${cPushSize[0][1]}px`;
+
             context.current.clearRect(0,0,canvasId.current.width, canvasId.current.height);
 
             var canvasArea = document.getElementById('canvasID');
@@ -694,6 +728,7 @@ const MainBoard = () => {
 
         setCStep(0);
         cPushArray.length = 1;
+        cPushSize.length = 1;
     }
 
     // 새 프로젝트 기능
@@ -747,27 +782,8 @@ const MainBoard = () => {
                     <img src={selectIcon} className="side4-3" onClick={() => onselect()} />
                 </div>
                 <div style={{height: '0px'}}> {/* 이 부분 한강생겨서 height값 조정해서 없애주기 */}
-                    {/* {console.log('test2', props.canvas)}
-                    {console.log('test2', props.ctx)}
-                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL}/> : null}
-                    {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageUrl={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr}/> : null}
-                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage}/> : null}
-                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse}/> : null}
-                    {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL}/> : null}
-                    <img id='loadImage' src={brush} style={{display: 'none'}}/>
-                    <img id='loadImage_crop' src={endCrop} style={{display: 'none'}}/> {/*여기서 위에 페인트이미지는 잘 뜨는데 크롭이미지는 하얗게 뜨고 이미지가 안뜬다. 프롭스데이터 넘어올때 뭔가 잘못된 듯. 일단 여기서 크롭이미지가 잘 뜨게 해야함
-                    <img id='loadImage_filter' src={endFilter} style={{display: 'none'}}/>
-                    <img id='loadImage_reverse' src={endReverse} style={{display: 'none'}}/>
-                    <img id='loadImage_turn' src={endTurn} style={{display: 'none'}}/>
-                        </div>
-                    </div>
-                    <div className="App" style={{display: 'none'}}>
-                        <header className="App-header">
-                            Upload Image
-                        </header>
-                    </div> */}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
-                    {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr}/> : null}
+                    {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr} getData_cropSize={getData_cropSize} canvasId={canvasId}/> : null}
                     {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn}/> : null}
                     {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse}/> : null}
                     {selectText ? <Textfunc 

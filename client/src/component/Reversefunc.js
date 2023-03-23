@@ -6,19 +6,15 @@ import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
 function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
 
-    // console.log("Reverse컴포넌트 돌아감");
-
     const [reverse_h, setReverse_h] = useState(true);
     const [reverse_v, setReverse_v] = useState(true);
     const [resetCount, setResetCount] = useState(0);
 
     if(updateURL != null) {
-        console.log('if문 ㅇㅇㅇ');
         image = updateURL;
     }
 
     const onClick_HReverse = () => { // 수평 기준 좌우 반전
-        console.log('onClick_HReverse');
         setReverse_h((prev) => !prev);
         drawimageReverse_h(ctx, image);
     }
@@ -29,19 +25,10 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
     }
 
     const onClickEndReverse = () => {
-        // const reverseImg = canvas.toDataURL('image/png');
 
-        // reverseCanvas.width = image.width;
-        // reverseCanvas.height = image.height;
-        const reverseImg = document.getElementById('canvasID').toDataURL('image/png');
+        // const reverseImg = document.getElementById('canvasID').toDataURL('image/png');
+        const reverseImg = document.getElementById('source').src;
 
-        // const $link = document.createElement("a");
-        // $link.download = 'tmp.png';
-        // $link.href = reverseImg;
-        // $link.click();
-
-
-        // todo 여기서 사이즈 조절이 안 됨
         getData_reverse(reverseImg);
         setResetCount(0); // 반전툴 사용 이후 또 다시 회전툴 사용 - 반전툴 사용 플로우로 툴 사용할 경우 reset안해주면 또 에러나니까 종료할땐 0으로 초기화시켜줘서 다시 회전툴 사용 이후 들어올때 또 최초 1회엔 reset 돌아가도록 
 
@@ -50,7 +37,6 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
     }
 
     function drawimageReverse_h(ctx, image){
-        console.log('1',image.width);
         if(resetCount == 0) { // 회전툴을 사용하고 넘어온 경우 캔버스의 축이 회전기준으로 세팅되어있어서 회전툴 사용이후 반전툴 최초사용땐 reset으로 캔버스 세팅을 싹 지워줄것. 최초아니고 계속 툴 사용할때마다 지워지게 하면 정상적으로 이미지 draw가 안되니까 최초 1회만
             ctx.reset();
         }
@@ -67,7 +53,6 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         ctx.filter = filterType;
         ctx.scale(-1, 1); // 좌우반전 (X축)
         ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
-        console.log(image.width, image.height);
         ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
         
         // 종료 후 두 번 돌아가고 꼬이는 문제가 축을 한번 더 바꿔주면 해결됨. 이유는 모르겠음 ...
@@ -81,7 +66,6 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
     };
 
     function drawimageReverse_v(ctx, image){
-        console.log('drawimageReverse_v');
         if(resetCount == 0) {
             ctx.reset();
         }
@@ -107,7 +91,6 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         // getData_reverse(reverseImg);
         ctx.restore();
         setResetCount(resetCount+1);
-        // console.log('4',image.width);
     };
 
     return (

@@ -10,14 +10,12 @@ import Cropper from 'react-easy-crop';
 import './Cropfunc.css';
 import { ReactComponent as CropIcon } from "../Image/crop.svg"
 
-function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cropURLstr} ) { // image 밑에서 중복이라 일단 지워놨음 
+function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cropURLstr, getData_cropSize, canvasId} ) { // image 밑에서 중복이라 일단 지워놨음 
 
     if(cropURLstr != null) {
         imageUrl = cropURLstr;
     }
 
-    // console.log("Cropfunc에서 imageUrl", imageUrl);
-    // console.log("Cropfunc에서 cropURLstr", cropURLstr);
     const [crop1, setCrop1] = useState(false);
     const [crop2, setCrop2] = useState(false);
     const [crop3, setCrop3] = useState(false);
@@ -50,7 +48,7 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
             {crop1 == true
             ? <div className="App"> {/* 이 App클래스 가진 div때문에 아래 영역 넓어짐 */}
                 <header>
-                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={1} aspect_Y={1}/>
+                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={1} aspect_Y={1} getData_cropSize={getData_cropSize} canvasId={canvasId}/>
                     {/* EasyCrop - Cropfunc - MainBoard - Turnfunc
                         (자식)  -  (부모)  -   (부모)  -  (자식) */}
                 </header>
@@ -61,7 +59,7 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
             {crop2 == true
             ? <div className="App">
                 <header>
-                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={4} aspect_Y={3}/>
+                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={4} aspect_Y={3} getData_cropSize={getData_cropSize} canvasId={canvasId}/>
                     {/* EasyCrop - Cropfunc - MainBoard - Turnfunc
                         (자식)  -  (부모)  -   (부모)  -  (자식) */}
                 </header>
@@ -72,7 +70,7 @@ function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cr
             {crop3 == true
             ? <div className="App">
                 <header>
-                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={16} aspect_Y={9}/>
+                    <EasyCrop image={imageUrl} canvas={canvas} ctx={ctx} endCrop={endCrop} getData_crop={getData_crop} aspect_X={16} aspect_Y={9} getData_cropSize={getData_cropSize} canvasId={canvasId}/>
                     {/* EasyCrop - Cropfunc - MainBoard - Turnfunc
                         (자식)  -  (부모)  -   (부모)  -  (자식) */}
                 </header>
