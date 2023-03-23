@@ -192,8 +192,6 @@ const MainBoard = () => {
         setCropURLstr(endCrop);  
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg2);  
-
-        console.log(document.getElementById('source').width, document.getElementById('source').height);
     }
     const getData_cropSize = (sizeW, sizeH) => {
         canvasId.current.width = sizeW;
@@ -214,15 +212,17 @@ const MainBoard = () => {
         setCropURLstr(endReverse);
         setImageUrl(canvasId.current.toDataURL()); 
         setUpdateURL(loadingImg4);
-        console.log(document.getElementById('source').width);
+        // console.log(document.getElementById('source').width);
     }
     const getData_turn = (endTurn) => {
         setEndTurn(endTurn);
         setCropURLstr(endTurn);
-        setImageUrl(canvasId.current.toDataURL()); 
+        // setImageUrl(canvasId.current.toDataURL());
         setUpdateURL(loadingImg5);
     }
-
+    const getImageUrl = () => {
+        setImageUrl(canvasId.current.toDataURL());
+    }
     const openModalStore = () => {
         setModalStoreOpen(true);
     };
@@ -235,6 +235,8 @@ const MainBoard = () => {
     const closeModalImport = () => {
         setModalImportOpen(false);
     };
+
+    var isSize = true;
 
     // TopBar.js
     const onChangeImage = (e) => {
@@ -259,6 +261,15 @@ const MainBoard = () => {
             setProps({canvas, ctx, image, imageUrl, canvasRef, context});
 
             function drawImageData(image, ctx) { 
+
+                if (isSize) {
+                    isSize = false;
+                    canvas.width = document.getElementById('source').width;
+                    canvas.height = document.getElementById('source').height;
+                    canvas.style.width = `${document.getElementById('source').width}px`;
+                    canvas.style.height = `${document.getElementById('source').height}px`;
+                }
+
                 var canvasArea = ctx.canvas ;
                 var hRatio = canvasArea.width  / image.width    ;
                 var vRatio =  canvasArea.height / image.height  ;
@@ -272,12 +283,6 @@ const MainBoard = () => {
 
             image.addEventListener('load', (e) => {
                 // canvas 사이즈를 이미지로 맞춰 캔버스가 이미지로 인식되는 문제, 회전시 점점 이미지가 작아지는 문제 해결
-                // canvasId.current.width = document.getElementById('source').width;
-                // canvasId.current.height = document.getElementById('source').height;
-                canvasId.current.style.width = `${document.getElementById('source').width}px`;
-                canvasId.current.style.height = `${document.getElementById('source').height}px`;
-                console.log(canvasId.current.width, canvasId.current.height);
-
                 drawImageData(image, ctx); 
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
@@ -620,17 +625,9 @@ const MainBoard = () => {
         if (imageUrl !== null) {
             console.log('if문 돌아감');
             cPushArray.push(imageUrl); // 이미지 데이터 TODO
-            console.log(cPushSize);
             // cPushArray.push(canvasId.current.toDataURL());
         }
-
-        // console.log('cStep, cPushArray.length : ',cStep, cPushArray.length);
-        // console.log('cPush Test',cPushArray[cPushArray.length-1]);
     }, [cPushStep]);
-
-    // useEffect(() => {
-    //     console.log('cPushArray 바뀜!!!!!!', cPushArray[cPushArray.length-1]);
-    // }, [cPushArray.length]);
 
     useEffect(() => {
         console.log('cstep useEffect : ', cStep, cPushArray.length);
@@ -780,7 +777,7 @@ const MainBoard = () => {
                 <div style={{height: '0px'}}> {/* 이 부분 한강생겨서 height값 조정해서 없애주기 */}
                     {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr} getData_cropSize={getData_cropSize} canvasId={canvasId}/> : null}
-                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn}/> : null}
+                    {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn} getImageUrl={getImageUrl}/> : null}
                     {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse}/> : null}
                     {selectText ? <Textfunc 
                                         getTxtColor={getTxtColor}
