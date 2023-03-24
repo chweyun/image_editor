@@ -264,10 +264,22 @@ const MainBoard = () => {
 
                 if (isSize) {
                     isSize = false;
-                    canvas.width = document.getElementById('source').width;
-                    canvas.height = document.getElementById('source').height;
-                    canvas.style.width = `${document.getElementById('source').width}px`;
-                    canvas.style.height = `${document.getElementById('source').height}px`;
+                    // canvas.width = document.getElementById('source').width;
+                    // canvas.height = document.getElementById('source').height;
+                    //밑에 두줄 변경해서 사이즈 조정해주기..?
+                    // canvas.style.width = `${document.getElementById('source').width}px`;
+                    // canvas.style.height = `${document.getElementById('source').height}px`;
+
+                    var hRatio = 1152  / document.getElementById('source').width;
+                    var vRatio =  528 / document.getElementById('source').height;
+                    var ratio  = Math.min ( hRatio, vRatio );
+                    var centerShift_x = ( 1152 - image.width*ratio ) / 2;
+                    var centerShift_y = ( 528 - image.height*ratio ) / 2;
+
+                    canvas.width = document.getElementById('source').width*ratio;
+                    canvas.height = document.getElementById('source').height*ratio;
+                    canvas.style.width = `${document.getElementById('source').width*ratio}px`;
+                    canvas.style.height = `${document.getElementById('source').height*ratio}px`;
                 }
 
                 var canvasArea = ctx.canvas ;

@@ -45,6 +45,17 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
 
     getData_cropSize(croppedImageURL.width, croppedImageURL.height);
 
+    var hRatio = 1152  / croppedImageURL.width;
+    var vRatio =  528 / croppedImageURL.height;
+    var ratio  = Math.min ( hRatio, vRatio );
+    var centerShift_x = ( 1152 - image.width*ratio ) / 2;
+    var centerShift_y = ( 528 - image.height*ratio ) / 2;
+
+    canvas.width = croppedImageURL.width*ratio;
+    canvas.height = croppedImageURL.height*ratio;
+    canvas.style.width = `${croppedImageURL.width*ratio}px`;
+    canvas.style.height = `${croppedImageURL.height*ratio}px`;
+
     var canvasArea = ctx.canvas ;
     var hRatio = canvasArea.width  / croppedImageURL.width    ;
     var vRatio =  canvasArea.height / croppedImageURL.height  ;
