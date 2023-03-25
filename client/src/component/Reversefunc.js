@@ -59,8 +59,8 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         ctx.scale(-1, 1); // 좌우반전 (X축)
         ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
 
-        // const reverseImg = canvas.toDataURL('image/png');
-        // getData_reverse(reverseImg);
+        const reverseImg = canvas.toDataURL('image/png');
+        getData_reverse(reverseImg);
         ctx.restore();
         setResetCount(resetCount+1); // 최초 1회 이후엔 reset돌아가지 않게
     };
@@ -87,8 +87,8 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         ctx.scale(1, -1); // 상하반전 (Y축)
         ctx.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
         
-        // const reverseImg = canvas.toDataURL('image/png');
-        // getData_reverse(reverseImg);
+        const reverseImg = canvas.toDataURL('image/png');
+        getData_reverse(reverseImg);
         ctx.restore();
         setResetCount(resetCount+1);
     };
