@@ -781,7 +781,7 @@ const MainBoard = () => {
                     <PaintIcon className={clickPaint ? ("iconStyle", "icon_select") : ("iconStyle", "icon_noneselect")} onClick={() => clickControl('Paint', clickPaint, setClickPaint, setSelectPaint)}/>
                     <ShapeIcon className={clickShape ? ("iconStyle", "shape_select") : ("iconStyle", "shape_noneselect")} onClick={() => clickControl('Shape', clickShape, setClickShape, setSelectShape)}/>
                 </div>
-                <div className="side4">
+                <div className="side4" style={{display: 'none'}}>
                     <EraserIcon className={clickEraser ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('Eraser', clickEraser, setClickEraser)}/>
                     <EraserAllIcon className={clickEraserAll ? ("iconStyle", "eraser_select") : ("iconStyle", "eraser_noneselect")} onClick={() => clickControl('EraserAll', clickEraserAll, setClickEraserAll)}/>
                     <img src={selectIcon} className="side4-3" onClick={() => onselect()} />

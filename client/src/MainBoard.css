@@ -45,7 +45,7 @@
     min-width: 250px;
 }
 .centertop1, .centertop2, .centertop3 {
-    width: 60px;
+    width: 55px;
     cursor:pointer;
 }
 
@@ -77,8 +77,13 @@
     height: 120px;
 }
 
-.side2, .side3 {
+.side2 {
     border-bottom: 3px solid #9FC2DE;
+    height: 170px;
+}
+
+.side3 {
+    border-bottom: none;
     height: 170px;
 }
 
