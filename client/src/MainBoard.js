@@ -607,7 +607,6 @@ const MainBoard = () => {
         else if (isShape == 'circle') {
             var radiusX = (e.clientX - bound.left) * (canvasId.current.width / bound.width) - pos[0];
             var radiusY = (e.clientY - bound.top) * (canvasId.current.height / bound.height) - pos[1];
-
             context.current.beginPath();
             context.current.ellipse(pos[0], pos[1], radiusX, radiusY, 0, 0, Math.PI*2);
             context.current.fill();
@@ -798,6 +797,7 @@ const MainBoard = () => {
                                         getIsSelected={getIsSelected}
                                         getIsClr={getIsClr}
                                         getIsOkClicked={getIsOkClicked}
+                                        ctx={props.ctx}
                                     /> : null }
                     {selectPaint ? <Paintfunc canvas={props.canvas} ctx={props.ctx} image={props.image} canvasRef={props.canvasRef} brush={brush} getData={getData} updateURL={updateURL} setSelectPaint={setSelectPaint} setClickPaint={setClickPaint} selectPaint={selectPaint}/> : null}
                     {selectShape ? <Shapefunc 

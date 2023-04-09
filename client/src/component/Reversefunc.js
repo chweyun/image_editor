@@ -6,6 +6,8 @@ import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
 function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
 
+    ctx.lineWidth = 0.01;
+
     const [reverse_h, setReverse_h] = useState(true);
     const [reverse_v, setReverse_v] = useState(true);
     const [resetCount, setResetCount] = useState(0);

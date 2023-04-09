@@ -4,7 +4,9 @@ import { ChromePicker } from 'react-color';
 // css 파일
 import './Textfunc.css';
 
-const Textfunc = ( {getTxtColor, getIsItalic, getIsBold, getIsSelected, getIsClr, getIsOkClicked} ) => {
+const Textfunc = ( {getTxtColor, getIsItalic, getIsBold, getIsSelected, getIsClr, getIsOkClicked, ctx} ) => {
+
+    ctx.lineWidth = 0.01;
 
     const [isItalic, setIsItalic] = useState(false);
     const [isBold, setIsBold] = useState(false);

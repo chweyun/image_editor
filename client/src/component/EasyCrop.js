@@ -81,7 +81,7 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
       <div /* 자를영역*그외 어두운 부분 포함 */
         className="container"
         style={{
-          display: image === null || croppedImage !== null ? "none" : "block"
+          display: image === null || croppedImage !== null ? "none" : "block",
         }}
       >
         <div className="crop-container"> {/* 자를 영역 */}

@@ -7,6 +7,7 @@ import { ReactComponent as TurnIcon } from "../Image/turn.svg"
 function Turnfunc ( {canvas, ctx, image, updateURL, getData_turn, setSelectTurn, setClickTurn, getImageUrl} ) {
 
     //ctx.save(); // 얘 쓰면 회전이 하나만 되고 멈춤 뭘까
+    ctx.lineWidth = 0.01;
 
     const [rotate, setRotate] = useState(true);
 

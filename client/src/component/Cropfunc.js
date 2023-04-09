@@ -11,6 +11,7 @@ import './Cropfunc.css';
 import { ReactComponent as CropIcon } from "../Image/crop.svg"
 
 function Cropfunc ( {canvas, ctx, imageUrl, canvasRef, endCrop, getData_crop, cropURLstr, getData_cropSize, canvasId} ) { // image 밑에서 중복이라 일단 지워놨음 
+    ctx.lineWidth = 0.01;
 
     if(cropURLstr != null) {
         imageUrl = cropURLstr;

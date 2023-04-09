@@ -4,6 +4,8 @@ import './Filterfunc.css';
 
 function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelectFilter, setClickFilter } ) {
 
+    ctx.lineWidth = 0.01;
+
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
         console.log(image.width, image.height);
