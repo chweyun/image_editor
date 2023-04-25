@@ -3,12 +3,17 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import './Paintfunc.css';
 import { GithubPicker } from 'react-color';
 
+import { ReactComponent as BoldIcon } from "../Image/bold.svg";
+import { ReactComponent as ShapeCircleIcon } from "../Image/shapeCircle.svg"
+
 
 function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint, selectPaint} ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
     }
+
+    let [paintColor, setPaintColor] = useState();
 
     function ondrawImg (canvas, ctx, image) { // 회전툴이나 반전툴을 사용한 이후 페인트 툴을 사용할 경우 캔버스 축이 돌아가 있어서 reset안해주면 브러쉬가 회전&반전된 축 기준으로 좌우반전 혹은 상하반전, 90도 회전되어 그려짐 -> 최초에 reset해서 축을 원래대로 돌린 다음 가장 최근 업데이트 된 이미지를 캔버스에 그려주는 함수
         ctx.reset();
@@ -34,7 +39,7 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         drawTool(canvas, ctx, color.hex, 4);
         // getData_lineColor(color.hex);
         setcolorPicker((prev) => !prev);
-
+        setPaintColor(color.hex);
     };
     
 
@@ -126,8 +131,18 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         <div>
             <div className='sideline'>
                 { colorPicker ? <GithubPicker className="colorpicker" color={selectedColor} onChangeComplete={ handleChangeComplete }/> : null } 
-                <div className="paintOption1-1" onClick={onClickcolor}><p className="paintOption1">색상</p></div>
-                <div className="paintOption2-1" onClick={onClickweight}><p className="paintOption2">두께</p></div>
+                {/* <div className="paintOption1-1" onClick={onClickcolor}><p className="paintOption1">색상</p></div> */}
+
+                <div className="paintDiv1" onClick={onClickcolor}>
+                    <ShapeCircleIcon className="paintIconStyle1 paintOption1" style={{fill: paintColor}}/>
+                    <div><p className="paintOption1Text">색상</p></div>
+                </div>
+
+                <div className="paintDiv2" onClick={onClickweight}>
+                    <BoldIcon className="paintIconStyle2 paintOption2" />
+                    <div><p className="paintOption2Text">두께</p></div>
+                </div>
+
                 <div className="paintOption3-1" onClick={onClickend}><p className="paintOption3">종료</p></div>
                 
                 { colorweight ? <div className="brushWeight">

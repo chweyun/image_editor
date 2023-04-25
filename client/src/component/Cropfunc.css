@@ -15,7 +15,7 @@
     text-align: center;
 }
 
-.cropOption1-1, .cropOption2-1, .cropOption3-1, .cropOption4-1, .cropOption5-1, .cropOption6-1 {
+.cropOption1-1, .cropOption2-1, .cropOption3-1, .cropOption4-1, .cropOption5-1, .cropOption6-1, .cropOption7-1, .cropOption8-1, .cropOption9-1, .cropOption10-1{
     height: 10px;
     cursor:pointer;
 }
@@ -24,18 +24,14 @@
     /* float: left;
     margin-top: 20px; */
     float: left;
-    margin-top: 90px;
+    margin-top: 55px;
 }
 
-.cropOption2 {
+.cropOption2, .cropOption3, .cropOption4, .cropOption5, .cropOption6, .cropOption7 {
     float: left;
 }
 
-.cropOption3 {
-    float: left;
-}
-
-.cropOption1Text, .cropOption2Text, .cropOption3Text {
+.cropOption1Text, .cropOption2Text, .cropOption3Text, .cropOption4Text, .cropOption5Text, .cropOption6Text, .cropOption7Text {
     float: left;
     font-size: 15px;
     /* margin-top: -510px;

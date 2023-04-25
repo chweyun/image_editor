@@ -24,6 +24,7 @@ import basicImg from './Image/profile.png';
 import eraserAllIcon from './Image/eraserAll.svg';
 import selectIcon from './Image/select.svg';
 import hyuIcon from './Image/HYU_logo.png';
+import menual from './Image/manual.png';
 import { ReactComponent as FilterIcon } from "./Image/filter.svg"
 import { ReactComponent as CropIcon } from "./Image/crop.svg"
 import { ReactComponent as TurnIcon } from "./Image/turn.svg"
@@ -33,6 +34,7 @@ import { ReactComponent as PaintIcon } from "./Image/drawing.svg"
 import { ReactComponent as ShapeIcon } from "./Image/shape.svg"
 import { ReactComponent as EraserIcon } from "./Image/eraser.svg"
 import { ReactComponent as EraserAllIcon } from "./Image/eraserAll.svg"
+import { ReactComponent as BoldIcon } from "./Image/bold.svg"
 import profile from './Image/profile.png';
 
 import filterIcon from './Image/filter.svg';
@@ -63,7 +65,7 @@ import oneraserAll from "./component/EraserAllfunc.js";
 import onselect from "./component/Selectfunc.js";
 import { wait } from "@testing-library/user-event/dist/utils";
 import Shapefunc from "./component/Shapefunc.js";
-
+import MenualPopup from "./component/MenualPopup.js";
 
 const MainBoard = () => {
 
@@ -827,6 +829,7 @@ const MainBoard = () => {
             <div id="inputList" 
             // style={{display: 'none'}}
             ></div> 
+            <MenualPopup />
         </>
     );
 };
