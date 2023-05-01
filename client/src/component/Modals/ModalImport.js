@@ -27,22 +27,29 @@ const ModalImport = (props) => {
     const url = `http://localhost:5000/api/gallery/${id}`;
     // const url = `https://image-editor-s3.s3.ap-northeast-2.amazonaws.com/${id}`;
 
-    axios.get(url)
-    .then(response => { 
-      console.log(response);
-      getImgId(id);
-      close();
-    })
-    .catch(error => {
-      if (id == '') {
-        alert('ID를 입력하세요.');
-      }
-      else {
-        alert('해당하는 id값과 일치하는 프로젝트가 존재하지 않습니다.');
-        erase();
-        console.error(error);
-      }
-    })
+    axios.get( url, { responseType: 'blob' })
+    .then(res => {
+      // const myFile = new File([res.data], 'imageName')
+      // const reader = new FileReader()
+      //   reader.onload = ev => {
+      //     const previewImage = String(ev.target?.result)
+      //     // setMyImage(previewImage) // myImage라는 state에 저장
+      //     console.log(previewImage);
+      //   }
+      //   reader.readAsDataURL(myFile)
+        getImgId(id);
+        close();
+        // console.log(res);
+    }).catch(error => {
+        if (id == '') {
+          alert('ID를 입력하세요.');
+        }
+        else {
+          alert('해당하는 id값과 일치하는 프로젝트가 존재하지 않습니다.');
+          erase();
+          console.error(error);
+        }
+      })
   }
 
   return (
