@@ -123,7 +123,7 @@ const MainBoard = () => {
             const container = document.getElementById('source');
 
             // const response = await fetch (`http://localhost:5000/api/gallery/${imgId}`, { //todo
-            const response = await fetch (`https://git.heroku.com/image-editor-hy.git/api/gallery/${imgId}`, { 
+            const response = await fetch (`https://image-editor-hy.herokuapp.com/api/gallery/${imgId}`, { 
                 method : "GET"
             });
             const blobImg = await response.blob();
@@ -150,7 +150,7 @@ const MainBoard = () => {
         e.preventDefault();
         var canvas = document.getElementById('canvasID');
         // const API_URL = 'http://localhost:5000/api/gallery'; //todo
-        const API_URL = 'https://git.heroku.com/image-editor-hy.git/api/gallery';
+        const API_URL = 'https://image-editor-hy.herokuapp.com/api/gallery';
 
         function dataURLtoFile(dataurl, filename) {
             var arr = dataurl.split(','),
