@@ -24,10 +24,10 @@ const ModalImport = (props) => {
   const getIdfetch = async () => {
 
     const id = value;
-    // const url = `https://image-editor-s3.s3.ap-northeast-2.amazonaws.com/${id}`;
+    const url = `https://image-editor-s3.s3.ap-northeast-2.amazonaws.com/${id}`;
     // const url = `http://localhost:5000/api/gallery/${id}`; //todo
     // const url = `https://image-editor-hy.herokuapp.com/api/gallery/${id}`;
-    const url = `/api/gallery/${id}`;
+    // const url = `/api/gallery/${id}`;
 
     axios.get( url, { responseType: 'blob' })
     .then(res => {
