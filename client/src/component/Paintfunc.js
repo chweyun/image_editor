@@ -7,7 +7,7 @@ import { ReactComponent as BoldIcon } from "../Image/bold.svg";
 import { ReactComponent as ShapeCircleIcon } from "../Image/shapeCircle.svg"
 
 
-function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint, selectPaint} ) {
+function Paintfunc ( {canvas, ctx, context, image, updateURL, canvasRef, brush, getData, setImage, setSelectPaint, setClickPaint, selectPaint} ) {
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -15,16 +15,16 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
 
     let [paintColor, setPaintColor] = useState();
 
-    function ondrawImg (canvas, ctx, image) { // 회전툴이나 반전툴을 사용한 이후 페인트 툴을 사용할 경우 캔버스 축이 돌아가 있어서 reset안해주면 브러쉬가 회전&반전된 축 기준으로 좌우반전 혹은 상하반전, 90도 회전되어 그려짐 -> 최초에 reset해서 축을 원래대로 돌린 다음 가장 최근 업데이트 된 이미지를 캔버스에 그려주는 함수
-        ctx.reset();
-        var canvasArea = ctx.canvas ;
+    function ondrawImg (canvas, context, image) { // 회전툴이나 반전툴을 사용한 이후 페인트 툴을 사용할 경우 캔버스 축이 돌아가 있어서 reset안해주면 브러쉬가 회전&반전된 축 기준으로 좌우반전 혹은 상하반전, 90도 회전되어 그려짐 -> 최초에 reset해서 축을 원래대로 돌린 다음 가장 최근 업데이트 된 이미지를 캔버스에 그려주는 함수
+        context.reset();
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     };
 
     const [colorPicker, setcolorPicker] = useState(false);
@@ -35,8 +35,8 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
     
     // 색상 변경 후 호출 및 적용할 함수(onChange로 대체 가능하다)
     const handleChangeComplete = (color) => {
-        ondrawImg(canvas, ctx, image); // drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
-        drawTool(canvas, ctx, color.hex, 4);
+        ondrawImg(canvas, context, image); // drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
+        drawTool(canvas, context, color.hex, 4);
         // getData_lineColor(color.hex);
         setcolorPicker((prev) => !prev);
         setPaintColor(color.hex);
@@ -52,30 +52,30 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
     }
 
     const onClickend = () => {
-        ondrawImg(canvas, ctx, image); // (마찬가지) drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
-        drawTool(canvas, ctx, '#0000000', 0.001); // 여기서 아예 안보이게끔 어케 조치를 취해야겠음
+        ondrawImg(canvas, context, image); // (마찬가지) drawTool함수를 사용해 브러쉬를 직접적으로 사용하기 직전에만 배치해서 reset으로 인해 워크보드가 초기화된 모습이 드러나지 않고 바로 [축 원상복귀된 이미지 draw - 브러쉬 사용]이 이루어지도록 함
+        drawTool(canvas, context, '#0000000', 0.001); // 여기서 아예 안보이게끔 어케 조치를 취해야겠음
 
         setClickPaint(false);
         setSelectPaint(false);
     }
 
     const onClickthin = () => {
-        ctx.lineWidth = 2;
+        context.lineWidth = 2;
         setcolorWeight((prev) => !prev);
     }
 
     const onClicknomal = () => {
-        ctx.lineWidth = 4;
+        context.lineWidth = 4;
         setcolorWeight((prev) => !prev);
     }
 
     const onClickbold = () => {
-        ctx.lineWidth = 6;
+        context.lineWidth = 6;
         setcolorWeight((prev) => !prev);
     }
 
-    function drawTool (canvas, ctx, lineColor, lineWidth) {
-        ctx.filter = 'none' // 필터 씌웠을 경우 브러쉬는 필터 적용을 받지 않아야 함 
+    function drawTool (canvas, context, lineColor, lineWidth) {
+        context.filter = 'none' // 필터 씌웠을 경우 브러쉬는 필터 적용을 받지 않아야 함 
 
         let drawing = false;
 
@@ -87,15 +87,15 @@ function Paintfunc ( {canvas, ctx, image, updateURL, canvasRef, brush, getData, 
         let startX = 0;
         let startY = 0;
 
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = lineColor;
+        context.lineWidth = lineWidth;
+        context.strokeStyle = lineColor;
 
 
         function draw(curX, curY) {  
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            ctx.lineTo(curX, curY);
-            ctx.stroke();
+            context.beginPath();
+            context.moveTo(startX, startY);
+            context.lineTo(curX, curY);
+            context.stroke();
         }
 
         function mouseDown(e) {

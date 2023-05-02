@@ -4,14 +4,13 @@ import Cropper from "react-easy-crop";
 import getCroppedImg from "./Crop";
 import './EasyCrop.css';
 
-const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_Y, getData_cropSize, canvasId }) => {
+const EasyCrop = ({ image, canvas, ctx, context, endCrop, getData_crop, aspect_X, aspect_Y, getData_cropSize, canvasId }) => {
   //console.log("EasyCrop안에서 image", image);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
-
   const [clickClose, setclickClose] = useState(true);
 
   var croppedImg = document.getElementById("loadCropImage");
@@ -35,13 +34,13 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
 
   const onClickClose = () => {
     setclickClose((prev) => !prev); // 클로즈 누르면 크롭 툴 영역 안보이게 됨
-    drawCropImage(canvas, ctx, croppedImg);
+    drawCropImage(canvas, context, croppedImg);
     getData_crop(croppedImage); // 부모 MainBoard 컴포넌트로 크롭된 imgURL 전달해주는 getData 함수
   } 
   
-  function drawCropImage (canvas, ctx, croppedImageURL) { // 크롭한 이미지 캔버스에 그리기
+  function drawCropImage (canvas, context, croppedImageURL) { // 크롭한 이미지 캔버스에 그리기
     //setEndCrop((prev) => !prev);
-    ctx.reset();
+    context.reset();
 
     getData_cropSize(croppedImageURL.width, croppedImageURL.height);
 
@@ -51,19 +50,20 @@ const EasyCrop = ({ image, canvas, ctx, endCrop, getData_crop, aspect_X, aspect_
     var centerShift_x = ( 1152 - image.width*ratio ) / 2;
     var centerShift_y = ( 528 - image.height*ratio ) / 2;
 
-    canvas.width = croppedImageURL.width*ratio;
-    canvas.height = croppedImageURL.height*ratio;
-    canvas.style.width = `${croppedImageURL.width*ratio}px`;
-    canvas.style.height = `${croppedImageURL.height*ratio}px`;
+    console.log(croppedImageURL.width);
+    canvasId.width = croppedImageURL.width*ratio;
+    canvasId.height = croppedImageURL.height*ratio;
+    canvasId.style.width = `${croppedImageURL.width*ratio}px`;
+    canvasId.style.height = `${croppedImageURL.height*ratio}px`;
 
-    var canvasArea = ctx.canvas ;
+    var canvasArea = context.canvas ;
     var hRatio = canvasArea.width  / croppedImageURL.width    ;
     var vRatio =  canvasArea.height / croppedImageURL.height  ;
     var ratio  = Math.min ( hRatio, vRatio );
     var centerShift_x = ( canvasArea.width - croppedImageURL.width*ratio ) / 2;
     var centerShift_y = ( canvasArea.height - croppedImageURL.height*ratio ) / 2;  
-    ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-    ctx.drawImage(croppedImageURL, 0,0, croppedImageURL.width, croppedImageURL.height, centerShift_x, centerShift_y, croppedImageURL.width*ratio, croppedImageURL.height*ratio);
+    context.clearRect(0,0,canvasArea.width, canvasArea.height);
+    context.drawImage(croppedImageURL, 0,0, croppedImageURL.width, croppedImageURL.height, centerShift_x, centerShift_y, croppedImageURL.width*ratio, croppedImageURL.height*ratio);
   };
 
   return (

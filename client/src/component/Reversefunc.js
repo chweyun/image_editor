@@ -4,13 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import './Reversefunc.css';
 import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
-function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
+function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
 
-    ctx.lineWidth = 0.01;
+    context.lineWidth = 0.01;
 
     const [reverse_h, setReverse_h] = useState(true);
     const [reverse_v, setReverse_v] = useState(true);
     const [resetCount, setResetCount] = useState(0);
+
+    var canvasId = document.getElementById('canvasID');
 
     if(updateURL != null) {
         image = updateURL;
@@ -18,12 +20,12 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
 
     const onClick_HReverse = () => { // 수평 기준 좌우 반전
         setReverse_h((prev) => !prev);
-        drawimageReverse_h(ctx, image);
+        drawimageReverse_h(context, image);
     }
 
     const onClick_VReverse = () => { // 수직 기준 상하 반전
         setReverse_v((prev) => !prev);
-        drawimageReverse_v(ctx, image);
+        drawimageReverse_v(context, image);
     }
 
     const onClickEndReverse = () => {
@@ -38,60 +40,60 @@ function Reversefunc ( {canvas, ctx, image, updateURL, getData_reverse, setSelec
         setSelectReverse(false);
     }
 
-    function drawimageReverse_h(ctx, image){
+    function drawimageReverse_h(context, image){
         if(resetCount == 0) { // 회전툴을 사용하고 넘어온 경우 캔버스의 축이 회전기준으로 세팅되어있어서 회전툴 사용이후 반전툴 최초사용땐 reset으로 캔버스 세팅을 싹 지워줄것. 최초아니고 계속 툴 사용할때마다 지워지게 하면 정상적으로 이미지 draw가 안되니까 최초 1회만
-            ctx.reset();
+            context.reset();
         }
-        var filterType = ctx.filter;
-        var canvasArea = ctx.canvas ;
+        var filterType = context.filter;
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( vRatio, hRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;
-        ctx.filter = 'none';
-        ctx.fillStyle = "#D3D3D3";
-        ctx.fillRect(0,0,canvasArea.width, canvasArea.height);  
-        ctx.filter = filterType;
-        ctx.scale(-1, 1); // 좌우반전 (X축)
-        ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
-        ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
+        context.filter = 'none';
+        context.fillStyle = "#D3D3D3";
+        context.fillRect(0,0,canvasArea.width, canvasArea.height);  
+        context.filter = filterType;
+        context.scale(-1, 1); // 좌우반전 (X축)
+        context.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
+        context.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
         
         // 종료 후 두 번 돌아가고 꼬이는 문제가 축을 한번 더 바꿔주면 해결됨. 이유는 모르겠음 ...
-        ctx.scale(-1, 1); // 좌우반전 (X축)
-        ctx.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
+        context.scale(-1, 1); // 좌우반전 (X축)
+        context.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
 
-        const reverseImg = canvas.toDataURL('image/png');
+        const reverseImg = canvasId.toDataURL('image/png');
         getData_reverse(reverseImg);
-        ctx.restore();
+        context.restore();
         setResetCount(resetCount+1); // 최초 1회 이후엔 reset돌아가지 않게
     };
 
-    function drawimageReverse_v(ctx, image){
+    function drawimageReverse_v(context, image){
         if(resetCount == 0) {
-            ctx.reset();
+            context.reset();
         }
-        var filterType = ctx.filter;
-        var canvasArea = ctx.canvas ;
+        var filterType = context.filter;
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( vRatio, hRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;
-        ctx.filter = 'none';
-        ctx.fillStyle = "#D3D3D3";
-        ctx.fillRect(0,0,canvasArea.width, canvasArea.height);  
-        ctx.filter = filterType;
-        ctx.scale(1, -1); // 상하반전 (Y축)
-        ctx.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
-        ctx.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
+        context.filter = 'none';
+        context.fillStyle = "#D3D3D3";
+        context.fillRect(0,0,canvasArea.width, canvasArea.height);  
+        context.filter = filterType;
+        context.scale(1, -1); // 상하반전 (Y축)
+        context.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
+        context.drawImage(image, 0, 0, image.width, image.height, centerShift_x, centerShift_y, image.width*ratio, image.height*ratio);
         
-        ctx.scale(1, -1); // 상하반전 (Y축)
-        ctx.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
+        context.scale(1, -1); // 상하반전 (Y축)
+        context.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
         
-        const reverseImg = canvas.toDataURL('image/png');
+        const reverseImg = canvasId.toDataURL('image/png');
         getData_reverse(reverseImg);
-        ctx.restore();
+        context.restore();
         setResetCount(resetCount+1);
     };
 
