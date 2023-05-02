@@ -2,9 +2,10 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import './Filterfunc.css';
 
-function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelectFilter, setClickFilter } ) {
+function Filterfunc ( { canvas, ctx, context, image, updateURL, getData_filter, setSelectFilter, setClickFilter } ) {
 
-    ctx.lineWidth = 0.01;
+    context.lineWidth = 0.01;
+    console.log(canvas);
 
     if(updateURL != null) {
         image = updateURL; //image변수값 최초 임포트 URL말고 편집된 updateURL로 재할당
@@ -20,125 +21,125 @@ function Filterfunc ( { canvas, ctx, image, updateURL, getData_filter, setSelect
 
     const onClickgrayscale = () => {
         setGrayscale((prev) => !prev);
-        ongrayscale(canvas, ctx, image);
+        ongrayscale(canvas, context, image);
         //onPint ? ongrayscale(canvas, ctx, brush) : ongrayscale(canvas, ctx, image);
     }
     const onClickinvert = () => {
         setInvert((prev) => !prev);
-        oninvert(canvas, ctx, image);
+        oninvert(canvas, context, image);
         //onPint ? oninvert(canvas, ctx, brush) : oninvert(canvas, ctx, image);
     }
     const onClicksepia = () => {
         setSepia((prev) => !prev);
-        onsepia(canvas, ctx, image);
+        onsepia(canvas, context, image);
         //onPint ? onsepia(canvas, ctx, brush) : onsepia(canvas, ctx, image);
     }
     const onClickbrightness = () => {
         setBrightness((prev) => !prev);
-        onbrightness(canvas, ctx, image);
+        onbrightness(canvas, context, image);
         //onPint ? onbrightness(canvas, ctx, brush) : onbrightness(canvas, ctx, image);
     }
     const onClicksharp = () => {
         setSharp((prev) => !prev);
-        onsharp(canvas, ctx, image);
+        onsharp(canvas, context, image);
         //onPint ? onsharp(canvas, ctx, brush) : onsharp(canvas, ctx, image);
     }
     const onClickblur = () => {
         setBlur((prev) => !prev);
-        onblur(canvas, ctx, image);
+        onblur(canvas, context, image);
         //onPint ? onblur(canvas, ctx, brush) : onblur(canvas, ctx, image);
     }
     const onClickend = () => {
-        ctx.filter = 'none';
+        context.filter = 'none';
         const filterImg = canvas.toDataURL('image/png');
-        console.log(image.width, image.height);
         getData_filter(filterImg);
         setSelectFilter(false);
         setClickFilter(false);
+        // console.log(filterImg);
     }
 
     var loadingImg = document.getElementById("loadImage"); 
 
-    function ongrayscale (canvas, ctx, image) {
-        console.log(image.width, image.height);
-        ctx.reset();
-        ctx.save();
-        {grayscale ? ctx.filter = 'grayscale()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function ongrayscale (canvas, context, image) {
+        context.reset();
+        context.save();
+        {grayscale ? context.filter = 'grayscale()' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-        ctx.restore();
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.restore();
+        console.log(canvas.toDataURL('image/png'));
     };
 
-    function oninvert (canvas, ctx, image) {
-        ctx.reset();
-        ctx.save();
-        {invert ? ctx.filter = 'invert()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function oninvert (canvas, context, image) {
+        context.reset();
+        context.save();
+        {invert ? context.filter = 'invert()' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
-        ctx.restore();
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.restore();
         //ctx.drawImage(loadingImg, 0,0, loadingImg.width, loadingImg.height, centerShift_x,centerShift_y,loadingImg.width*ratio, loadingImg.height*ratio);
         //아니면 기능 하나 쓸때마다 변화가 생긴 상태의 이미지를 저장해뒀다가 그 이미지를 -> drawImage 소스로 줘서 그 이미지 자체를 그리게끔 해야할거같은데
     };
-    function onsepia (canvas, ctx, image) {
-        ctx.reset();
-        {sepia ? ctx.filter = 'sepia()' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function onsepia (canvas, context, image) {
+        context.reset();
+        {sepia ? context.filter = 'sepia()' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
         // ctx.restore();
     };
-    function onbrightness (canvas, ctx, image) {
-        ctx.reset();
-        {brightness ? ctx.filter = 'brightness(2)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function onbrightness (canvas, context, image) {
+        context.reset();
+        {brightness ? context.filter = 'brightness(2)' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     };
-    function onsharp (canvas, ctx, image) {
-        ctx.reset();
-        {sharp ? ctx.filter = 'contrast(230%)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function onsharp (canvas, context, image) {
+        context.reset();
+        {sharp ? context.filter = 'contrast(230%)' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     };
-    function onblur (canvas, ctx, image) {
-        ctx.reset();
-        {blur ? ctx.filter = 'blur(5px)' : ctx.filter = 'none'};
-        var canvasArea = ctx.canvas ;
+    function onblur (canvas, context, image) {
+        context.reset();
+        {blur ? context.filter = 'blur(5px)' : context.filter = 'none'};
+        var canvasArea = context.canvas ;
         var hRatio = canvasArea.width  / image.width    ;
         var vRatio =  canvasArea.height / image.height  ;
         var ratio  = Math.min ( hRatio, vRatio );
         var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
         var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-        ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
-        ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+        context.clearRect(0,0,canvasArea.width, canvasArea.height);
+        context.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
     };
 
     return (

@@ -90,6 +90,8 @@ const MainBoard = () => {
 
     useEffect(() => {
         console.log('imageUrl 바뀜');
+        console.log(imageUrl);
+        // console.log(canvasId.current.toDataURL());
     }, [imageUrl]);
 
     // 이미지 GET
@@ -104,7 +106,18 @@ const MainBoard = () => {
 
         const addImage = function(file) {
             const image = new Image;
+            image.src = file;
             image.onload = function() {
+                var hRatio = 1152  / document.getElementById('source').width;
+                var vRatio =  528 / document.getElementById('source').height;
+                var ratio  = Math.min ( hRatio, vRatio );
+                var centerShift_x = ( 1152 - image.width*ratio ) / 2;
+                var centerShift_y = ( 528 - image.height*ratio ) / 2;
+                canvas.width = document.getElementById('source').width*ratio;
+                canvas.height = document.getElementById('source').height*ratio;
+                canvas.style.width = `${document.getElementById('source').width*ratio}px`;
+                canvas.style.height = `${document.getElementById('source').height*ratio}px`;
+
                 var canvasArea = ctx.canvas ;
                 var hRatio = canvasArea.width  / image.width    ;
                 var vRatio =  canvasArea.height / image.height  ;
@@ -114,21 +127,44 @@ const MainBoard = () => {
                 ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
                 ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             }
-            image.src = URL.createObjectURL(file);
+            document.getElementById('source').src = image.src;
+            
+            // setImageUrl(document.getElementById('source').src);
+            setUpdateURL(document.getElementById('source'));
         }
+
+        function convertImageToBase64(imgUrl) {
+            const image = new Image();
+            image.crossOrigin='anonymous';
+            var dataUrl;
+            image.onload = () => {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              canvas.height = image.naturalHeight;
+              canvas.width = image.naturalWidth;
+              ctx.drawImage(image, 0, 0);
+              dataUrl = canvas.toDataURL();
+
+              addImage(dataUrl);
+            }
+            image.src = imgUrl;
+          }
 
         const getOneImage = async () => {
             const container = document.getElementById('source');
 
-            const response = await fetch (`http://localhost:5000/api/gallery/${imgId}`, {
+            const response = await fetch (`http://localhost:5000/api/gallery/${imgId}`, { //todo
+            // const response = await fetch (`https://image-editor-hy.herokuapp.com/api/gallery/${imgId}`, { 
+                // const response = await fetch (`/api/gallery/${imgId}`, { 
                 method : "GET"
             });
-            const blobImg = await response.blob();
-            const imgUrl = URL.createObjectURL(blobImg);
-            addImage(blobImg);
+            const ImgLink = await response.url;
+            convertImageToBase64(ImgLink);
         }
         getOneImage();
     }
+
+    const [rand, setRand] = useState(Math.floor((Math.random()*(100000000-10000000))+10000000));
 
     // 이미지 POST 
     const down = () => {
@@ -141,21 +177,37 @@ const MainBoard = () => {
         $link.click();
     }
 
-    const rand = Math.floor((Math.random()*(100000000-10000000))+10000000);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         var canvas = document.getElementById('canvasID');
-        const API_URL = 'http://localhost:5000/api/gallery';
+        const API_URL = 'http://localhost:5000/api/gallery'; //todo
+        // const API_URL = 'https://image-editor-hy.herokuapp.com/api/gallery';
+        // const API_URL = '/api/gallery';
+
+        function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, {type:mime});
+        }
+
+        const file = dataURLtoFile(canvasId.current.toDataURL(), rand);
+        setImageFile(file);
 
         await axios.post(API_URL, {
             id: rand,
-            imageFile: imageFile,
+            imageFile: file,
         }, {
             headers: {
             'Content-Type': 'multipart/form-data',
             },
-        }).catch (error => {
+        })
+        .catch (error => {
             setModalImportOpen(false);
             alert('빈 프로젝트입니다.');
         })
@@ -176,7 +228,7 @@ const MainBoard = () => {
     const [cropURLstr, setCropURLstr] = useState();
 
     let canvas = undefined;
-    let ctx = undefined;  
+    // let ctx = undefined;  
     let image = undefined;
 
     let orgImage = undefined;
@@ -233,8 +285,10 @@ const MainBoard = () => {
     };
     const closeModalStore = () => {
         setModalStoreOpen(false);
+        setRand(Math.floor((Math.random()*(100000000-10000000))+10000000));
     };
     const closeModalImport = () => {
+        console.log('closeModal');
         setModalImportOpen(false);
     };
 
@@ -242,10 +296,10 @@ const MainBoard = () => {
 
     // TopBar.js
     const onChangeImage = (e) => {
+        console.log('onChangeImage');
         const reader = new FileReader();
         const file = imgRef.current.files[0];
 
-        // 먼지 모름...
         const imgFile = (e.target.files[0]);
         setImageFile(imgFile);
 
@@ -255,14 +309,14 @@ const MainBoard = () => {
             setCropURLstr(reader.result);
 
             canvas = document.getElementById('canvasID');
-            ctx = canvas.getContext('2d');
+            // ctx = canvas.getContext('2d');
             image = document.getElementById('source');
             orgImage = image;
             setUpdateURL(image);
 
-            setProps({canvas, ctx, image, imageUrl, canvasRef, context});
+            setProps({canvas, context, image, imageUrl, canvasRef});
 
-            function drawImageData(image, ctx) { 
+            function drawImageData(image, context) { 
 
                 if (isSize) {
                     isSize = false;
@@ -284,20 +338,20 @@ const MainBoard = () => {
                     canvas.style.height = `${document.getElementById('source').height*ratio}px`;
                 }
 
-                var canvasArea = ctx.canvas ;
+                var canvasArea = context.current.canvas ;
                 var hRatio = canvasArea.width  / image.width    ;
                 var vRatio =  canvasArea.height / image.height  ;
                 var ratio  = Math.min ( hRatio, vRatio );
                 var centerShift_x = ( canvasArea.width - image.width*ratio ) / 2;
                 var centerShift_y = ( canvasArea.height - image.height*ratio ) / 2;  
-                ctx.clearRect(0,0,canvasArea.width, canvasArea.height);
+                context.current.clearRect(0,0,canvasArea.width, canvasArea.height);
                 // console.log(image);
-                ctx.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
+                context.current.drawImage(image, 0,0, image.width, image.height, centerShift_x,centerShift_y,image.width*ratio, image.height*ratio);
             };
 
             image.addEventListener('load', (e) => {
                 // canvas 사이즈를 이미지로 맞춰 캔버스가 이미지로 인식되는 문제, 회전시 점점 이미지가 작아지는 문제 해결
-                drawImageData(image, ctx); 
+                drawImageData(image, context); 
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
                 cPush();
@@ -614,6 +668,7 @@ const MainBoard = () => {
             context.current.fill();
         }
     }
+    const [imagetmp, setImagetmp] = useState();
 
     function drawEnd(e) {
         setIsDraw(false);
@@ -729,7 +784,6 @@ const MainBoard = () => {
             var centerShift_x = ( canvasArea.width - canvasPic.width*ratio ) / 2;
             var centerShift_y = ( canvasArea.height - canvasPic.height*ratio ) / 2;
             context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
-        
         }
 
         setCStep(0);
@@ -788,7 +842,8 @@ const MainBoard = () => {
                     <img src={selectIcon} className="side4-3" onClick={() => onselect()} />
                 </div>
                 <div style={{height: '0px'}}> {/* 이 부분 한강생겨서 height값 조정해서 없애주기 */}
-                    {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
+                    {/* {selectFilter ? <Filterfunc canvas={props.canvas} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null} */}
+                    {selectFilter ? <Filterfunc canvas={canvasId.current} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} image={props.image} imageURL={imageUrl} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr} getData_cropSize={getData_cropSize} canvasId={canvasId}/> : null}
                     {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn} getImageUrl={getImageUrl}/> : null}
                     {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse}/> : null}
