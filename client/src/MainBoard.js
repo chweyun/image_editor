@@ -274,6 +274,7 @@ const MainBoard = () => {
         setUpdateURL(loadingImg3);
     }
     const getData_reverse = (endReverse) => {
+        console.log(endReverse);
         setEndReverse(endReverse);
         setCropURLstr(endReverse);
         setImageUrl(canvasId.current.toDataURL()); 
@@ -364,11 +365,12 @@ const MainBoard = () => {
             image.addEventListener('load', (e) => {
                 console.log('444444');
                 // canvas 사이즈를 이미지로 맞춰 캔버스가 이미지로 인식되는 문제, 회전시 점점 이미지가 작아지는 문제 해결
-                console.log(image);
+                // console.log(image);
                 drawImageData(image, context); 
                 setImageUrl(image.src);
                 // setUpdateURL(image.src);
                 cPush();
+                console.log(image);
             });
         };
     };
@@ -687,6 +689,7 @@ const MainBoard = () => {
     function drawEnd(e) {
         setIsDraw(false);
         setImageUrl(canvasId.current.toDataURL()); 
+        console.log(canvasId.current.toDataURL());
         // setUpdateURL(image);
         setCropURLstr(canvasId.current.toDataURL());  
     }
@@ -863,7 +866,7 @@ const MainBoard = () => {
                     {selectFilter ? <Filterfunc canvas={canvasId.current} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_filter={getData_filter} setUpdateURL={setUpdateURL} setSelectFilter={setSelectFilter} setClickFilter={setClickFilter}/> : null}
                     {selectCrop ? <Cropfunc canvas={props.canvas} ctx={props.ctx} context={context.current} image={props.image} imageURL={imageUrl} updateURL={updateURL} canvasRef={canvasRef} endCrop={endCrop} getData_crop={getData_crop} cropURLstr={cropURLstr} getData_cropSize={getData_cropSize} canvasId={canvasId.current}/> : null}
                     {selectTurn ? <Turnfunc canvas={props.canvas} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_turn={getData_turn} orgImage={orgImage} setSelectTurn={setSelectTurn} setClickTurn={setClickTurn} getImageUrl={getImageUrl}/> : null}
-                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse}/> : null}
+                    {selectReverse ? <Reversefunc canvas={props.canvas} ctx={props.ctx} context={context.current} image={props.image} updateURL={updateURL} getData_reverse={getData_reverse} setSelectReverse={setSelectReverse} setClickReverse={setClickReverse} canvasId={canvasId.current}/> : null}
                     {selectText ? <Textfunc 
                                         getTxtColor={getTxtColor}
                                         getIsItalic={getIsItalic}

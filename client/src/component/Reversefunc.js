@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import './Reversefunc.css';
 import { ReactComponent as ReverseIcon } from "../Image/reverse.svg"
 
-function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse, setSelectReverse, setClickReverse} ) {
+function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse, setSelectReverse, setClickReverse, canvasId} ) {
 
     context.lineWidth = 0.01;
 
@@ -12,7 +12,7 @@ function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse,
     const [reverse_v, setReverse_v] = useState(true);
     const [resetCount, setResetCount] = useState(0);
 
-    var canvasId = document.getElementById('canvasID');
+    // var canvasId = document.getElementById('canvasID');
 
     if(updateURL != null) {
         image = updateURL;
@@ -38,6 +38,8 @@ function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse,
 
         setClickReverse(false);
         setSelectReverse(false);
+        console.log(reverseImg);
+        console.log(image);
     }
 
     function drawimageReverse_h(context, image){
@@ -62,7 +64,7 @@ function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse,
         // 종료 후 두 번 돌아가고 꼬이는 문제가 축을 한번 더 바꿔주면 해결됨. 이유는 모르겠음 ...
         context.scale(-1, 1); // 좌우반전 (X축)
         context.translate(canvasArea.width*(-1), 0); // 축 바꿔주기 
-
+        console.log(context);
         const reverseImg = canvasId.toDataURL('image/png');
         getData_reverse(reverseImg);
         context.restore();
@@ -70,6 +72,9 @@ function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse,
     };
 
     function drawimageReverse_v(context, image){
+        image.src = canvasId.toDataURL('image/png');
+        console.log(image);
+        console.log(canvasId.toDataURL('image/png'));
         if(resetCount == 0) {
             context.reset();
         }
@@ -90,7 +95,7 @@ function Reversefunc ( {canvas, ctx, context, image, updateURL, getData_reverse,
         
         context.scale(1, -1); // 상하반전 (Y축)
         context.translate(0, canvasArea.height*(-1)); // 축 바꿔주기
-        
+        // console.log(canvasId.toDataURL('image/png'));
         const reverseImg = canvasId.toDataURL('image/png');
         getData_reverse(reverseImg);
         context.restore();
