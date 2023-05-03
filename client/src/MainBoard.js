@@ -755,6 +755,7 @@ const MainBoard = () => {
                 context.current.drawImage(canvasPic, 0,0, canvasPic.width, canvasPic.height, centerShift_x,centerShift_y,canvasPic.width*ratio, canvasPic.height*ratio);
             }
             setCStep(cStep => cStep - 1);
+            setUpdateURL(canvasPic);
         }
     }
 
@@ -777,6 +778,7 @@ const MainBoard = () => {
                 context.current.drawImage(canvasPic, 0,0, canvasId.current.width, canvasId.current.height);
             }
         }
+        setUpdateURL(canvasPic);
     }
 
     const cReset = () => {
