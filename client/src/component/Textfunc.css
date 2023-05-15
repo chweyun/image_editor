@@ -18,8 +18,8 @@ p {
 
 .textOption1 {
     display: inline-block;
-    margin-bottom: 30px;
-    margin-top: 20px;
+    /* margin-bottom: 30px;
+    margin-top: 20px; */
     height: 60px;
     background-color:transparent;
     border: none;
@@ -27,16 +27,17 @@ p {
 
 .textOption2, .textOption3, .textOption4, .textOption5, .textOption6 {
     background-color:transparent;
-    margin-top: -10px;
+    /* margin-top: -10px; */
     height: 46px;
     border: none;
 }
 
 .textOption7 {
-    margin-top: -10px;
+    /* margin-top: -10px; */
     background-color: transparent;
     height: 46px;
     border: none;
+    margin-top: -12px;
 }
 
 .rect {
@@ -52,3 +53,69 @@ p {
     /* float: left; */
     display: inline-block;
 }
+
+/* .iconStyle {
+    fill:#9DAAB2;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    padding-bottom: 0;
+
+    cursor:pointer;
+} */
+
+.texticon_noneselect{
+    fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: -5px;
+    margin-left: 5px;
+
+    cursor:pointer;
+}
+
+.texticon_select{
+    fill:#004483;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: -5px;
+    margin-left: 5px;
+
+    cursor:pointer;
+}
+
+.texticon_noneselect0{
+    fill:#9DAAB2;stroke:#9DAAB2;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: -10px;
+    margin-left: 5px;
+
+    cursor:pointer;
+}
+
+.texticon_select0{
+    fill:#004483;stroke:#004483;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    width: 40px;
+    height: 40px;
+    margin-top: -10px;
+    margin-left: 5px;
+
+    cursor:pointer;
+}
+
+.colorIconStyle {
+    fill:#9DAAB2;stroke:#004483;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    padding-bottom: 0;
+    margin-bottom: 8px;
+}
+
+.colorOption {
+    float: left;
+    font-size: 16px;
+    margin-left: -2px;
+}
+

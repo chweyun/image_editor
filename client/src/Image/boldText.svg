@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <style>
+    </style>
+  </defs>
+  <polyline points="50 68 17 68 17 12 46 12" style=fill:none;stroke-width:5;/>
+  <line x1="50" y1="40" x2="17" y2="40" style=fill:none;stroke-width:5;/>
+  <g>
+    <path d="m59,26c0-7.39-5.74-13.43-13-13.95" style=fill:none;stroke-width:5;/>
+    <path d="m59,26.05c0,7.39-5.74,13.43-13,13.95" style=fill:none;stroke-width:5;/>
+  </g>
+  <g>
+    <path d="m63,54c0-7.39-5.74-13.43-13-13.95" style=fill:none;stroke-width:5;/>
+    <path d="m63,54.05c0,7.39-5.74,13.43-13,13.95" style=fill:none;stroke-width:5;/>
+  </g>
+</svg>
