@@ -16,7 +16,7 @@ app.use(cors({ credentials: true, origin: true, methods: 'GET,POST' }));
 // route를 정의
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 
-const PORT = process.nextTick.PORT || 5000;
+const PORT = process.nextTick.PORT || 5000; //todo
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
